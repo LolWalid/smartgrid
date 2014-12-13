@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  #wrapper
+    #objectifInfo
+      h2 Objectif Info
+      p
+        strong Titre:
+        |  <span id='objectifInfoTitle'></span>
+        br
+        strong Description :
+        |  <span id='objectifInfoDescription'></span>
+        br
+      h2 Effects :
+      p#effects
+
+
+    h2 Objectif List
+    #objectifList
+      table
+        thead
+          th Titre
+          th Description
+          th Delete?
+        tbody
+    h2 Ajouter  un objectif
+    #addObjectif
+      fieldset
+        input#inputObjectifTitle(type='text', placeholder='Nom de l objectif')
+        input#inputObjectifDescription(type='text', placeholder='Description')
+        br
+        div#add_input_effects
+          input#inputObjectifResource.resource(type='text', placeholder='Ressource')
+          input#inputObjectifEffect.effect(type='text', placeholder='Effet')
+          br
+        button.add_field_button Add More Fields
+        button#btnAddObjectif Ajouter
+
+  h2 Editer un objectif
+  #editObjectif
+    fieldset
+      input#editObjectifId(type='hidden')
+      input#editObjectifTitle(type='text', placeholder='Nom de l objectif')
+      input#editObjectifDescription(type='text', placeholder='Description')
+      br
+      input#editObjectifResource(type='text', placeholder='Ressource')
+      input#editObjectifEffect(type='text', placeholder='Effet')
+      br
+      button#btnEditObjectif Editer
