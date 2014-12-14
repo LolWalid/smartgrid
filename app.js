@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var http = require('http');
 
 // DataBase
 var mongo = require('mongoskin');
@@ -15,6 +16,7 @@ var events = require('./routes/events');
 
 var app = express();
 
+app.server = http.createServer(app)
 var io = require('socket.io').listen(app.server);
 
 io.sockets.on('connection', function(socket) {
@@ -23,7 +25,8 @@ io.sockets.on('connection', function(socket) {
     });
 });
 
-app.listen(8080,"0.0.0.0");
+
+app.server.listen(3000);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

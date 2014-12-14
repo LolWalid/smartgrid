@@ -1,5 +1,6 @@
 // Objectiflist data array for filling in info box
 var objectifListData = [];
+var socket = io.connect('http://localhost:3000');
 
 // DOM Ready =============================================================
 ready  = $(function() {
@@ -15,29 +16,24 @@ ready  = $(function() {
   // Edit Objectif button click
   $('#btnEditObjectif').on('click', editObjectif);
 
-  // Delete Objectif link click
-  $('#objectifList table tbody').on('click', 'td a.linkdeleteobjectif', deleteObjectif);
-    var max_fields      = 10; //maximum input boxes allowed
-    var wrapper         = $("#add_input_effects"); //Fields wrapper
-    var add_button      = $(".add_field_button"); //Add button ID
+  $('#objectifList table tbody').on('click', 'td a.sendobjectif', function(event){
+    event.preventDefault();
+    var thisObjectifId = $(this).prop('rel');
+    var arrayPosition = objectifListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisObjectifId);
+    var thisObjectifObject = objectifListData[arrayPosition];
 
-    var x = 1; //initlal text box count
-    $(add_button).click(function(e){ //on add input button click
-      e.preventDefault();
-        if(x < max_fields){ //max input box allowed
-            x++; //text box increment
-            $(wrapper).append('<div><input type="text" class="resource" name="resource[]"/>\
-              <input type="text" name="effects[]" class="effect"/>\
-              <a href="#" class="remove_field">Remove</a>\
-            </div>'); //add input box
-          }
-        });
+    socket.emit('new_obj', {
+      'titre': thisObjectifObject.objectifTitle,
+      'description': thisObjectifObject.description,
+      'common': thisObjectifObject.common
+    });
 
-    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-      e.preventDefault(); $(this).parent('div').remove(); x--;
-    })
-
+    console.log("message envoyé");
+    $("#obj_titre").val('').focus();
+    $("#obj_descr").val('');
   });
+});
+
 $(document).ready(ready);
 $(document).on('page:load', ready);
 // Functions =============================================================
@@ -57,6 +53,7 @@ function populateTable() {
       tableContent += '<td><a href="#" class="linkshowobjectif" rel="' + this._id + '" title="Show Details">' + this.objectifTitle + '</a></td>';
       tableContent += '<td>' + this.description + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteobjectif" rel="' + this._id + '">delete</a></td>';
+      tableContent += '<td><a href="#" class="sendobjectif" rel="' + this._id + '">Send</a></td>';
       tableContent += '</tr>';
     });
 
@@ -142,10 +139,10 @@ function addObjectif(event) {
     }
 
     newObjectif.objectifTitle = $('#addObjectif fieldset input#inputObjectifTitle').val();
-    newObjectif.description = $('#addObjectif fieldset input#inputObjectifDescription').val();
+    newObjectif.description = $('#addObjectif fieldset #inputObjectifDescription').val();
     newObjectif.achieve = $('#addObjectif fieldset input#inputObjectifAchieve').val();
     newObjectif.resource = $('#addObjectif fieldset input#inputObjectifResource').val();
-
+    newObjectif.common = $('#addObjectif fieldset input#inputObjectifCommon').is(":checked")=='on' ? 'true' : 'false';
 
 //    newObjectif.effects = effectsJson;
 

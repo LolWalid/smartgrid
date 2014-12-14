@@ -24,16 +24,21 @@ block content
         thead
           th Titre
           th Description
+          th type
           th Delete?
+          th Send objectif
         tbody
     h2 Ajouter  un objectif
     #addObjectif
       fieldset
         input#inputObjectifTitle(type='text', placeholder='Nom de l objectif')
-        input#inputObjectifDescription(type='text', placeholder='Description')
+        label Objectif commun ?
+        input#inputObjectifCommon(type='checkbox')
         br
         input#inputObjectifResource(type='text', placeholder='Ressource')
-        input#inputObjectifAchieve(type='text', placeholder='Effet')
+        input#inputObjectifAchieve(type='text', placeholder='Valeur à atteindre')
+        br
+        textarea#inputObjectifDescription(type='text', placeholder='Description')
         br
         button#btnAddObjectif Ajouter
 
