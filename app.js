@@ -13,8 +13,16 @@ var routes = require('./routes/index');
 var objectives = require('./routes/objectives');
 var events = require('./routes/events');
 
-
 var app = express();
+
+var io = require('socket.io').listen(app.server);
+
+io.sockets.on('connection', function(socket) {
+    socket.on('new_obj', function(message) {
+        socket.broadcast.emit('server_message', message);
+    });
+});
+
 app.listen(8080,"0.0.0.0");
 
 // view engine setup
