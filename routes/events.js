@@ -6,29 +6,29 @@ var ObjectID = require('mongodb').ObjectID;
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('objectives');
+  res.render('events');
 });
 
 /*
- * GET objectives.
+ * GET events.
  */
-router.get('/objectiveslist', function(req, res) {
+router.get('/eventslist', function(req, res) {
     var db = req.db;
-    db.collection('objectives').find().toArray(function (err, items) {
+    db.collection('events').find().toArray(function (err, items) {
         res.json(items);
     });
 });
 
 /*
- * ADD objectif.
+ * ADD event.
  */
-router.post('/addobjectif', function(req, res) {
+router.post('/addevent', function(req, res) {
     var db = req.db;
 
     console.log(req.body.length);
     var data = req.body;
 
-    db.collection('objectives').insert(data, function(err, result){
+    db.collection('events').insert(data, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
         );
@@ -36,12 +36,12 @@ router.post('/addobjectif', function(req, res) {
 });
 
 /*
- * EDIT objectif.
+ * EDIT event.
  */
-router.post('/editobjectif', function(req, res) {
+router.post('/editevent', function(req, res) {
     var db = req.db;
     var id = new ObjectID(req.body.id);
-    db.collection('objectives').update( {_id: id}, req.body, function(err, result){
+    db.collection('events').update( {_id: id}, req.body, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
         );
@@ -49,12 +49,12 @@ router.post('/editobjectif', function(req, res) {
 });
 
 /*
- * DELETE to deleteobjectif.
+ * DELETE to deleteevent.
  */
-router.delete('/deleteobjectif/:id', function(req, res) {
+router.delete('/deleteevent/:id', function(req, res) {
     var db = req.db;
-    var objectifToDelete = req.params.id;
-    db.collection('objectives').removeById(objectifToDelete, function(err, result) {
+    var eventToDelete = req.params.id;
+    db.collection('events').removeById(eventToDelete, function(err, result) {
         res.send((result === 1) ? { msg: '' } : { msg:'error: ' + err });
     });
 });

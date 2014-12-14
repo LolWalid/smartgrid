@@ -1,0 +1,50 @@
+extends layout
+
+block content
+  #wrapper
+    #eventInfo
+      h2 Event Info
+      p
+        strong Titre:
+        |  <span id='eventInfoTitle'></span>
+        br
+        strong Description :
+        |  <span id='eventInfoDescription'></span>
+        br
+      h2 Effects :
+      p#effects
+
+
+    h2 Event List
+    #eventList
+      table
+        thead
+          th Titre
+          th Description
+          th Delete?
+        tbody
+    h2 Ajouter  un event
+    #addEvent
+      fieldset
+        input#inputEventTitle(type='text', placeholder='Nom de l event')
+        input#inputEventDescription(type='text', placeholder='Description')
+        br
+        div#add_input_effects
+          input#inputEventResource.resource(type='text', placeholder='Ressource')
+          input#inputEventEffect.effect(type='text', placeholder='Effet')
+          br
+        button.add_field_button Add More Fields
+        button#btnAddEvent Ajouter
+
+  h2 Editer un event
+  #editEvent
+    fieldset
+      input#editEventId(type='hidden')
+      input#editEventTitle(type='text', placeholder='Nom de l event')
+      input#editEventDescription(type='text', placeholder='Description')
+      br
+      input#editEventResource(type='text', placeholder='Ressource')
+      input#editEventEffect(type='text', placeholder='Effet')
+      br
+      button#btnEditEvent Editer
+  script(src='/javascripts/eventscript.js')

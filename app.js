@@ -11,6 +11,8 @@ var db = mongo.db("mongodb://localhost/sg", {native_parser: true});
 
 var routes = require('./routes/index');
 var objectives = require('./routes/objectives');
+var events = require('./routes/events');
+
 
 var app = express();
 app.listen(8080,"0.0.0.0");
@@ -35,6 +37,8 @@ app.use(function(req,res,next){
 
 app.use('/', routes);
 app.use('/objectives', objectives);
+app.use('/events', events);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

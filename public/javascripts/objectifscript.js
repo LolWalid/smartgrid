@@ -2,8 +2,7 @@
 var objectifListData = [];
 
 // DOM Ready =============================================================
-$(document).ready(function() {
-
+ready  = $(function() {
   // Populate the objectif table on initial page load
   populateTable();
 
@@ -39,7 +38,8 @@ $(document).ready(function() {
     })
 
   });
-
+$(document).ready(ready);
+$(document).on('page:load', ready);
 // Functions =============================================================
 
 // Fill table with data
@@ -72,8 +72,6 @@ function showObjectifInfo(event) {
   // Prevent Link from Firing
   event.preventDefault();
 
-  console.log($(this).prop('rel'));
-
   // Retrieve objectifname from link rel attribute
   var thisObjectifId = $(this).prop('rel');
 
@@ -83,9 +81,10 @@ function showObjectifInfo(event) {
   // Get our Objectif Object
   var thisObjectifObject = objectifListData[arrayPosition];
 
-  var effects = thisObjectifObject.effects;
 
-  var tableContent = '';
+  //console.log(thisObjectifObject["effects[0][resource]"]);
+
+/*  var tableContent = '';
 
   if( typeof(effects.length)!="undefined") {
     for( var i = 0; i< effects.length;i++ ) {
@@ -98,17 +97,18 @@ function showObjectifInfo(event) {
   }
 
   $('#effects').html(tableContent);
+  */
 
   //Populate Info Box
   $('#objectifInfoTitle').text(thisObjectifObject.objectifTitle);
   $('#objectifInfoDescription').text(thisObjectifObject.description);
-  $('#objectifInfoResource').text(effects[0].resource);
-  $('#objectifInfoEffect').text(effects[0].effect);
+  $('#objectifInfoResource').text(thisObjectifObject.resource);
+  $('#objectifInfoAchieve').text(thisObjectifObject.achieve);
 
   $('#editObjectifTitle').val(thisObjectifObject.objectifTitle);
   $('#editObjectifDescription').val(thisObjectifObject.description);
-  $('#editObjectifResource').val(effects[0].resource);
-  $('#editObjectifEffect').val(effects[0].effect);
+  $('#editObjectifResource').val(thisObjectifObject.resource);
+  $('#editObjectifAchieve').val(thisObjectifObject.achieve);
   $('#editObjectifId').val(thisObjectifObject._id);
 };
 
@@ -125,10 +125,9 @@ function addObjectif(event) {
   // Check and make sure errorCount's still at zero
   if(errorCount === 0) {
 
-    var resources = $('#addObjectif .resource');
+/*    var resources = $('#addObjectif .resource');
     var effects = $('#addObjectif .effect');
 
-    console.log(effects.length);
     var effectsJson = [];
 
     if( typeof(effects.length)!="undefined") {
@@ -137,16 +136,18 @@ function addObjectif(event) {
         effectsJson = effectsJson.concat(json);
       }
     }
-
-
+    */
     // If it is, compile all objectif info into one object
     var newObjectif = {
-      'objectifTitle': $('#addObjectif fieldset input#inputObjectifTitle').val(),
-      'description': $('#addObjectif fieldset input#inputObjectifDescription').val(),
-      'effects': effectsJson
     }
 
-    console.log(JSON.stringify(newObjectif));
+    newObjectif.objectifTitle = $('#addObjectif fieldset input#inputObjectifTitle').val();
+    newObjectif.description = $('#addObjectif fieldset input#inputObjectifDescription').val();
+    newObjectif.achieve = $('#addObjectif fieldset input#inputObjectifAchieve').val();
+    newObjectif.resource = $('#addObjectif fieldset input#inputObjectifResource').val();
+
+
+//    newObjectif.effects = effectsJson;
 
     // Use AJAX to post the object to our addobjectif service
     $.ajax({
@@ -231,13 +232,11 @@ function editObjectif(event) {
 
     // If it is, compile all objectif info into one object
     var objectif = {
-      'id': $('#editObjectif fieldset input#editObjectifId').val(),
-      'title': $('#editObjectif fieldset input#editObjectifTitle').val(),
+      '_id': $('#editObjectif fieldset input#editObjectifId').val(),
+      'objectifTitle': $('#editObjectif fieldset input#editObjectifTitle').val(),
       'description': $('#editObjectif fieldset input#editObjectifDescription').val(),
       'resource': $('#editObjectif fieldset input#editObjectifResource').val(),
-      'effect': $('#editObjectif fieldset input#editObjectifEffect').val(),
-      'location': $('#editObjectif fieldset input#editObjectifLocation').val(),
-      'gender': $('#editObjectif fieldset input#editObjectifGender').val()
+      'achieve': $('#editObjectif fieldset input#editObjectifAchieve').val(),
     };
 
     // Use AJAX to post the object to our editObjectif service

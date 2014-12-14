@@ -11,9 +11,12 @@ block content
         strong Description :
         |  <span id='objectifInfoDescription'></span>
         br
-      h2 Effects :
-      p#effects
-
+        strong Ressource :
+        |  <span id='objectifInfoResource'></span>
+        br
+        strong A Atteindre :
+        |  <span id='objectifInfoAchieve'></span>
+        br
 
     h2 Objectif List
     #objectifList
@@ -29,11 +32,9 @@ block content
         input#inputObjectifTitle(type='text', placeholder='Nom de l objectif')
         input#inputObjectifDescription(type='text', placeholder='Description')
         br
-        div#add_input_effects
-          input#inputObjectifResource.resource(type='text', placeholder='Ressource')
-          input#inputObjectifEffect.effect(type='text', placeholder='Effet')
-          br
-        button.add_field_button Add More Fields
+        input#inputObjectifResource(type='text', placeholder='Ressource')
+        input#inputObjectifAchieve(type='text', placeholder='Effet')
+        br
         button#btnAddObjectif Ajouter
 
   h2 Editer un objectif
@@ -44,6 +45,7 @@ block content
       input#editObjectifDescription(type='text', placeholder='Description')
       br
       input#editObjectifResource(type='text', placeholder='Ressource')
-      input#editObjectifEffect(type='text', placeholder='Effet')
+      input#editObjectifAchieve(type='text', placeholder='Effet')
       br
       button#btnEditObjectif Editer
+  script(src='/javascripts/objectifscript.js')
