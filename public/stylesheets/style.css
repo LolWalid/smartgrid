@@ -65,3 +65,26 @@ fieldset {
   background-color: rgb(100,200,0);
   border: 1px solid black;
 }
+
+a.navbar-brand {
+  border-right: 1px solid #e7e7e7;
+}
+
+#profil {
+  margin-top: 15px;
+  height: 500px;
+  border: 1px solid black;
+  background-color: #c8d8e8;
+}
+
+#obj {
+  margin-top: 15px;
+  cursor: pointer;
+  min-height: 200px;
+  border: 1px solid black;
+  background-color: #e8d8c8;
+}
+
+#objectives {
+  margin-top: 15px;
+}

@@ -3,8 +3,25 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='///netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
     script(src='/javascripts/jquery.min.js')
     script(src='/javascripts/socket.io.js')
   body
+    div.navbar.navbar-default.navbar-fixed-top(role='navigation')
+      #navbar-header
+        button(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1').navbar-toggle.collapsed
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href='/objectives') Objectifs 
+
+      p#argent.navbar-text Argent
+      p#argent.navbar-text Energie
+      p#argent.navbar-text Satisfaction
+      p#argent.navbar-text Score
+      p#argent.navbar-text 
+        a(href='/') Joueur 1
+
     block content
 

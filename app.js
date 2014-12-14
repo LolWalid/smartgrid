@@ -16,7 +16,7 @@ var events = require('./routes/events');
 
 var app = express();
 
-app.server = http.createServer(app)
+app.server = http.createServer(app);
 var io = require('socket.io').listen(app.server);
 
 io.sockets.on('connection', function(socket) {

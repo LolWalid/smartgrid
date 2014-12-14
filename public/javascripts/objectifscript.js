@@ -142,7 +142,7 @@ function addObjectif(event) {
     newObjectif.description = $('#addObjectif fieldset #inputObjectifDescription').val();
     newObjectif.achieve = $('#addObjectif fieldset input#inputObjectifAchieve').val();
     newObjectif.resource = $('#addObjectif fieldset input#inputObjectifResource').val();
-    newObjectif.common = $('#addObjectif fieldset input#inputObjectifCommon').is(":checked")=='on' ? 'true' : 'false';
+    newObjectif.common = $('#addObjectif fieldset input#inputObjectifCommon').is(":checked") ? 'true' : 'false';
 
 //    newObjectif.effects = effectsJson;
 

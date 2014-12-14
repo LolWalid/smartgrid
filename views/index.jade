@@ -1,18 +1,16 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-
   // WRAPPER
-  #wrapper
-
-    #objectivesCommon
-      h2 Liste des objectifs communs
-
-    #objectivesIndiv
-      h2 Liste des objectifs individuels
+  .container
     #new
+
+    #objectives
+      #objectivesCommon.col-sm-6
+        h2 Liste des objectifs communs
+
+      #objectivesIndiv.col-sm-6
+        h2 Liste des objectifs individuels
    // /WRAPPER
   script(src='/javascripts/playerscript.js')
 
