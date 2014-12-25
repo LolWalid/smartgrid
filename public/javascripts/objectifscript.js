@@ -10,6 +10,8 @@ ready  = $(function() {
   // Add ShowObjectifInfo click
   $('#objectifList table tbody').on('click', 'td a.linkshowobjectif', showObjectifInfo);
 
+  $('#objectifList table tbody').on('click', 'td a.linkdeleteobjectif', deleteObjectif);
+
   // Add Objectif button click
   $('#btnAddObjectif').on('click', addObjectif);
 
@@ -52,6 +54,7 @@ function populateTable() {
       tableContent += '<tr>';
       tableContent += '<td><a href="#" class="linkshowobjectif" rel="' + this._id + '" title="Show Details">' + this.objectifTitle + '</a></td>';
       tableContent += '<td>' + this.description + '</td>';
+      tableContent += '<td>' + (this.common == 'true' ? "commun" : "individuel") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteobjectif" rel="' + this._id + '">delete</a></td>';
       tableContent += '<td><a href="#" class="sendobjectif" rel="' + this._id + '">Send</a></td>';
       tableContent += '</tr>';
@@ -229,7 +232,7 @@ function editObjectif(event) {
 
     // If it is, compile all objectif info into one object
     var objectif = {
-      '_id': $('#editObjectif fieldset input#editObjectifId').val(),
+      'id': $('#editObjectif fieldset input#editObjectifId').val(),
       'objectifTitle': $('#editObjectif fieldset input#editObjectifTitle').val(),
       'description': $('#editObjectif fieldset input#editObjectifDescription').val(),
       'resource': $('#editObjectif fieldset input#editObjectifResource').val(),

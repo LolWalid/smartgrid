@@ -41,7 +41,7 @@ router.post('/addobjectif', function(req, res) {
 router.post('/editobjectif', function(req, res) {
     var db = req.db;
     var id = new ObjectID(req.body.id);
-    db.collection('objectives').update( {_id: id}, req.body, function(err, result){
+    db.collection('objectives').update( {_id: id}, {'$set':req.body}, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
         );
