@@ -139,22 +139,21 @@ function addObjectif(event) {
     */
     // If it is, compile all objectif info into one object
     var newObjectif = {
+      //test : [{ bail : "test1", bail2 : "test2"}, { bail : "test1", bail2 : "test2"}],
+      objectifTitle : $('#addObjectif fieldset input#inputObjectifTitle').val(),
+      description : $('#addObjectif fieldset #inputObjectifDescription').val(),
+      achieve : $('#addObjectif fieldset input#inputObjectifAchieve').val(),
+      resource : $('#addObjectif fieldset input#inputObjectifResource').val(),
+      common : $('#addObjectif fieldset input#inputObjectifCommon').is(":checked") ? "true" : "false"
     }
-
-    newObjectif.objectifTitle = $('#addObjectif fieldset input#inputObjectifTitle').val();
-    newObjectif.description = $('#addObjectif fieldset #inputObjectifDescription').val();
-    newObjectif.achieve = $('#addObjectif fieldset input#inputObjectifAchieve').val();
-    newObjectif.resource = $('#addObjectif fieldset input#inputObjectifResource').val();
-    newObjectif.common = $('#addObjectif fieldset input#inputObjectifCommon').is(":checked") ? 'true' : 'false';
-
 //    newObjectif.effects = effectsJson;
 
     // Use AJAX to post the object to our addobjectif service
     $.ajax({
       type: 'POST',
-      data: newObjectif,
-      url: '/objectives/addobjectif',
-      dataType: 'JSON'
+      contentType : 'application/json',
+      data: JSON.stringify(newObjectif),
+      url: '/objectives/addobjectif'
     }).done(function( response ) {
 
       // Check for successful (blank) response
