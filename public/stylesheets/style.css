@@ -3,6 +3,10 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+.container {
+  padding-top: 30px;
+}
+
 h2 {
   margin:0 0 .5em 0;
 }

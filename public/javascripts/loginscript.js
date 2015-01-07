@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 		if (pseudo == 0 && password === 'smartgrid') {
 			event.preventDefault();
-			window.location.href='/objectives';
+			window.location.href='/objectives/admin';
 		}
 		else if (pseudo != '0') {
 			event.preventDefault();
