@@ -5,8 +5,8 @@ var ObjectID = require('mongodb').ObjectID;
 
 
 /* GET home page. */
-router.get('/', function(req, res) {
-  res.render('objectives',  {title: 'Smartgrid - Admin', player: 'Admin' });
+router.get('/admin', function(req, res) {
+  res.render('admin/objectives',  {title: 'Smartgrid - Admin', player: 'Admin' });
 });
 
 /*

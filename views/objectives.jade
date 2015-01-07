@@ -1,56 +1,16 @@
 extends layout
 
 block content
-  #wrapper
-    #objectifInfo.info
-      h2 Objectif Info
-      p
-        strong Titre:
-        |  <span id='objectifInfoTitle'></span>
-        br
-        strong Description :
-        |  <span id='objectifInfoDescription'></span>
-        br
-        strong Ressource :
-        |  <span id='objectifInfoResource'></span>
-        br
-        strong A Atteindre :
-        |  <span id='objectifInfoAchieve'></span>
-        br
+  // WRAPPER
+  .container
+    #new
 
-    h2 Objectif List
-    #objectifList.list
-      table
-        thead
-          th Titre
-          th Description
-          th type
-          th Delete?
-          th Send objectif
-        tbody
-    h2 Ajouter  un objectif
-    #addObjectif
-      fieldset
-        input#inputObjectifTitle(type='text', placeholder='Nom de l objectif')
-        label Objectif commun ?
-        input#inputObjectifCommon(type='checkbox')
-        br
-        input#inputObjectifResource(type='text', placeholder='Ressource')
-        input#inputObjectifAchieve(type='text', placeholder='Valeur à atteindre')
-        br
-        textarea#inputObjectifDescription(type='text', placeholder='Description')
-        br
-        button#btnAddObjectif Ajouter
+    #objectives
+      #objectivesCommon.col-sm-6
+        h2 Liste des objectifs communs
 
-  h2 Editer un objectif
-  #editObjectif
-    fieldset
-      input#editObjectifId(type='hidden')
-      input#editObjectifTitle(type='text', placeholder='Nom de l objectif')
-      input#editObjectifDescription(type='text', placeholder='Description')
-      br
-      input#editObjectifResource(type='text', placeholder='Ressource')
-      input#editObjectifAchieve(type='text', placeholder='Effet')
-      br
-      button#btnEditObjectif Editer
-  script(src='/javascripts/objectifscript.js')
+      #objectivesIndiv.col-sm-6
+        h2 Liste des objectifs individuels
+   // /WRAPPER
+  script(src='/javascripts/playerscript.js')
+
