@@ -11,5 +11,5 @@ For player:
   /objectives : contain indivual and common player's objectives
 
 For admin:
-  /objectives/admin : admin can add new objectif and send then to the players.
+  /objectives/admin/ : admin can add new objectif and send then to the players.
 ```
