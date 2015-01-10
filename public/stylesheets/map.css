@@ -1,0 +1,22 @@
+.tile {
+  width: 100px;
+  z-index: 1;
+}
+
+img {
+  position: absolute;
+}
+
+#info {
+  margin-left: 10px;
+  //float: left;
+}
+
+#joueurs {
+  margin-left: 10px;
+  float: left;
+}
+
+.tree{
+  z-index: 2;
+}

@@ -3,7 +3,7 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='///netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     script(src='/javascripts/jquery.min.js')
     script(src='/javascripts/socket.io.js')
   body
@@ -14,14 +14,17 @@ html
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        a.navbar-brand(href='/objectives/admin') Objectifs
+        a.navbar-brand(href='#') Admin
 
-      p#argent.navbar-text Argent
-      p#argent.navbar-text Energie
-      p#argent.navbar-text Satisfaction
-      p#argent.navbar-text Score
       p#argent.navbar-text
-        a(href='/objectives') !{player}
+        a(href='/objectives/admin') Objectifs
+      p#argent.navbar-text
+        a(href='#') Objets
+      p#argent.navbar-text
+        a(href='/events/admin') Evenements
+      p#argent.navbar-text
+        a(href='/map') Map
 
+      p#argent.navbar-text Admin
     block content
 
