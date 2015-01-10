@@ -3,10 +3,11 @@ var debug = require('debug')('rest');
 var app = require('../app');
 var http = require('http');
 
-app.set('port', process.env.PORT || 4000);
-
-http.createServer(app).listen(5000, "0.0.0.0");
+/*app.set('port', process.env.PORT || 4000);
 
 var server = app.listen(app.get('port'), "0.0.0.0", function() {
   console.log('Express server listening on port ' + server.address().port);
 });
+*/
+
+console.log('Express server listening on port ' + 3000);
