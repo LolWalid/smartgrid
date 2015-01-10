@@ -29,10 +29,11 @@ block content
         input#inputEventTitle(type='text', placeholder='Nom de l event')
         input#inputEventDescription(type='text', placeholder='Description')
         br
-        div#add_input_effects
-          input#inputEventResource.resource(type='text', placeholder='Ressource')
-          input#inputEventEffect.effect(type='text', placeholder='Effet')
-          br
+        div.add_input_effects
+          div
+            input.resource(type='text', placeholder='Ressource')
+            input.effect(type='text', placeholder='Effet')
+            a.remove_field(href="#") Remove
         button.add_field_button Add More Fields
         button#btnAddEvent Ajouter
 
@@ -43,8 +44,9 @@ block content
       input#editEventTitle(type='text', placeholder='Nom de l event')
       input#editEventDescription(type='text', placeholder='Description')
       br
-      input#editEventResource(type='text', placeholder='Ressource')
-      input#editEventEffect(type='text', placeholder='Effet')
-      br
+      div.add_input_effects
+        div
+      button.add_field_button Add More Fields
+
       button#btnEditEvent Editer
   script(src='/javascripts/eventscript.js')

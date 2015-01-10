@@ -9,12 +9,16 @@ ready  = $(function() {
   // Add ShowEventInfo click
   $('#eventList table tbody').on('click', 'td a.linkshowevent', showEventInfo);
 
+  $('#eventList table tbody').on('click', 'td a.linkdeleteevent', deleteEvent);
+
   // Add Event button click
   $('#btnAddEvent').on('click', addEvent);
 
   // Edit Event button click
   $('#btnEditEvent').on('click', editEvent);
 
+  $('.add_field_button').on('click', addField);
+  $('.remove_field').on('click', removeField);
 });
 
 $(document).ready(ready);
@@ -51,6 +55,8 @@ function showEventInfo(event) {
   // Prevent Link from Firing
   event.preventDefault();
 
+  $("#editEvent .remove_field").trigger('click');
+
   // Retrieve eventname from link rel attribute
   var thisEventId = $(this).prop('rel');
 
@@ -60,35 +66,42 @@ function showEventInfo(event) {
   // Get our Event Object
   var thisEventObject = eventListData[arrayPosition];
 
+  effects = thisEventObject.effects;
 
-  //console.log(thisEventObject["effects[0][resource]"]);
-
-/*  var tableContent = '';
-
-  if( typeof(effects.length)!="undefined") {
-    for( var i = 0; i< effects.length;i++ ) {
-      tableContent += '<strong>Ressources : </strong>';
-      tableContent += '<span>'+ effects[i].resource + '</span>';
-      tableContent += "<br>"
-      tableContent += '<strong>Effet : </strong>';
-      tableContent += '<span>'+ effects[i].effect + '</span>';
-    }
-  }
-
-  $('#effects').html(tableContent);
-  */
 
   //Populate Info Box
   $('#eventInfoTitle').text(thisEventObject.eventTitle);
   $('#eventInfoDescription').text(thisEventObject.description);
+
   $('#eventInfoResource').text(thisEventObject.resource);
   $('#eventInfoAchieve').text(thisEventObject.achieve);
 
   $('#editEventTitle').val(thisEventObject.eventTitle);
   $('#editEventDescription').val(thisEventObject.description);
-  $('#editEventResource').val(thisEventObject.resource);
-  $('#editEventAchieve').val(thisEventObject.achieve);
   $('#editEventId').val(thisEventObject._id);
+
+
+  var tableContent = '';
+
+  if( typeof(effects.length)!="undefined") {
+    for( var i = 0; i< effects.length;i++ ) {
+      tableContent += '<strong>Ressources : </strong>';
+      tableContent += '<span>'+ effects[i].resource + '</span>';
+      tableContent += '<strong>Effet : </strong>';
+      tableContent += '<span>'+ effects[i].effect + '</span>';
+      tableContent += '<br>';
+
+      $('#editEvent .add_input_effects').append('<div>\
+        <input type="text" class="resource" placeholder="Ressource" value="' + effects[i].resource +'"">\
+        <input type="text" class="effect" placeholder="Effet" value="' + effects[i].effect +'"">\
+        <a href="#" class="remove_field">Remove</a>\
+        </div>');
+      $("#editEvent .remove_field").on('click', removeField);
+    }
+  }
+
+  $('#effects').html(tableContent);
+
 };
 
 // Add Event
@@ -104,7 +117,7 @@ function addEvent(event) {
   // Check and make sure errorCount's still at zero
   if(errorCount === 0) {
 
-/*    var resources = $('#addEvent .resource');
+    var resources = $('#addEvent .resource');
     var effects = $('#addEvent .effect');
 
     var effectsJson = [];
@@ -114,26 +127,24 @@ function addEvent(event) {
         var json = {'resource': resources[i].value, 'effect': effects[i].value};
         effectsJson = effectsJson.concat(json);
       }
-    }
-    */
+    };
+
     // If it is, compile all event info into one object
     var newEvent = {
-    }
 
-    newEvent.eventTitle = $('#addEvent fieldset input#inputEventTitle').val();
-    newEvent.description = $('#addEvent fieldset input#inputEventDescription').val();
-    newEvent.achieve = $('#addEvent fieldset input#inputEventAchieve').val();
-    newEvent.resource = $('#addEvent fieldset input#inputEventResource').val();
-
-
-//    newEvent.effects = effectsJson;
+      eventTitle : $('#addEvent fieldset input#inputEventTitle').val(),
+      description : $('#addEvent fieldset input#inputEventDescription').val(),
+      achieve : $('#addEvent fieldset input#inputEventAchieve').val(),
+      resource : $('#addEvent fieldset input#inputEventResource').val(),
+      effects : effectsJson
+    };
 
     // Use AJAX to post the object to our addevent service
     $.ajax({
       type: 'POST',
-      data: newEvent,
       url: '/events/addevent',
-      dataType: 'JSON'
+      data: JSON.stringify(newEvent),
+      contentType : 'application/json',
     }).done(function( response ) {
 
       // Check for successful (blank) response
@@ -208,22 +219,31 @@ function editEvent(event) {
 
   // Check and make sure errorCount's still at zero
   if(errorCount === 0) {
+    var resources = $('#editEvent .resource');
+    var effects = $('#editEvent .effect');
+    var effectsJson = [];
+
+    if( typeof(effects.length)!="undefined") {
+      for (var i=0; i<effects.length; i++) {
+        var json = {'resource': resources[i].value, 'effect': effects[i].value};
+        effectsJson = effectsJson.concat(json);
+      }
+    };
 
     // If it is, compile all event info into one object
-    var event = {
-      'id': $('#editEvent fieldset input#editEventId').val(),
-      'eventTitle': $('#editEvent fieldset input#editEventTitle').val(),
-      'description': $('#editEvent fieldset input#editEventDescription').val(),
-      'resource': $('#editEvent fieldset input#editEventResource').val(),
-      'achieve': $('#editEvent fieldset input#editEventAchieve').val(),
+    var eventEdit = {
+      id : $('#editEvent fieldset input#editEventId').val(),
+      eventTitle: $('#editEvent fieldset input#editEventTitle').val(),
+      description: $('#editEvent fieldset input#editEventDescription').val(),
+      effects : effectsJson
     };
 
     // Use AJAX to post the object to our editEvent service
     $.ajax({
       type: 'POST',
-      data: event,
+      data: JSON.stringify(eventEdit),
+      contentType : 'application/json',
       url: '/events/editevent',
-      dataType: 'JSON'
     }).done(function( response ) {
 
       // Check for successful (blank) response
@@ -247,3 +267,19 @@ function editEvent(event) {
     return false;
   }
 };
+
+
+function addField (e) {
+  e.preventDefault();
+  $(this).siblings('.add_input_effects').append('<div>\
+    <input type="text" class="resource" placeholder="Ressource">\
+    <input type="text" class="effect" placeholder="Effet">\
+    <a href="#" class="remove_field">Remove</a>\
+    </div>');
+  $(this).siblings('.add_input_effects').children().last().find('.remove_field').on('click', removeField);
+}
+
+function removeField(e) {
+  e.preventDefault();
+  $(this).parent('div').remove();
+}
