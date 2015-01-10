@@ -26,8 +26,8 @@ function addObj(message) {
   console.log(message);
   $("#new").empty().hide();
   newline = '<div id="obj" class="obj1"><strong>'+ message.titre +'</strong> : '+ message.description +'</div>';
-  if (message.common == 'true')
+  if (message.joueur == 0)
     $("#objectivesCommon").append(newline);
-  else
+  else 
     $("#objectivesIndiv").append(newline);
 };

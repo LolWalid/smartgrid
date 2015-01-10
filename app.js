@@ -22,6 +22,7 @@ var io = require('socket.io').listen(app.server);
 
 io.sockets.on('connection', function(socket) {
     socket.on('new_obj', function(message) {
+        // socket.broadcast.to('players').emit('server_message', message);
         socket.broadcast.emit('server_message', message);
     });
 });

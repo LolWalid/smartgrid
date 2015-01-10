@@ -24,16 +24,17 @@ ready  = $(function() {
     var arrayPosition = objectifListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisObjectifId);
     var thisObjectifObject = objectifListData[arrayPosition];
 
-    socket.emit('new_obj', {
-      'joueur': $("#sendto").val(),
+    objToSend = {
+      'joueur': (thisObjectifObject.common == "true" ? 0 : $(this).closest('tr').find("#sendto").val()),
       'titre': thisObjectifObject.objectifTitle,
-      'description': thisObjectifObject.description,
-      'common': thisObjectifObject.common
-    });
+      'description': thisObjectifObject.description
+    };
+
+    socket.emit('new_obj', objToSend);
+
+    alert(objToSend.joueur + " - " + objToSend.titre);
 
     console.log("Message envoyé");
-    $("#obj_titre").val('').focus();
-    $("#obj_descr").val('');
   });
 });
 
@@ -57,11 +58,16 @@ function populateTable() {
       tableContent += '<td>' + this.description + '</td>';
       tableContent += '<td>' + (this.common == 'true' ? "commun" : "individuel") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteobjectif" rel="' + this._id + '">delete</a></td>';
-      tableContent += '<td><select class="sendto">';
-      for (i=1; i <= 10; i++) {
-        tableContent += '<option value="'+ i +'">Joueur '+ i +'</option>';
+      if (this.common != 'true') {  
+        tableContent += '<td><select id="sendto">';
+        for (i=1; i <= 10; i++) {
+          tableContent += '<option value="'+ i +'">Player '+ i +'</option>';
+        }
+        tableContent += '</select></td>';
       }
-      tableContent += '</select></td>';
+      else {
+        tableContent += '<td>All players</td>';
+      }
       tableContent += '<td><a href="#" class="sendobjectif" rel="' + this._id + '">Send</a></td>';
       tableContent += '</tr>';
     });
@@ -166,6 +172,7 @@ function addObjectif(event) {
 
         // Clear the form inputs
         $('#addObjectif fieldset input').val('');
+        $('#addObjectif fieldset textarea').val('');
 
         // Update the table
         populateTable();
