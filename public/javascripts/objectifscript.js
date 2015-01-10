@@ -25,12 +25,13 @@ ready  = $(function() {
     var thisObjectifObject = objectifListData[arrayPosition];
 
     socket.emit('new_obj', {
+      'joueur': $("#sendto").val(),
       'titre': thisObjectifObject.objectifTitle,
       'description': thisObjectifObject.description,
       'common': thisObjectifObject.common
     });
 
-    console.log("message envoyé");
+    console.log("Message envoyé");
     $("#obj_titre").val('').focus();
     $("#obj_descr").val('');
   });
@@ -56,6 +57,11 @@ function populateTable() {
       tableContent += '<td>' + this.description + '</td>';
       tableContent += '<td>' + (this.common == 'true' ? "commun" : "individuel") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteobjectif" rel="' + this._id + '">delete</a></td>';
+      tableContent += '<td><select class="sendto">';
+      for (i=1; i <= 10; i++) {
+        tableContent += '<option value="'+ i +'">Joueur '+ i +'</option>';
+      }
+      tableContent += '</select></td>';
       tableContent += '<td><a href="#" class="sendobjectif" rel="' + this._id + '">Send</a></td>';
       tableContent += '</tr>';
     });
@@ -139,7 +145,6 @@ function addObjectif(event) {
     */
     // If it is, compile all objectif info into one object
     var newObjectif = {
-      //test : [{ bail : "test1", bail2 : "test2"}, { bail : "test1", bail2 : "test2"}],
       objectifTitle : $('#addObjectif fieldset input#inputObjectifTitle').val(),
       description : $('#addObjectif fieldset #inputObjectifDescription').val(),
       achieve : $('#addObjectif fieldset input#inputObjectifAchieve').val(),
