@@ -5,8 +5,8 @@ var ObjectID = require('mongodb').ObjectID;
 
 
 /* GET home page. */
-router.get('/', function(req, res) {
-  res.render('events');
+router.get('/admin', function(req, res) {
+  res.render('admin/events');
 });
 
 /*
