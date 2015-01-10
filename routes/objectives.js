@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
 
-
-
 /* GET home page. */
 router.get('/admin', function(req, res) {
   res.render('admin/objectives',  {title: 'Smartgrid - Admin', player: 'Admin' });

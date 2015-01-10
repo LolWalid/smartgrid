@@ -6,7 +6,17 @@ $(document).ready(function(){
 
 		if (pseudo == 0 && password === 'smartgrid') {
 			event.preventDefault();
-			window.location.href='/objectives/admin';
+			var login = { login : pseudo};
+			console.log(login);
+			$.ajax({
+				url: '/login',
+				type: 'POST',
+				data: login,
+				dataType: 'json',
+			}).done(function( response ) {
+				if (response.msg === 'done')
+					window.location.href='/objectives/admin';
+			});
 		}
 		else if (pseudo != '0') {
 			event.preventDefault();
