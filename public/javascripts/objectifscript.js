@@ -3,7 +3,7 @@ var objectifListData = [];
 var socket = io.connect('http://localhost:3000');
 
 // DOM Ready =============================================================
-ready  = $(function() {
+ready = $(function() {
   // Populate the objectif table on initial page load
   populateTable();
 
@@ -18,24 +18,7 @@ ready  = $(function() {
   // Edit Objectif button click
   $('#btnEditObjectif').on('click', editObjectif);
 
-  $('#objectifList table tbody').on('click', 'td a.sendobjectif', function(event){
-    event.preventDefault();
-    var thisObjectifId = $(this).prop('rel');
-    var arrayPosition = objectifListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisObjectifId);
-    var thisObjectifObject = objectifListData[arrayPosition];
-
-    objToSend = {
-      'joueur': (thisObjectifObject.common == "true" ? 0 : $(this).closest('tr').find("#sendto").val()),
-      'titre': thisObjectifObject.objectifTitle,
-      'description': thisObjectifObject.description
-    };
-
-    socket.emit('new_obj', objToSend);
-
-    alert(objToSend.joueur + " - " + objToSend.titre);
-
-    console.log("Message envoyé");
-  });
+  $('#objectifList table tbody').on('click', 'td a.sendobjectif', sendObjectif);
 });
 
 $(document).ready(ready);
@@ -278,4 +261,21 @@ function editObjectif(event) {
     alert('Please fill in all fields');
     return false;
   }
+};
+
+function sendObjectif (event) {
+    event.preventDefault();
+    var thisObjectifId = $(this).prop('rel');
+    var arrayPosition = objectifListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisObjectifId);
+    var thisObjectifObject = objectifListData[arrayPosition];
+
+    objToSend = {
+      'joueur': (thisObjectifObject.common == "true" ? 0 : $(this).closest('tr').find("#sendto").val()),
+      'titre': thisObjectifObject.objectifTitle,
+      'description': thisObjectifObject.description
+    };
+
+    socket.emit('new_obj', objToSend);
+
+    console.log("Message envoyé");
 };

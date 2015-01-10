@@ -1,3 +1,5 @@
+var socket = io.connect('http://localhost:3000');
+
 $(document).ready(function(){
 	var login,password;
 	$("#login-form").submit(function(event){
@@ -21,7 +23,7 @@ $(document).ready(function(){
 		else if (pseudo != '0') {
 			event.preventDefault();
 			var login = { login : pseudo};
-			console.log(login);
+			socket.emit('addPlayer', {'room' : 'players'});
 			$.ajax({
 				url: '/login',
 				type: 'POST',

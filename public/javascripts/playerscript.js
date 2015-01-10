@@ -2,12 +2,17 @@ var socket = io.connect('http://localhost:3000');
 
 var objectifsListData = [];
 
+var playerID;
+
 $(document).ready(function() {
   socket.on('server_message', function(message) {
-    console.log(message);
-    newQuest(message);
+    $.get('http://localhost:3000/player/id', function (data) {
+      playerID = data.id;
+    }).done(function () {
+      if (message.joueur == 0 || message.joueur == playerID)
+        newQuest(message);
+    });
   });
-
 });
 
 function newQuest(message) {
@@ -23,11 +28,11 @@ function newQuest(message) {
 }
 
 function addObj(message) {
-  console.log(message);
   $("#new").empty().hide();
   newline = '<div id="obj" class="obj1"><strong>'+ message.titre +'</strong> : '+ message.description +'</div>';
+
   if (message.joueur == 0)
     $("#objectivesCommon").append(newline);
   else 
-    $("#objectivesIndiv").append(newline);
+    $("#objectivesIndiv").append(newline);  
 };

@@ -7,7 +7,7 @@ Routes available:
 ```
 For player:
   / : homepage, will contain all player's information
-  /login : player has to login to play
+  /player/id : display player's id
   /logout : disconnect a player
   /objectives : contain indivual and common player's objectives
 

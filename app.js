@@ -12,6 +12,7 @@ var mongo = require('mongoskin');
 var db = mongo.db("mongodb://localhost/sg", {native_parser: true});
 
 var routes = require('./routes/index');
+var players = require('./routes/players');
 var objectives = require('./routes/objectives');
 var events = require('./routes/events');
 
@@ -21,8 +22,11 @@ app.server = http.createServer(app);
 var io = require('socket.io').listen(app.server);
 
 io.sockets.on('connection', function(socket) {
+    socket.on('addPlayer', function (data) {socket.join(data.room);});
+
+    socket.on('delPlayer', function (data) {socket.leave(data.room)});
+
     socket.on('new_obj', function(message) {
-        // socket.broadcast.to('players').emit('server_message', message);
         socket.broadcast.emit('server_message', message);
     });
 });
@@ -50,6 +54,7 @@ app.use(function(req,res,next){
 });
 
 app.use('/', routes);
+app.use('/player', players);
 app.use('/objectives', objectives);
 app.use('/events', events);
 
