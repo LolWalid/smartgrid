@@ -13,11 +13,10 @@ For player:
 
 For admin:
   /objectives/admin/ : admin can add new objectives and send them to the players.
+  /events/admin : add and edit events then send them to players
   /map : show the map of the world
 
 TODO :
   /ojects : buy new item
-
-  /events/admin : add and edit events then send them to players
-  /events/admin : add and edit objects, players will buy them
+  /events : add and edit objects, players will buy them
 ```
