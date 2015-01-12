@@ -19,6 +19,11 @@ ready = $(function() {
   $('#btnEditObjectif').on('click', editObjectif);
 
   $('#objectifList table tbody').on('click', 'td a.sendobjectif', sendObjectif);
+
+  $('#updateView').on('click', function(event) {
+    event.preventDefault();
+    socket.emit('update_view', 'all');
+  });
 });
 
 $(document).ready(ready);

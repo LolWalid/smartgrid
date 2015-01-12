@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
   sess = req.session;
 
   if (sess.joueur) {
-  	res.render('index', {title: 'Smartgrid', player: 'Joueur ' + sess.joueur });
+    res.render('index', {title: 'Smartgrid', player: 'Joueur ' + sess.joueur });
   }
   else {
   	res.render('login', { title: 'Smartgrid - Connexion'});
