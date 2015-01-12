@@ -3,10 +3,17 @@ var router = express.Router();
 
 var sess;
 
-router.get('/id', function (req, res) {
+router.get('/data', function (req, res) {
 	sess = req.session;
 
-	res.send({ id: sess.joueur});
+	var data = {
+		id: sess.joueur,
+		money: 3000,
+		energy: 500,
+		satisfaction: 3,
+		score: 1350
+	}
+	res.send(data);
 });
 
 module.exports = router;

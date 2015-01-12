@@ -7,7 +7,7 @@ Routes available:
 ```
 For player:
   / : homepage, will contain all player's information
-  /player/id : display player's id
+  /player/data : get player's data (id, money, energy, satisfaction, score)
   /logout : disconnect a player
   /objectives : contain indivual and common player's objectives
 
