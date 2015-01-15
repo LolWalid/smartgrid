@@ -3,6 +3,19 @@ var router = express.Router();
 
 var sess;
 
+router.get('/data', function (req, res) {
+  sess = req.session;
+
+  var data = {
+    id: sess.joueur,
+    money: 3000,
+    energy: 500,
+    satisfaction: 3,
+    score: 1350
+  }
+  res.send(data);
+});
+
 router.get('/list', function(req, res) {
   var db = req.db;
   db.collection('players').find().toArray(function (err, items) {
@@ -59,21 +72,6 @@ router.delete('/delete/:id', function(req, res) {
     db.collection('players').removeById(playerToDelete, function(err, result) {
         res.send((result === 1) ? { msg: '' } : { msg:'error: ' + err });
     });
-});
-
-
-
-router.get('/data', function (req, res) {
-	sess = req.session;
-
-	var data = {
-		id: sess.joueur,
-		money: 3000,
-		energy: 500,
-		satisfaction: 3,
-		score: 1350
-	}
-	res.send(data);
 });
 
 module.exports = router;

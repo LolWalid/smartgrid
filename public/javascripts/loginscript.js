@@ -1,6 +1,5 @@
 var socket = io.connect('http://localhost:3000');
 
-
 function addPlayer(id) {
 	data = {
 		sessionId: id,
@@ -14,11 +13,13 @@ function addPlayer(id) {
 		url: '/players/add',
 		type: 'POST',
 		data: data,
-		dataType: 'json',
+		dataType : 'json',
 	}).done(function(response){
-		if (response.msg != '') {
-			console.log("Fail add");
-		}
+		if (response.msg === '')
+			window.location.href='/';
+		else
+			console.log(response.msg);
+
 	});
 };
 
@@ -46,7 +47,7 @@ $(document).ready(function(){
 		else if (pseudo != '0') {
 			event.preventDefault();
 			var login = { login : pseudo};
-			socket.emit('addPlayer', {'room' : 'players'});
+			//socket.emit('addPlayer', {'room' : 'players'});
 			$.ajax({
 				url: '/login',
 				type: 'POST',
@@ -55,7 +56,7 @@ $(document).ready(function(){
 			}).done(function( response ) {
 				if (response.msg === 'done') {
 					addPlayer(pseudo);
-					window.location.href='/';
+					//window.location.href='/';
 				}
 			});
 		}

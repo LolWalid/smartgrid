@@ -6,7 +6,7 @@ var playerID;
 
 $(document).ready(function() {
   socket.on('server_message', function(message) {
-    $.get('http://localhost:3000/players/data', function (data) {
+    $.get('players/data', function (data) {
       playerID = data.id;
     }).done(function () {
       if (message.joueur == 0 || message.joueur == playerID)
