@@ -54,7 +54,7 @@ app.use(function(req,res,next){
 });
 
 app.use('/', routes);
-app.use('/player', players);
+app.use('/players', players);
 app.use('/objectives', objectives);
 app.use('/events', events);
 

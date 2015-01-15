@@ -11,7 +11,7 @@ function addPlayer(id) {
 	};
 
 	$.ajax({
-		url: '/player/add',
+		url: '/players/add',
 		type: 'POST',
 		data: data,
 		dataType: 'json',
