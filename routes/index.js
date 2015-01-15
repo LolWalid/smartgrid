@@ -3,10 +3,13 @@ var router = express.Router();
 
 var sess;
 
+setSession = function(req){
+  sess = req.session;
+}
+
 /* GET home page. */
 router.get('/', function(req, res) {
-  sess = req.session;
-
+  setSession(req);
   if (sess.joueur) {
   	res.render('index', {title: 'Smartgrid', player: 'Joueur ' + sess.joueur });
   }
@@ -20,7 +23,7 @@ router.get('/map', function(req, res) {
 })
 
 router.get('/objectives', function(req, res) {
-  sess = req.session;
+  setSession(req);
 
   if (sess.joueur) {
     res.render('objectives', {title: 'Smartgrid', player: 'Joueur ' + sess.joueur });
@@ -31,14 +34,14 @@ router.get('/objectives', function(req, res) {
 });
 
 router.post('/login', function(req, res) {
-	sess = req.session;
+	setSession(req);
 
 	sess.joueur = req.body.login;
   res.send({ msg: 'done'});
 });
 
 router.get('/logout', function(req, res) {
-  sess = req.session;
+  setSession(req);
 
   delete sess.joueur;
   res.send('Vous êtes maintenant déconnecté.');

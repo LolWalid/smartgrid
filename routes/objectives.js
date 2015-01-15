@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var ObjectID = require('mongodb').ObjectID;
 
 /* GET home page. */
 router.get('/admin', function(req, res) {
@@ -10,7 +9,7 @@ router.get('/admin', function(req, res) {
 /*
  * GET objectives.
  */
-router.get('/objectiveslist', function(req, res) {
+router.get('/list', function(req, res) {
     var db = req.db;
     db.collection('objectives').find().toArray(function (err, items) {
         res.json(items);
@@ -20,7 +19,7 @@ router.get('/objectiveslist', function(req, res) {
 /*
  * ADD objectif.
  */
-router.post('/addobjectif', function(req, res) {
+router.post('/add', function(req, res) {
     var db = req.db;
 
     console.log(req.body.length);
@@ -36,10 +35,10 @@ router.post('/addobjectif', function(req, res) {
 /*
  * EDIT objectif.
  */
-router.post('/editobjectif', function(req, res) {
+router.post('/edit', function(req, res) {
     var db = req.db;
-    var id = new ObjectID(req.body.id);
-    db.collection('objectives').update( {_id: id}, {'$set':req.body}, function(err, result){
+    var id = req.body.id;
+    db.collection('objectives').updateById(id, {'$set':req.body}, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
         );
@@ -49,7 +48,7 @@ router.post('/editobjectif', function(req, res) {
 /*
  * DELETE to deleteobjectif.
  */
-router.delete('/deleteobjectif/:id', function(req, res) {
+router.delete('/delete/:id', function(req, res) {
     var db = req.db;
     var objectifToDelete = req.params.id;
     db.collection('objectives').removeById(objectifToDelete, function(err, result) {

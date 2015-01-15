@@ -167,6 +167,7 @@ ready = $(function() {
   add(3,2,"img/roadTEast.png",0);
   add(4,2,"img/roadTEast.png",0);
 
+  add_house(0,0);
   $("#map")
   .append('<img \
     src="img/vehicules/bus_cote.png" \

@@ -32,7 +32,7 @@ function populateTable() {
   var tableContent = '';
 
   // jQuery AJAX call for JSON
-  $.getJSON( '/objectives/objectiveslist', function( data ) {
+  $.getJSON( '/objectives/list', function( data ) {
     objectifListData = data;
     // For each item in our JSON, add a table row and cells to the content string
     $.each(data, function(){
@@ -41,7 +41,7 @@ function populateTable() {
       tableContent += '<td>' + this.description + '</td>';
       tableContent += '<td>' + (this.common == 'true' ? "commun" : "individuel") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteobjectif" rel="' + this._id + '">delete</a></td>';
-      if (this.common != 'true') {  
+      if (this.common != 'true') {
         tableContent += '<td><select id="sendto">';
         for (i=1; i <= 10; i++) {
           tableContent += '<option value="'+ i +'">Player '+ i +'</option>';
@@ -147,7 +147,7 @@ function addObjectif(event) {
       type: 'POST',
       contentType : 'application/json',
       data: JSON.stringify(newObjectif),
-      url: '/objectives/addobjectif'
+      url: '/objectives/add'
     }).done(function( response ) {
 
       // Check for successful (blank) response
@@ -189,7 +189,7 @@ function deleteObjectif(event) {
     // If they did, do our delete
     $.ajax({
       type: 'DELETE',
-      url: '/objectives/deleteobjectif/' + $(this).prop('rel')
+      url: '/objectives/delete/' + $(this).prop('rel')
     }).done(function( response ) {
 
       // Check for a successful (blank) response
@@ -237,7 +237,7 @@ function editObjectif(event) {
     $.ajax({
       type: 'POST',
       data: objectif,
-      url: '/objectives/editobjectif',
+      url: '/objectives/edit',
       dataType: 'JSON'
     }).done(function( response ) {
 
