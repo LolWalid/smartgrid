@@ -5,7 +5,7 @@ Game using express with node.js and mongodb.
 
 Routes available:
 ```
-For player:
+For players:
   / : homepage, will contain all player's information
   /login : log a player
   /player/data : get player's data (id, money, energy, satisfaction, score)

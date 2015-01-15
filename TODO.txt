@@ -10,8 +10,8 @@ Walid: - page ajout de ressource,
         - revoir la partie crud des objectifs pour faire un truc vraiment générique (aller chercher les noms des ressources dans la bd)
         - continuer les AAP
 
-Alpha ou moi: - envoie de decisions communes pour les joueurs + gestion (concensus etc...)
+Alpha ou moi: - envoi de decisions communes pour les joueurs + gestion (concensus etc...)
 
 Tout le monde: envoyer un mail à ParisTech pour leur montrer où on est + expliquer a robin ce qu'on fait
 
-On va surement devoir ecrire un tutoriel pour notre jeu.
+On va surement devoir ecrire un tutoriel pour notre jeu => Et même pour le démarrer (npm start toussa)
