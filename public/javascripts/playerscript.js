@@ -5,13 +5,31 @@ var objectifsListData = [];
 var playerID;
 
 $(document).ready(function() {
+  // Recuperer id joueur
+  $.get('players/data', function (data) {
+    playerID = data.id;
+    console.log("Joueur n°" + playerID);
+  })
+  //Remplir la liste d'objectifs
+  $.get('objectives/list', function (data) {
+      for (var i = 0; i < data.length; i++) {
+        console.log(data[i].players.indexOf(playerID))
+        if (data[i].common == "true"  || data[i].players.indexOf(playerID) != -1){
+        var obj = 
+        {
+          'joueur': data[i].common == "true" ? 0 : data[i].players[i],
+          'titre': data[i].objectifTitle,
+          'description': data[i].description
+        }
+        addObj(obj)
+      }
+    }
+    })
+  //Recevoir nouvel ojectif
   socket.on('server_message', function(message) {
-    $.get('players/data', function (data) {
-      playerID = data.id;
-    }).done(function () {
       if (message.joueur == 0 || message.joueur == playerID)
         newQuest(message);
-    });
+   
   });
 });
 

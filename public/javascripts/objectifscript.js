@@ -4,6 +4,15 @@ var socket = io.connect('http://localhost:3000');
 
 // DOM Ready =============================================================
 ready = $(function() {
+
+  // Fill players options
+  for (i=1; i <= 10; i++) {
+          $('#inputObjectifPlayers').append('<option value="'+ i +'">Player '+ i +'</option>');
+        }
+  // Hide/unhide playerslist
+  $('#inputObjectifCommon').on('change', function() {
+    $('#inputObjectifPlayers').toggle()
+  })
   // Populate the objectif table on initial page load
   populateTable();
 
@@ -42,11 +51,14 @@ function populateTable() {
       tableContent += '<td>' + (this.common == 'true' ? "commun" : "individuel") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteobjectif" rel="' + this._id + '">delete</a></td>';
       if (this.common != 'true') {
-        tableContent += '<td><select id="sendto">';
-        for (i=1; i <= 10; i++) {
-          tableContent += '<option value="'+ i +'">Player '+ i +'</option>';
-        }
-        tableContent += '</select></td>';
+        tableContent += '<td> ' + this.players.toString() + '</td>';
+        
+        //tableContent += '<td><select id="sendto">';
+        //   tableContent += '<option value="'+ i +'">Player '+ i +'</option>';
+        // for (i=1; i <= 10; i++) {
+        //   tableContent += '<option value="'+ i +'">Player '+ i +'</option>';
+        // }
+        //tableContent += '</select></td>';
       }
       else {
         tableContent += '<td>All players</td>';
@@ -133,12 +145,14 @@ function addObjectif(event) {
     }
     */
     // If it is, compile all objectif info into one object
+    var isCommon = $('#addObjectif fieldset input#inputObjectifCommon').is(":checked")
     var newObjectif = {
       objectifTitle : $('#addObjectif fieldset input#inputObjectifTitle').val(),
       description : $('#addObjectif fieldset #inputObjectifDescription').val(),
       achieve : $('#addObjectif fieldset input#inputObjectifAchieve').val(),
       resource : $('#addObjectif fieldset input#inputObjectifResource').val(),
-      common : $('#addObjectif fieldset input#inputObjectifCommon').is(":checked") ? "true" : "false"
+      common : isCommon ? "true" : "false",
+      players : isCommon ? [0] : $('#addObjectif fieldset select#inputObjectifPlayers').val() || []
     }
 //    newObjectif.effects = effectsJson;
 
@@ -268,14 +282,17 @@ function sendObjectif (event) {
     var thisObjectifId = $(this).prop('rel');
     var arrayPosition = objectifListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisObjectifId);
     var thisObjectifObject = objectifListData[arrayPosition];
-
-    objToSend = {
-      'joueur': (thisObjectifObject.common == "true" ? 0 : $(this).closest('tr').find("#sendto").val()),
+for (var i = 0; i < thisObjectifObject.players.length; i++) {
+    var objToSend = {
+      // 'joueur': (thisObjectifObject.common == "true" ? 0 : $(this).closest('tr').find("#sendto").val()),
+      'joueur': thisObjectifObject.common == "true" ? 0 : thisObjectifObject.players[i],
       'titre': thisObjectifObject.objectifTitle,
       'description': thisObjectifObject.description
     };
+    console.log(objToSend)
 
     socket.emit('new_obj', objToSend);
 
-    console.log("Message envoyé");
+    console.log("Message envoyé au joueur " + thisObjectifObject.common == "true" ? 0 : thisObjectifObject.players[i]);
+  }
 };
