@@ -66,7 +66,7 @@ function newQuest(message) {
 function addObj(message) {
   $("#new").empty().hide()
   newline = '<div id="obj" class="obj1"><strong>'+ message.titre +'</strong> : '+ message.description +'</div>'
-
+  console.log(message.common);
   if (message.common === "true")
     $("#objectivesCommon").append(newline);
   else

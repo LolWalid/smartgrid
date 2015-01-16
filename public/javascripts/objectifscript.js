@@ -1,5 +1,6 @@
 // Objectiflist data array for filling in info box
 var objectifListData = [];
+var players;
 var socket = io.connect('http://localhost:3000');
 
 // DOM Ready =============================================================
@@ -39,9 +40,18 @@ $(document).ready(ready);
 $(document).on('page:load', ready);
 // Functions =============================================================
 
+
+function updatePlayers () {
+  $.getJSON('/players/list', function (data) {
+    players = data;
+    console.log(players);
+  });
+
+}
 // Fill table with data
 function populateTable() {
 
+  updatePlayers();
   // Empty content string
   var tableContent = '';
 
@@ -56,22 +66,19 @@ function populateTable() {
       tableContent += '<td>' + (this.common == 'true' ? "commun" : "individuel") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteobjectif" rel="' + this._id + '">delete</a></td>';
       if (this.common != 'true') {
-        //tableContent += '<td> ' + this.players.toString() + '</td>';
-
-
         tableContent += '<td><select id="sendto">';
-        //tableContent += '<option value="'+ i +'">Player '+ i +'</option>';
-        for (i=1; i <= 10; i++) {
-         tableContent += '<option value="'+ i +'">Player '+ i +'</option>';
-       }
-       tableContent += '</select></td>';
-     }
-     else {
-      tableContent += '<td>All players</td>';
-    }
-    tableContent += '<td><a href="#" class="sendobjectif" rel="' + this._id + '">Send</a></td>';
-    tableContent += '</tr>';
-  });
+
+        $.each(players, function(){
+          tableContent += '<option value="'+ this._id +'">Player '+ this._id +'</option>';
+        });
+        tableContent += '</select></td>';
+      }
+      else   {
+        tableContent += '<td>All players</td>';
+      }
+      tableContent += '<td><a href="#" class="sendobjectif" rel="' + this._id + '">Send</a></td>';
+      tableContent += '</tr>';
+    });
 
     // Inject the whole content string into our existing HTML table
     $('#objectifList table tbody').html(tableContent);
@@ -283,6 +290,29 @@ function editObjectif(event) {
   }
 };
 
+function updatePlayersObjectives(playerId, objectif) {
+  $.get('/players/show/' + playerId, function (data) {
+    if (data.objectives)
+      data.objectives.push(objectif);
+    else
+      data.objectives = [objectif];
+
+    var playerUpdate = {
+      id : playerId,
+      objectives : data.objectives
+    };
+    console.log(playerUpdate);
+    $.ajax({
+      type: 'POST',
+      data: JSON.stringify(playerUpdate),
+      contentType : 'application/json',
+      url: '/players/edit',
+          //dataType: 'JSON'
+        }).done(
+        console.log("youpi"));
+      });
+}
+
 function sendObjectif (event) {
   event.preventDefault();
   var thisObjectifId = $(this).prop('rel');
@@ -291,42 +321,29 @@ function sendObjectif (event) {
   var _this = $(this);
   //for (var i = 0; i < thisObjectifObject.players.length; i++) {
     var objToSend = {
-      'joueur': (thisObjectifObject.common == "true" ? 0 : $(this).closest('tr').find("#sendto").val()),
+      joueur: (thisObjectifObject.common == "true" ? 0 : $(this).closest('tr').find("#sendto").val()),
       //'joueur': thisObjectifObject.common == "true" ? 0 : thisObjectifObject.players[i],
-      'titre': thisObjectifObject.objectifTitle,
-      'description': thisObjectifObject.description
+      titre: thisObjectifObject.objectifTitle,
+      description: thisObjectifObject.description,
+      common : thisObjectifObject.common
     };
     console.log(objToSend)
 
     socket.emit('new_obj', objToSend);
 
-    if (thisObjectifObject.common == "true") {
-      console.log("in work");
+    if (thisObjectifObject.common === "true") {
+      updatePlayers();
+      $.each(players, function(){
+        updatePlayersObjectives(this._id, thisObjectifObject);
+      });
     }
     else {
       var playerId = $(this).closest('tr').find("#sendto").val();
-      $.get('/players/show/' + playerId, function (data) {
-        if (data.objectives)
-          data.objectives.push(thisObjectifObject);
-        else
-          data.objectives = [thisObjectifObject];
-
-        var playerUpdate = {
-          id : _this.closest('tr').find("#sendto").val(),
-          objectives : data.objectives
-        };
-        console.log(playerUpdate);
-        $.ajax({
-          type: 'POST',
-          data: JSON.stringify(playerUpdate),
-          contentType : 'application/json',
-          url: '/players/edit',
-          //dataType: 'JSON'
-        }).done(
-        console.log("youpi"));
-      });
+      updatePlayersObjectives(playerId, thisObjectifObject);
     }
 
     //console.log("Message envoyé au joueur " + thisObjectifObject.common == "true" ? 0 : thisObjectifObject.players[i]);
   //}
 };
+
+
