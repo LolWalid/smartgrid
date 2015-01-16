@@ -3,8 +3,8 @@ TODO (pour Dimanche/lundi):
 ALPHA:  - gestion des clients, pouvoir les supprimer de la bd et les deconnecter (dans les 2 cas supprimer la varaible de session)
         - gestion des messages (envoyé  qu'au joueur connecté)
 
-DEF:  -ajout en bd des objectifs pour les joueurs
-      -web socket : envoie des event (idem que objectifs cad commun ou individuel) + gestion des msg cad reduire les ressources des joueurs concernés
+DEF:  -> DONE ajout en bd des objectifs pour les joueurs 
+      - web socket : envoie des event (idem que objectifs cad commun ou individuel) + gestion des msg cad reduire les ressources des joueurs concernés
 
 Walid: - page ajout de ressource,
         - revoir la partie crud des objectifs pour faire un truc vraiment générique (aller chercher les noms des ressources dans la bd)
