@@ -3,19 +3,24 @@ var socket = io.connect('http://localhost:3000');
 var objectifsListData = [];
 
 var playerID;
+var playerData;
 
 $(document).ready(function() {
   // Recuperer id joueur
   $.get('players/data', function (data) {
-    playerID = data.id;
+    playerID = data._id;
+    playerData = data;
     console.log("Joueur n°" + playerID);
+    for (var i = 0; i < data.objectives.length; i++) {
+      addObj(data.objectives[i])
+    }
   })
   //Remplir la liste d'objectifs
-  $.get('objectives/list', function (data) {
+  /*  $.get('objectives/list', function (data) {
       for (var i = 0; i < data.length; i++) {
         console.log(data[i].players.indexOf(playerID))
         if (data[i].common == "true"  || data[i].players.indexOf(playerID) != -1){
-        var obj = 
+        var obj =
         {
           'joueur': data[i].common == "true" ? 0 : data[i].players[i],
           'titre': data[i].objectifTitle,
@@ -24,12 +29,14 @@ $(document).ready(function() {
         addObj(obj)
       }
     }
-    })
+  })*/
+
+
   //Recevoir nouvel ojectif
   socket.on('server_message', function(message) {
-      if (message.joueur == 0 || message.joueur == playerID)
-        newQuest(message);
-   
+    if (message.joueur == 0 || message.joueur == playerID)
+      newQuest(message);
+
   });
 });
 
@@ -49,7 +56,7 @@ function addObj(message) {
   $("#new").empty().hide();
   newline = '<div id="obj" class="obj1"><strong>'+ message.titre +'</strong> : '+ message.description +'</div>';
 
-  if (message.joueur == 0)
+  if (message.common === "true")
     $("#objectivesCommon").append(newline);
   else
     $("#objectivesIndiv").append(newline);

@@ -2,7 +2,7 @@ var socket = io.connect('http://localhost:3000');
 
 function addPlayer(id) {
 	data = {
-		sessionId: id,
+		_id: id,
 		money: 3000,
 		energy: 500,
 		satisfaction: 3,

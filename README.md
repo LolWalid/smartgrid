@@ -30,7 +30,7 @@ Other Routes:
 
   /players/list : json with all players connected
   /players/add : add player to db when connected
-  /players/:id : return all data of a player
+  /players/show/:id : return all data of a player
   /players/delete/:id : delete and deconnect player with id id
   /players/deleteAll : delete and deconnect all players.
 

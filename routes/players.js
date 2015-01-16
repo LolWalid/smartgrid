@@ -5,15 +5,21 @@ var sess;
 
 router.get('/data', function (req, res) {
   sess = req.session;
-
-  var data = {
+  var db = req.db;
+/*  var data = {
     id: sess.joueur,
     money: 3000,
     energy: 500,
     satisfaction: 3,
     score: 1350
-  }
-  res.send(data);
+  }*/
+    db.collection('players').findById(sess.joueur, function (err, items) {
+    if (err)
+      console.log(err);
+    else
+      res.json(items);
+  });
+  //res.send(data);
 });
 
 router.get('/list', function(req, res) {
@@ -35,7 +41,7 @@ router.post('/add', function(req, res) {
     });
 });
 
-router.get('/:id', function(req, res) {
+router.get('/show/:id', function(req, res) {
   var db = req.db;
   var playerId = req.params.id;
 
