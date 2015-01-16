@@ -22,7 +22,11 @@ router.get('/data', function (req, res) {
   //res.send(data);
 });
 
-router.get('/list', function(req, res) {
+router.get('/admin', function (req, res) {
+  res.render('admin/players', {title: 'Smartgrid - Admin - Players',player: 'Admin'});
+});
+
+router.get('/list', function (req, res) {
   var db = req.db;
   db.collection('players').find().sort({_id : 1}).toArray(function (err, items) {
     res.json(items);

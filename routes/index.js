@@ -37,7 +37,7 @@ router.post('/login', function(req, res) {
 });
 
 router.get('/logout', function(req, res) {
-    sess = req.session;
+  sess = req.session;
 
   delete sess.joueur;
   res.send('Vous êtes maintenant déconnecté.');
