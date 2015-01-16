@@ -6,7 +6,7 @@ function addPlayer(id) {
 		money: 3000,
 		energy: 500,
 		satisfaction: 3,
-		score: 1350
+		score: 1350,
 	};
 
 	$.ajax({

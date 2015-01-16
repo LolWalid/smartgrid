@@ -16,11 +16,15 @@ html
           span.icon-bar
         a.navbar-brand(href='/objectives') Objectifs
 
-      p#argent.navbar-text Argent
-      p#argent.navbar-text Energie
-      p#argent.navbar-text Satisfaction
-      p#argent.navbar-text Score
-      p#argent.navbar-text
+      p#argent.navbar-text Argent 
+        span#valeur_argent
+      p#energie.navbar-text Energie 
+        span#valeur_energie
+      p#satisfaction.navbar-text Satisfaction 
+        span#valeur_satisfaction
+      p#score.navbar-text Score 
+        span#valeur_score
+      p.navbar-text
         a(href='/') !{player}
 
     block content

@@ -29,6 +29,10 @@ io.sockets.on('connection', function(socket) {
     socket.on('new_obj', function(message) {
         socket.broadcast.emit('server_message', message);
     });
+
+    socket.on('update_view', function(message) {
+        socket.broadcast.emit('update_view', message);
+    });
 });
 
 
