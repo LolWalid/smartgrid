@@ -43,7 +43,7 @@ function addObj(message) {
   newline = '<div id="obj" class="obj1"><strong>'+ message.titre +'</strong> : '+ message.description +'</div>'
 
   if (message.joueur == 0)
-    $("#objectivesCommon").append(newline)
-  else 
-    $("#objectivesIndiv").append(newline)  
-}
+    $("#objectivesCommon").append(newline);
+  else
+    $("#objectivesIndiv").append(newline);
+};

@@ -1,8 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var ObjectID = require('mongodb').ObjectID;
-
-
 
 /* GET home page. */
 router.get('/admin', function(req, res) {
@@ -12,7 +9,7 @@ router.get('/admin', function(req, res) {
 /*
  * GET events.
  */
-router.get('/eventslist', function(req, res) {
+router.get('/list', function(req, res) {
     var db = req.db;
     db.collection('events').find().toArray(function (err, items) {
         res.json(items);
@@ -22,7 +19,7 @@ router.get('/eventslist', function(req, res) {
 /*
  * ADD event.
  */
-router.post('/addevent', function(req, res) {
+router.post('/add', function(req, res) {
     var db = req.db;
 
     console.log(req.body.length);
@@ -38,10 +35,10 @@ router.post('/addevent', function(req, res) {
 /*
  * EDIT event.
  */
-router.post('/editevent', function(req, res) {
+router.post('/edit', function(req, res) {
     var db = req.db;
-    var id = new ObjectID(req.body.id);
-    db.collection('events').update( {_id: id}, req.body, function(err, result){
+    var id = req.body.id;
+    db.collection('events').updateById( id, req.body, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
         );
@@ -51,7 +48,7 @@ router.post('/editevent', function(req, res) {
 /*
  * DELETE to deleteevent.
  */
-router.delete('/deleteevent/:id', function(req, res) {
+router.delete('/delete/:id', function(req, res) {
     var db = req.db;
     var eventToDelete = req.params.id;
     db.collection('events').removeById(eventToDelete, function(err, result) {

@@ -32,7 +32,7 @@ function populateTable() {
   var tableContent = '';
 
   // jQuery AJAX call for JSON
-  $.getJSON( '/events/eventslist', function( data ) {
+  $.getJSON( '/events/list', function( data ) {
     eventListData = data;
     // For each item in our JSON, add a table row and cells to the content string
     $.each(data, function(){
@@ -142,7 +142,7 @@ function addEvent(event) {
     // Use AJAX to post the object to our addevent service
     $.ajax({
       type: 'POST',
-      url: '/events/addevent',
+      url: '/events/add',
       data: JSON.stringify(newEvent),
       contentType : 'application/json',
     }).done(function( response ) {
@@ -185,7 +185,7 @@ function deleteEvent(event) {
     // If they did, do our delete
     $.ajax({
       type: 'DELETE',
-      url: '/events/deleteevent/' + $(this).prop('rel')
+      url: '/events/delete/' + $(this).prop('rel')
     }).done(function( response ) {
 
       // Check for a successful (blank) response
@@ -243,7 +243,7 @@ function editEvent(event) {
       type: 'POST',
       data: JSON.stringify(eventEdit),
       contentType : 'application/json',
-      url: '/events/editevent',
+      url: '/events/edit',
     }).done(function( response ) {
 
       // Check for successful (blank) response

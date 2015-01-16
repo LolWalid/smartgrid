@@ -1,5 +1,29 @@
 var socket = io.connect('http://localhost:3000');
 
+function addPlayer(id) {
+	data = {
+		sessionId: id,
+		money: 3000,
+		energy: 500,
+		satisfaction: 3,
+		score: 1350
+	};
+
+	$.ajax({
+		url: '/players/add',
+		type: 'POST',
+		data: data,
+		dataType : 'json',
+	}).done(function(response){
+		if (response.msg === '')
+			window.location.href='/';
+		else
+			console.log(response.msg);
+
+	});
+};
+
+
 $(document).ready(function(){
 	var login,password;
 	$("#login-form").submit(function(event){
@@ -23,15 +47,17 @@ $(document).ready(function(){
 		else if (pseudo != '0') {
 			event.preventDefault();
 			var login = { login : pseudo};
-			socket.emit('addPlayer', {'room' : 'players'});
+			//socket.emit('addPlayer', {'room' : 'players'});
 			$.ajax({
 				url: '/login',
 				type: 'POST',
 				data: login,
 				dataType: 'json',
 			}).done(function( response ) {
-				if (response.msg === 'done')
-					window.location.href='/';
+				if (response.msg === 'done') {
+					addPlayer(pseudo);
+					//window.location.href='/';
+				}
 			});
 		}
 		else {
