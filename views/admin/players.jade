@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	#wrapper
+		#connectedPlayers.list
+			h2 Connected players
+			table
+				thead
+					th Player
+					th Money
+					th Energy
+					th Satisfaction
+					th Score
+				tbody
+
+		h2 
+			a#deleteAll(href="#") DELETE PLAYERS
+
+		script(src='/javascripts/admin/playerscript.js')
