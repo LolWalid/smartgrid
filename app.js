@@ -11,6 +11,9 @@ var http = require('http');
 var mongo = require('mongoskin');
 var db = mongo.db("mongodb://localhost/sg", {native_parser: true});
 
+db.collection('players').remove({}, function(msg) {
+});
+
 var routes = require('./routes/index');
 var players = require('./routes/players');
 var objectives = require('./routes/objectives');

@@ -10,18 +10,10 @@ html
     #login
       form#login-form
         select#pseudo
-          option(value='0') Admin
-          option(value='1') Joueur 1
-          option(value='2') Joueur 2
-          option(value='3') Joueur 3
-          option(value='4') Joueur 4
-          option(value='5') Joueur 5
-          option(value='6') Joueur 6
-          option(value='7') Joueur 7
-          option(value='8') Joueur 8
-          option(value='9') Joueur 9
-          option(value='10') Joueur 10
         br
         input#password(type='password', placeholder='Password')
         input#submit(type='submit', value='Connexion')
+    h2 Listes des joueurs connectés
+    ul.connected
+
   script(src='/javascripts/loginscript.js')

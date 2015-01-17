@@ -1,4 +1,6 @@
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect('/');
+
+var players = [];
 
 function addPlayer(id) {
 	data = {
@@ -23,8 +25,41 @@ function addPlayer(id) {
 	});
 };
 
+function updatePlayers () {
+	$.getJSON('/players/list', function (data) {
+		players = data;
+		addDisconnected();
+	});
+};
+
+function isConnected(i) {
+	var bool = false;
+	$.each(players, function() {
+		if (this._id === i.toString())
+			bool = true;
+	});
+	return bool;
+}
+
+function addDisconnected() {
+	var tablecontent = '<option value="0" + >Admin</option>';
+	var tableConnected = '';
+	for( var i = 1; i <= 10 ; i++) {
+		if (!isConnected(i)) {
+			tablecontent += '<option value=' + i + '>Joueur ' + i +'</option>';
+		}
+		else
+			tableConnected += '<li>Joueur ' + i + '</li>';
+	}
+	$('#pseudo').html(tablecontent);
+	$(".connected").html(tableConnected);
+}
+
 
 $(document).ready(function(){
+	var i;
+	updatePlayers();
+
 	var login,password;
 	$("#login-form").submit(function(event){
 		pseudo = $("#pseudo").val();
