@@ -1,7 +1,7 @@
 // Objectiflist data array for filling in info box
 var objectifListData = [];
 var players;
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect('/');
 
 // DOM Ready =============================================================
 ready = $(function() {
