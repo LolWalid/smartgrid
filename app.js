@@ -18,6 +18,8 @@ var routes = require('./routes/index');
 var players = require('./routes/players');
 var objectives = require('./routes/objectives');
 var events = require('./routes/events');
+var resources = require('./routes/resources');
+
 
 var app = express();
 
@@ -64,6 +66,7 @@ app.use('/', routes);
 app.use('/players', players);
 app.use('/objectives', objectives);
 app.use('/events', events);
+app.use('/resources', resources);
 
 
 // catch 404 and forward to error handler

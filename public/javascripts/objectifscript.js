@@ -1,7 +1,11 @@
 // Objectiflist data array for filling in info box
 var objectifListData = [];
 var players;
+var resources;
+
 var socket = io.connect('/');
+
+
 
 // DOM Ready =============================================================
 ready = $(function() {
@@ -44,14 +48,26 @@ $(document).on('page:load', ready);
 function updatePlayers () {
   $.getJSON('/players/list', function (data) {
     players = data;
-    console.log(players);
   });
-
 }
+
+function updateResources() {
+  $.getJSON( '/resources/list', function( data ) {
+    resources = data
+    var tableResources = ''
+    $.each(data, function() {
+      tableResources = '<option value="' + this.name + '">' + this.name + '</option>'
+    })
+    $(".resourceSelect").html(tableResources)
+  })
+}
+
+
 // Fill table with data
 function populateTable() {
 
   updatePlayers();
+  updateResources();
   // Empty content string
   var tableContent = '';
 
@@ -163,7 +179,7 @@ function addObjectif(event) {
       objectifTitle : $('#addObjectif fieldset input#inputObjectifTitle').val(),
       description : $('#addObjectif fieldset #inputObjectifDescription').val(),
       achieve : $('#addObjectif fieldset input#inputObjectifAchieve').val(),
-      resource : $('#addObjectif fieldset input#inputObjectifResource').val(),
+      resource : $(this).siblings(".resourceSelect").val(),
       common : isCommon ? "true" : "false",
       //players : isCommon ? [0] : $('#addObjectif fieldset select#inputObjectifPlayers').val() || []
     }

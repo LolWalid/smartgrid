@@ -38,7 +38,7 @@ block content
         //br
         //select#inputObjectifPlayers(name='players', size='10', multiple='multiple')
         br
-        input#inputObjectifResource(type='text', placeholder='Ressource')
+        select#inputObjectifResource.resourceSelect
         input#inputObjectifAchieve(type='text', placeholder='Valeur à atteindre')
         br
         textarea#inputObjectifDescription(type='text', placeholder='Description')
@@ -52,12 +52,12 @@ block content
       input#editObjectifTitle(type='text', placeholder='Nom de l objectif')
       input#editObjectifDescription(type='text', placeholder='Description')
       br
-      input#editObjectifResource(type='text', placeholder='Ressource')
+      input#editObjectifResource.resourceSelect(type='select', placeholder='Ressource')
       input#editObjectifAchieve(type='text', placeholder='Effet')
       br
       button#btnEditObjectif Editer
 
-  h2 
+  h2
     a#updateView(href="#") UPDATE
-    
+
   script(src='/javascripts/objectifscript.js')

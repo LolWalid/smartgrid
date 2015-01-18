@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  #wrapper
+    h2 Resources List
+    #resourceList.list
+      table
+        thead
+          th Name
+          th delete
+        tbody
+    h2 Ajouter une resource
+    #newResource
+      fieldset
+        input#inputResourceName(type='text', placeholder='Ressource')
+        label Resource partagée ?
+          input#inputResourceCommon(type='checkbox')
+        br
+        button#btnAddResource Ajouter
+
+  script(src='/javascripts/resourcescript.js')
+
