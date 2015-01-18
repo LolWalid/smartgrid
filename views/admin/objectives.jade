@@ -3,59 +3,62 @@ extends layout
 block content
   #wrapper
     #objectifInfo.info
-      h2 Objectif Info
+      h2 Objective Info
       p
-        strong Titre:
+        strong Title :
         |  <span id='objectifInfoTitle'></span>
         br
         strong Description :
         |  <span id='objectifInfoDescription'></span>
         br
-        strong Ressource :
+        strong Resource :
         |  <span id='objectifInfoResource'></span>
         br
-        strong A Atteindre :
+        strong Value to reach :
         |  <span id='objectifInfoAchieve'></span>
         br
 
-    h2 Objectif List
+    h2 Objectives List
     #objectifList.list
       table
         thead
-          th Titre
+          th Title
           th Description
-          th type
-          th Delete?
+          th Type
+          th Delete ?
           th Send to
           th Send
         tbody
-    h2 Ajouter un objectif
+
+    h2 Add an objective
     #addObjectif
       fieldset
-        input#inputObjectifTitle(type='text', placeholder='Nom de l\'objectif')
-        label Objectif commun ?
+        input#inputObjectifTitle(type='text', placeholder='Objective title')
+        label Common objective ?
         input#inputObjectifCommon(type='checkbox')
         //br
         //select#inputObjectifPlayers(name='players', size='10', multiple='multiple')
         br
         select#inputObjectifResource.resourceSelect
-        input#inputObjectifAchieve(type='text', placeholder='Valeur à atteindre')
+        input#inputObjectifAchieve(type='text', placeholder='Value to reach')
         br
         textarea#inputObjectifDescription(type='text', placeholder='Description')
         br
-        button#btnAddObjectif Ajouter
+        button.add_field_button Add More Fields
+        button#btnAddObjectif Add objective
 
   h2 Editer un objectif
   #editObjectif
     fieldset
       input#editObjectifId(type='hidden')
-      input#editObjectifTitle(type='text', placeholder='Nom de l objectif')
+      input#editObjectifTitle(type='text', placeholder='Objective title')
       input#editObjectifDescription(type='text', placeholder='Description')
       br
-      input#editObjectifResource.resourceSelect(type='select', placeholder='Ressource')
-      input#editObjectifAchieve(type='text', placeholder='Effet')
+      input#editObjectifResource.resourceSelect(type='select', placeholder='Resource')
+      input#editObjectifAchieve(type='text', placeholder='Effect')
       br
-      button#btnEditObjectif Editer
+      button.add_field_button Add More Fields
+      button#btnEditObjectif Edit objective
 
   h2
     a#updateView(href="#") UPDATE

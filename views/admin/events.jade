@@ -5,7 +5,7 @@ block content
     #eventInfo.info
       h2 Event Info
       p
-        strong Titre:
+        strong Title :
         |  <span id='eventInfoTitle'></span>
         br
         strong Description :
@@ -15,38 +15,38 @@ block content
       p#effects
 
 
-    h2 Event List
+    h2 Events List
     #eventList.list
       table
         thead
-          th Titre
+          th Title
           th Description
-          th Delete?
+          th Delete ?
         tbody
-    h2 Ajouter  un event
+    h2 Add an event
     #addEvent
       fieldset
-        input#inputEventTitle(type='text', placeholder='Nom de l event')
+        input#inputEventTitle(type='text', placeholder='Event title')
         input#inputEventDescription(type='text', placeholder='Description')
         br
         div.add_input_effects
           div
-            input.resource(type='text', placeholder='Ressource')
-            input.effect(type='text', placeholder='Effet')
-            a.remove_field(href="#") Remove
+            input.resource(type='text', placeholder='Resource')
+            input.effect(type='text', placeholder='Effect') 
+            a.remove_field(href="#")  Remove
         button.add_field_button Add More Fields
-        button#btnAddEvent Ajouter
+        button#btnAddEvent Add event
 
-  h2 Editer un event
+  h2 Edit an event
   #editEvent
     fieldset
       input#editEventId(type='hidden')
-      input#editEventTitle(type='text', placeholder='Nom de l event')
+      input#editEventTitle(type='text', placeholder='Event title')
       input#editEventDescription(type='text', placeholder='Description')
       br
       div.add_input_effects
         div
       button.add_field_button Add More Fields
 
-      button#btnEditEvent Editer
+      button#btnEditEvent Edit event
   script(src='/javascripts/eventscript.js')

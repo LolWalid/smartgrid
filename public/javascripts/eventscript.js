@@ -39,7 +39,7 @@ function populateTable() {
       tableContent += '<tr>';
       tableContent += '<td><a href="#" class="linkshowevent" rel="' + this._id + '" title="Show Details">' + this.eventTitle + '</a></td>';
       tableContent += '<td>' + this.description + '</td>';
-      tableContent += '<td><a href="#" class="linkdeleteevent" rel="' + this._id + '">delete</a></td>';
+      tableContent += '<td><a href="#" class="linkdeleteevent" rel="' + this._id + '">Delete</a></td>';
       tableContent += '</tr>';
     });
 
@@ -85,15 +85,15 @@ function showEventInfo(event) {
 
   if( typeof(effects.length)!="undefined") {
     for( var i = 0; i< effects.length;i++ ) {
-      tableContent += '<strong>Ressources : </strong>';
-      tableContent += '<span>'+ effects[i].resource + '</span>';
-      tableContent += '<strong>Effet : </strong>';
+      tableContent += '<strong>Resource : </strong>';
+      tableContent += '<span>'+ effects[i].resource + '</span><br />';
+      tableContent += '<strong>Effect : </strong>';
       tableContent += '<span>'+ effects[i].effect + '</span>';
       tableContent += '<br>';
 
       $('#editEvent .add_input_effects').append('<div>\
-        <input type="text" class="resource" placeholder="Ressource" value="' + effects[i].resource +'"">\
-        <input type="text" class="effect" placeholder="Effet" value="' + effects[i].effect +'"">\
+        <input type="text" class="resource" placeholder="Resource" value="' + effects[i].resource +'"">\
+        <input type="text" class="effect" placeholder="Effect" value="' + effects[i].effect +'"">\
         <a href="#" class="remove_field">Remove</a>\
         </div>');
       $("#editEvent .remove_field").on('click', removeField);
@@ -177,7 +177,7 @@ function deleteEvent(event) {
   event.preventDefault();
 
   // Pop up a confirmation dialog
-  var confirmation = confirm('Are you sure you want to delete this event?');
+  var confirmation = confirm('Are you sure you want to delete this event ?');
 
   // Check and make sure the event confirmed
   if (confirmation === true) {
@@ -272,8 +272,8 @@ function editEvent(event) {
 function addField (e) {
   e.preventDefault();
   $(this).siblings('.add_input_effects').append('<div>\
-    <input type="text" class="resource" placeholder="Ressource">\
-    <input type="text" class="effect" placeholder="Effet">\
+    <input type="text" class="resource" placeholder="Resource">\
+    <input type="text" class="effect" placeholder="Effect">\
     <a href="#" class="remove_field">Remove</a>\
     </div>');
   $(this).siblings('.add_input_effects').children().last().find('.remove_field').on('click', removeField);

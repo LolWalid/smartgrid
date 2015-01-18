@@ -29,7 +29,7 @@ function populateTable() {
     $.each(data, function(){
       tableContent += '<tr>';
       tableContent += '<td>' + this.name + '</td>';
-      tableContent += '<td><a href="#" class="linkdeleteresource" rel="' + this._id + '">delete</a></td>';
+      tableContent += '<td><a href="#" class="linkdeleteresource" rel="' + this._id + '">Delete</a></td>';
       tableContent += '</tr>';
     });
 
@@ -94,7 +94,7 @@ function deleteResource(event) {
   event.preventDefault();
 
   // Pop up a confirmation dialog
-  var confirmation = confirm('Are you sure you want to delete this objectif?');
+  var confirmation = confirm('Are you sure you want to delete this resource ?');
 
   // Check and make sure the objectif confirmed
   if (confirmation === true) {

@@ -79,8 +79,8 @@ function populateTable() {
       tableContent += '<tr>';
       tableContent += '<td><a href="#" class="linkshowobjectif" rel="' + this._id + '" title="Show Details">' + this.objectifTitle + '</a></td>';
       tableContent += '<td>' + this.description + '</td>';
-      tableContent += '<td>' + (this.common ? "commun" : "individuel") + '</td>';
-      tableContent += '<td><a href="#" class="linkdeleteobjectif" rel="' + this._id + '">delete</a></td>';
+      tableContent += '<td>' + (this.common ? "Common" : "Individual") + '</td>';
+      tableContent += '<td><a href="#" class="linkdeleteobjectif" rel="' + this._id + '">Delete</a></td>';
       if (!this.common) {
         tableContent += '<td><select id="sendto">';
 
@@ -224,7 +224,7 @@ function deleteObjectif(event) {
   event.preventDefault();
 
   // Pop up a confirmation dialog
-  var confirmation = confirm('Are you sure you want to delete this objectif?');
+  var confirmation = confirm('Are you sure you want to delete this objective ?');
 
   // Check and make sure the objectif confirmed
   if (confirmation === true) {
