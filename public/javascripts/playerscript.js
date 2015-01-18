@@ -68,7 +68,7 @@ function addObj(message) {
   $("#new").empty().hide()
   newline = '<div id="obj" class="obj1"><strong>'+ message.titre +'</strong> : '+ message.description +'</div>'
   console.log(message.common);
-  if (message.common === "true")
+  if (message.common)
     $("#objectivesCommon").append(newline);
   else
     $("#objectivesIndiv").append(newline);

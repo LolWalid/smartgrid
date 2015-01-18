@@ -79,9 +79,9 @@ function populateTable() {
       tableContent += '<tr>';
       tableContent += '<td><a href="#" class="linkshowobjectif" rel="' + this._id + '" title="Show Details">' + this.objectifTitle + '</a></td>';
       tableContent += '<td>' + this.description + '</td>';
-      tableContent += '<td>' + (this.common == 'true' ? "commun" : "individuel") + '</td>';
+      tableContent += '<td>' + (this.common ? "commun" : "individuel") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteobjectif" rel="' + this._id + '">delete</a></td>';
-      if (this.common != 'true') {
+      if (!this.common) {
         tableContent += '<td><select id="sendto">';
 
         $.each(players, function(){
@@ -180,7 +180,7 @@ function addObjectif(event) {
       description : $('#addObjectif fieldset #inputObjectifDescription').val(),
       achieve : $('#addObjectif fieldset input#inputObjectifAchieve').val(),
       resource : $(this).siblings(".resourceSelect").val(),
-      common : isCommon ? "true" : "false",
+      common : isCommon,
       //players : isCommon ? [0] : $('#addObjectif fieldset select#inputObjectifPlayers').val() || []
     }
 //    newObjectif.effects = effectsJson;
@@ -197,7 +197,7 @@ function addObjectif(event) {
       if (response.msg === '') {
 
         // Clear the form inputs
-        $('#addObjectif fieldset input').val('');
+        $('#addObjectif fieldset input').not(":checkbox").val('');
         $('#addObjectif fieldset textarea').val('');
 
         // Update the table
@@ -317,7 +317,6 @@ function updatePlayersObjectives(playerId, objectif) {
       id : playerId,
       objectives : data.objectives
     };
-    console.log(playerUpdate);
     $.ajax({
       type: 'POST',
       data: JSON.stringify(playerUpdate),
@@ -337,17 +336,16 @@ function sendObjectif (event) {
   var _this = $(this);
   //for (var i = 0; i < thisObjectifObject.players.length; i++) {
     var objToSend = {
-      joueur: (thisObjectifObject.common == "true" ? 0 : $(this).closest('tr').find("#sendto").val()),
+      joueur: (thisObjectifObject.common ? 0 : $(this).closest('tr').find("#sendto").val()),
       //'joueur': thisObjectifObject.common == "true" ? 0 : thisObjectifObject.players[i],
       titre: thisObjectifObject.objectifTitle,
       description: thisObjectifObject.description,
       common : thisObjectifObject.common
     };
-    console.log(objToSend)
 
     socket.emit('new_obj', objToSend);
 
-    if (thisObjectifObject.common === "true") {
+    if (thisObjectifObject.common) {
       updatePlayers();
       $.each(players, function(){
         updatePlayersObjectives(this._id, thisObjectifObject);
