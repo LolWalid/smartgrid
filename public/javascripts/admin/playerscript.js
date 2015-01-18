@@ -31,25 +31,41 @@ function populateTable() {
 
 function deletePlayer(event) {
 	event.preventDefault();
-	var id = $(this).prop('rel');
-	$.ajax({
-		type: 'DELETE',
-		contentType: 'application/json',
-		url: '/players/delete/' + id
-	}).done(function(response) {
-		alert('Player ' + id + ' deleted');
-		window.location.href='/players/admin';
-	});
+
+	var confirmation = confirm('Are you sure you want to delete this player ?');
+
+	if (confirmation) {
+		var id = $(this).prop('rel');
+		$.ajax({
+			type: 'DELETE',
+			contentType: 'application/json',
+			url: '/players/delete/' + id
+		}).done(function(response) {
+			alert('Player ' + id + ' deleted');
+			window.location.href='/players/admin';
+		});
+	}
+	else {
+		return false;
+	}
 }
 
 function deleteAllPlayers(event) {
 	event.preventDefault();
-	$.ajax({
-		type: 'POST',
-		contentType: 'application/json',
-		url: '/players/deleteAll'
-	}).done(function(response) {
-        alert(response.msg);
-        window.location.href='/players/admin';
-    });
+
+	var confirmation = confirm('Are you sure you want to delete ALL players ?');
+
+	if (confirmation){
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/players/deleteAll'
+		}).done(function(response) {
+			alert(response.msg);
+			window.location.href='/players/admin';
+		});
+	}
+	else {
+		return false;
+	}
 }
