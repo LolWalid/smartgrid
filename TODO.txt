@@ -1,18 +1,16 @@
-TODO (pour Dimanche/lundi):
+TODO LIST : 
 
 ALPHA:  - gestion des clients, pouvoir les supprimer de la bd et les deconnecter (dans les 2 cas supprimer la varaible de session)
-        - gestion des messages (envoyé  qu'au joueur connecté)
+        -> DONE gestion des messages (envoyé  qu'au joueur connecté)
 
 DEF:  -> DONE ajout en bd des objectifs pour les joueurs 
       - web socket : envoie des event (idem que objectifs cad commun ou individuel)
       - gestion des msg cad reduire les ressources des joueurs concernés
 
-Walid: - page ajout de ressource,
-        - revoir la partie crud des objectifs pour faire un truc vraiment générique (aller chercher les noms des ressources dans la bd)
+Walid:  -> DONE page ajout de ressource,
+        -> DONE revoir la partie crud des objectifs pour faire un truc vraiment générique (aller chercher les noms des ressources dans la bd)
         - continuer les AAP
 
 Alpha ou moi: - envoi de decisions communes pour les joueurs + gestion (concensus etc...)
 
-Tout le monde: envoyer un mail à ParisTech pour leur montrer où on est + expliquer a robin ce qu'on fait
-
-On va surement devoir ecrire un tutoriel pour notre jeu => Et même pour le démarrer (npm start toussa)
+Ecrire un mini tuto
