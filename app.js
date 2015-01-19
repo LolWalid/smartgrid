@@ -32,7 +32,10 @@ io.sockets.on('connection', function(socket) {
     socket.on('delPlayer', function (data) {socket.leave(data.room)});
 
     socket.on('new_obj', function(message) {
-        socket.broadcast.emit('server_message', message);
+        socket.broadcast.emit('server_objective_message', message);
+    });
+    socket.on('new_event', function(message) {
+        socket.broadcast.emit('server_event_message', message);
     });
 
     socket.on('update_view', function(message) {

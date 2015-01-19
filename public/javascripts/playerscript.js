@@ -35,9 +35,15 @@ $(document).ready(function() {
 
 
   //Recevoir nouvel ojectif
-  socket.on('server_message', function(message) {
+  socket.on('server_objective_message', function(message) {
     if (message.joueur == 0 || message.joueur == playerID)
       newQuest(message);
+
+  });
+  //Recevoir nouvel event
+  socket.on('server_event_message', function(message) {
+    if (message.joueur == 0 || message.joueur == playerID)
+      newEvent(message);
 
   });
   socket.on('update_view', function(message) {
@@ -64,10 +70,24 @@ function newQuest(message) {
   })
 }
 
+function newEvent(message) {
+  $("#new").append('<h3>Nouvel Évènement !</h3>')
+  $("#new").append('<p><strong>'+message.titre+'</strong><br />')
+  $("#new").append(message.description+'</p><br />')
+  $("#new").append('<input type="button" id="ok_event" value="OK" />')
+  $("#new").append('<input type="button" id="not_ok_event" value="NOT OK" />')
+  $("#new").show()
+
+  $("#ok_event").click(function() {
+    $('#new').hide()
+  })
+}
+
+
 function addObj(message) {
   $("#new").empty().hide()
   newline = '<div id="obj" class="obj1"><strong>'+ message.titre +'</strong> : '+ message.description +'</div>'
-  console.log(message.common);
+  //console.log(message.common);
   if (message.common)
     $("#objectivesCommon").append(newline);
   else
