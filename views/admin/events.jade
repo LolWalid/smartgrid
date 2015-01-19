@@ -16,6 +16,7 @@ block content
 
 
     h2 Events List
+    a.new(href="#") new event
     #eventList.list
       table
         thead
@@ -23,22 +24,22 @@ block content
           th Description
           th Delete ?
         tbody
-    h2 Add an event
     #addEvent
-      fieldset
-        input#inputEventTitle(type='text', placeholder='Event title')
-        input#inputEventDescription(type='text', placeholder='Description')
-        br
-        div.add_input_effects
-          div
-            input.resource(type='text', placeholder='Resource')
-            input.effect(type='text', placeholder='Effect') 
-            a.remove_field(href="#")  Remove
-        button.add_field_button Add More Fields
-        button#btnAddEvent Add event
+    h2 Add an event
+    fieldset
+      input#inputEventTitle(type='text', placeholder='Event title')
+      input#inputEventDescription(type='text', placeholder='Description')
+      br
+      div.add_input_effects
+        div
+          select.resource
+          input.effect(type='text', placeholder='Effect') 
+          a.remove_field(href="#")  Remove
+      button.add_field_button Add More Fields
+      button#btnAddEvent Add event
 
-  h2 Edit an event
-  #editEvent
+    #editEvent
+    h2 Edit an event
     fieldset
       input#editEventId(type='hidden')
       input#editEventTitle(type='text', placeholder='Event title')
@@ -49,4 +50,4 @@ block content
       button.add_field_button Add More Fields
 
       button#btnEditEvent Edit event
-  script(src='/javascripts/eventscript.js')
+    script(src='/javascripts/eventscript.js')

@@ -44,20 +44,20 @@ block content
         br
         textarea#inputObjectifDescription(type='text', placeholder='Description')
         br
-        button.add_field_button Add More Fields
+        //- button.add_field_button Add More Fields
         button#btnAddObjectif Add objective
 
-  h2 Editer un objectif
+  h2 Edit an objective
   #editObjectif
     fieldset
       input#editObjectifId(type='hidden')
       input#editObjectifTitle(type='text', placeholder='Objective title')
       input#editObjectifDescription(type='text', placeholder='Description')
       br
-      input#editObjectifResource.resourceSelect(type='select', placeholder='Resource')
+      select#editObjectifResource.resourceSelect
       input#editObjectifAchieve(type='text', placeholder='Effect')
       br
-      button.add_field_button Add More Fields
+      //- button.add_field_button Add More Fields
       button#btnEditObjectif Edit objective
 
   h2

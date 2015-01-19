@@ -25,9 +25,22 @@ $(document).ready(ready);
 $(document).on('page:load', ready);
 // Functions =============================================================
 
+function updateResources() {
+  $.getJSON( '/resources/list', function( data ) {
+    resources = data
+    var tableResources = ''
+    $.each(data, function() {
+      tableResources += '<option value="' + this.name + '">' + this.name + '</option>'
+    })
+    $(".resource").html(tableResources)
+  })
+}
+
+
 // Fill table with data
 function populateTable() {
 
+  updateResources();
   // Empty content string
   var tableContent = '';
 
@@ -51,7 +64,7 @@ function populateTable() {
 
 // Show Event Info
 function showEventInfo(event) {
-
+  
   // Prevent Link from Firing
   event.preventDefault();
 
@@ -92,13 +105,22 @@ function showEventInfo(event) {
       tableContent += '<br>';
 
       $('#editEvent .add_input_effects').append('<div>\
-        <input type="text" class="resource" placeholder="Resource" value="' + effects[i].resource +'"">\
+        <select id="resource' + i + '" class="resource" value="' + effects[i].resource +'"">\
         <input type="text" class="effect" placeholder="Effect" value="' + effects[i].effect +'"">\
         <a href="#" class="remove_field">Remove</a>\
         </div>');
       $("#editEvent .remove_field").on('click', removeField);
+      //updateResources();
+      var options = ''
+
+      for (var j = 0; j < resources.length; j++) {
+      
+       options += '<option value="' + resources[j].name + '"' + (resources[j].name == effects[i].resource ? 'selected' : '' ) + '>' + resources[j].name + '</option>'
+      }
+      $('#resource' + i).html(options)
     }
   }
+
 
   $('#effects').html(tableContent);
 
@@ -266,17 +288,19 @@ function editEvent(event) {
     alert('Please fill in all fields');
     return false;
   }
+  updateResources()
 };
 
 
 function addField (e) {
   e.preventDefault();
   $(this).siblings('.add_input_effects').append('<div>\
-    <input type="text" class="resource" placeholder="Resource">\
+    <select class="resource">\
     <input type="text" class="effect" placeholder="Effect">\
     <a href="#" class="remove_field">Remove</a>\
     </div>');
   $(this).siblings('.add_input_effects').children().last().find('.remove_field').on('click', removeField);
+  updateResources();
 }
 
 function removeField(e) {

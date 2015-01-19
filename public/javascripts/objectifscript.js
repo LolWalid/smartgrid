@@ -56,7 +56,7 @@ function updateResources() {
     resources = data
     var tableResources = ''
     $.each(data, function() {
-      tableResources = '<option value="' + this.name + '">' + this.name + '</option>'
+      tableResources += '<option value="' + this.name + '">' + this.name + '</option>'
     })
     $(".resourceSelect").html(tableResources)
   })
