@@ -4,8 +4,8 @@ ALPHA:  - gestion des clients, pouvoir les supprimer de la bd et les deconnecter
         -> DONE gestion des messages (envoyé  qu'au joueur connecté)
 
 DEF:  -> DONE ajout en bd des objectifs pour les joueurs 
-      - web socket : envoie des event (idem que objectifs cad commun ou individuel)
-      - gestion des msg cad reduire les ressources des joueurs concernés
+      -> DONE web socket, envoie des event (pas besoin de stocker dans les players)
+      -> PRESQUE DONE (en commentaire, les objets players sont pas encore conformes) gestion des msg cad reduire les ressources des joueurs concernés
 
 Walid:  -> DONE page ajout de ressource,
         -> DONE revoir la partie crud des objectifs pour faire un truc vraiment générique (aller chercher les noms des ressources dans la bd)

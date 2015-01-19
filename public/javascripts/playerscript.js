@@ -79,6 +79,7 @@ function newEvent(message) {
   $("#new").show()
 
   $("#ok_event").click(function() {
+    updatePlayer(message)
     $('#new').hide()
   })
 }
@@ -92,4 +93,37 @@ function addObj(message) {
     $("#objectivesCommon").append(newline);
   else
     $("#objectivesIndiv").append(newline);
+};
+
+function updatePlayer (message) {
+    // If it is, compile all event info into one object
+    var playerEdit = playerData
+
+    // $.each(playerEdit.resources, function(){
+    //   for (var i = 0; i < message.effects.length; i++) {
+    //    if(message.effects[i].resource == this.resource)
+    //     this.quantity += message.effects[i].effect
+    //   }
+    // })
+
+    // Use AJAX to post the object to our editEvent service
+    $.ajax({
+      type: 'POST',
+      data: JSON.stringify(eventEdit),
+      contentType : 'application/json',
+      url: '/players/edit',
+    }).done(function( response ) {
+      // Check for successful (blank) response
+      else {
+        // If something goes wrong, alert the error message that our service returned
+        console.log('Error: ' + response.msg);
+      }
+    });
+  }
+  else {
+    // If errorCount is more than 0, error out
+    alert('Please fill in all fields');
+    return false;
+  }
+  //updateResources()
 };

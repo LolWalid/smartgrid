@@ -349,6 +349,7 @@ function sendEvent(e){
       //'joueur': thisEventObject.common == "true" ? 0 : thisEventObject.players[i],
       titre: thisEventObject.EventTitle,
       description: thisEventObject.description,
+      effects : thisEventObject.effects,
       common : thisEventObject.common
     };
 
