@@ -34,14 +34,19 @@ $(document).ready(function() {
   })*/
 
 
-  //Recevoir nouvel ojectif
+  // Recevoir nouvel ojectif
   socket.on('server_objective_message', function(message) {
     newQuest(message);
   });
 
-  //Recevoir nouvel event
+  // Recevoir nouvel event
   socket.on('server_event_message', function(message) {
     newEvent(message);
+  });
+
+  // Recevoir message de déconnexion (admin)
+  socket.on('server_logout_message', function(){
+    newLogout();
   });
 
   socket.on('update_view', function(message) {
@@ -57,7 +62,7 @@ $(document).ready(function() {
 
 function newQuest(message) {
   $("#new").append('<h3>Nouvel objectif !</h3>')
-  $("#new").append('<p><strong>'+message.titre+'</strong><br />')
+  $("#new").append('<p><strong>'+message.objectifTitle+'</strong><br />')
   $("#new").append(message.description+'</p><br />')
   $("#new").append('<input type="button" id="ok_obj" value="OK" />')
   $("#new").show()
@@ -69,7 +74,7 @@ function newQuest(message) {
 
 function newEvent(message) {
   $("#new").append('<h3>Nouvel Évènement !</h3>')
-  $("#new").append('<p><strong>'+message.titre+'</strong><br />')
+  $("#new").append('<p><strong>'+message.objectifTitle+'</strong><br />')
   $("#new").append(message.description+'</p><br />')
   $("#new").append('<input type="button" id="ok_event" value="OK" />')
   $("#new").append('<input type="button" id="not_ok_event" value="NOT OK" />')
@@ -81,12 +86,32 @@ function newEvent(message) {
   })
 }
 
+function newLogout() {
+  $("#new").append('<h3>Oups !</h3>')
+  $("#new").append('<p><strong>Vous allez être déconnecté.</strong><br />')
+  $("#new").append('L\'administrateur vient de forcer votre déconnexion.</p><br />')
+  $("#new").append('<input type="button" id="ok_event" value="OK" />')
+  $("#new").show()
+
+  $("#ok_event").click(function() {
+    $('#new').hide()
+    $.ajax({
+      url: '/logout',
+      type: 'POST',
+      dataType: 'json',
+    }).done(function( response ) {
+      if (response.msg === 'done') {
+        window.location.href = '/';
+      }
+    });
+  })
+}
 
 function addObj(message) {
   console.log(message)
   $("#new").empty().hide()
 
-  newline = '<div id="obj" class="obj1"><strong>'+ message.titre +'</strong> : '+ message.description +'</div>'
+  newline = '<div id="obj" class="obj1"><strong>'+ message.objectifTitle +'</strong> : '+ message.description +'</div>'
 
   if (message.common)
     $("#objectivesCommon").append(newline)

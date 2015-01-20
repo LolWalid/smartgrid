@@ -109,7 +109,6 @@ $(document).ready(function(){
 			}).done(function( response ) {
 				if (response.msg === 'done') {
 					addPlayer(pseudo);
-					//window.location.href='/';
 				}
 			});
 		}

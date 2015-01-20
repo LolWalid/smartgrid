@@ -36,6 +36,10 @@ io.sockets.on('connection', function(socket) {
 
     socket.on('delPlayer', function (data) {
         // TODO : delete data.player from connectedPlayers
+        var socketID = connectedPlayers[data.player];
+        socketID.emit('server_logout_message', data);
+        connectedPlayers.slice(data.player);
+        console.log('CONNECTED : ' + connectedPlayers[data.player]);
     });
 
     socket.on('new_obj', function(message) {
