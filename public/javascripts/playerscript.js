@@ -114,7 +114,7 @@ function updatePlayer (message) {
       url: '/players/edit',
     }).done(function( response ) {
       // Check for successful (blank) response
-      else {
+      if (response.msg !== '') {
         // If something goes wrong, alert the error message that our service returned
         console.log('Error: ' + response.msg);
       }
