@@ -109,7 +109,7 @@ function updatePlayer (message) {
     // Use AJAX to post the object to our editEvent service
     $.ajax({
       type: 'POST',
-      data: JSON.stringify(eventEdit),
+      data: JSON.stringify(playerEdit),
       contentType : 'application/json',
       url: '/players/edit',
     }).done(function( response ) {
@@ -120,4 +120,4 @@ function updatePlayer (message) {
       }
     });
   }
-};
+
