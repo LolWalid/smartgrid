@@ -61,40 +61,43 @@ $(document).ready(function() {
 });
 
 function newQuest(message) {
-  $("#new").append('<h3>Nouvel objectif !</h3>')
-  $("#new").append('<p><strong>'+message.objectifTitle+'</strong><br />')
-  $("#new").append(message.description+'</p><br />')
-  $("#new").append('<input type="button" id="ok_obj" value="OK" />')
-  $("#new").show()
+  $("body").append("<div class='new_msg'></div>")
+  $(".new_msg").append('<h3>Nouvel objectif !</h3>')
+  $(".new_msg").append('<p><strong>'+message.titre+'</strong><br />')
+  $(".new_msg").append(message.description+'</p><br />')
+  $(".new_msg").append('<input type="button" id="ok_obj" value="OK" />')
 
   $("#ok_obj").click(function() {
     addObj(message)
+    $('.new_msg').remove()
   })
 }
 
 function newEvent(message) {
-  $("#new").append('<h3>Nouvel Évènement !</h3>')
-  $("#new").append('<p><strong>'+message.objectifTitle+'</strong><br />')
-  $("#new").append(message.description+'</p><br />')
-  $("#new").append('<input type="button" id="ok_event" value="OK" />')
-  $("#new").append('<input type="button" id="not_ok_event" value="NOT OK" />')
-  $("#new").show()
+  $("body").append("<div class='new_msg'></div>")
+  $(".new_msg").append('<h3>Nouvel Évènement !</h3>')
+  $(".new_msg").append('<p><strong>'+message.titre+'</strong><br />')
+  $(".new_msg").append(message.description+'</p><br />')
+  $(".new_msg").append('<input type="button" id="ok_event" value="OK" />')
+  $(".new_msg").append('<input type="button" id="not_ok_event" value="NOT OK" />')
+  $(".new_msg").show()
 
   $("#ok_event").click(function() {
     updatePlayer(message)
-    $('#new').hide()
+    $('.new_msg').remove()
   })
 }
 
 function newLogout() {
-  $("#new").append('<h3>Oups !</h3>')
-  $("#new").append('<p><strong>Vous allez être déconnecté.</strong><br />')
-  $("#new").append('L\'administrateur vient de forcer votre déconnexion.</p><br />')
-  $("#new").append('<input type="button" id="ok_event" value="OK" />')
-  $("#new").show()
+  $("body").append("<div class='new_msg'></div>")
+  $(".new_msg").append('<h3>Oups !</h3>')
+  $(".new_msg").append('<p><strong>Vous allez être déconnecté.</strong><br />')
+  $(".new_msg").append('L\'administrateur vient de forcer votre déconnexion.</p><br />')
+  $(".new_msg").append('<input type="button" id="ok_event" value="OK" />')
+  $(".new_msg").show()
 
   $("#ok_event").click(function() {
-    $('#new').hide()
+    $('.new_msg').remove()
     $.ajax({
       url: '/logout',
       type: 'POST',
@@ -108,8 +111,6 @@ function newLogout() {
 }
 
 function addObj(message) {
-  console.log(message)
-  $("#new").empty().hide()
 
   newline = '<div id="obj" class="obj1"><strong>'+ message.objectifTitle +'</strong> : '+ message.description +'</div>'
 

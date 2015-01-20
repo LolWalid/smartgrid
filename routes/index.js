@@ -19,6 +19,10 @@ router.get('/map', function(req, res) {
   res.render('admin/map')
 })
 
+router.get('/decision', function(req, res) {
+  res.render('admin/decision')
+})
+
 router.get('/objectives', function(req, res) {
     sess = req.session;
 
