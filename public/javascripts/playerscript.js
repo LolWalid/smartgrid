@@ -35,8 +35,13 @@ $(document).ready(function() {
 
 
   //Recevoir nouvel ojectif
-  socket.on('server_message', function(message) {
+  socket.on('server_objective_message', function(message) {
     newQuest(message);
+  });
+
+  //Recevoir nouvel event
+  socket.on('server_event_message', function(message) {
+    newEvent(message);
   });
 
   socket.on('update_view', function(message) {
@@ -50,7 +55,6 @@ $(document).ready(function() {
   })
 });
 
-
 function newQuest(message) {
   $("#new").append('<h3>Nouvel objectif !</h3>')
   $("#new").append('<p><strong>'+message.titre+'</strong><br />')
@@ -63,12 +67,55 @@ function newQuest(message) {
   })
 }
 
+function newEvent(message) {
+  $("#new").append('<h3>Nouvel Évènement !</h3>')
+  $("#new").append('<p><strong>'+message.titre+'</strong><br />')
+  $("#new").append(message.description+'</p><br />')
+  $("#new").append('<input type="button" id="ok_event" value="OK" />')
+  $("#new").append('<input type="button" id="not_ok_event" value="NOT OK" />')
+  $("#new").show()
+
+  $("#ok_event").click(function() {
+    updatePlayer(message)
+    $('#new').hide()
+  })
+}
+
+
 function addObj(message) {
   console.log(message)
   $("#new").empty().hide()
-  newline = '<div id="obj" class="obj1"><strong>'+ message.title +'</strong> : '+ message.description +'</div>'
+
+  newline = '<div id="obj" class="obj1"><strong>'+ message.titre +'</strong> : '+ message.description +'</div>'
+
   if (message.common)
     $("#objectivesCommon").append(newline)
   else
-    $("#objectivesIndiv").append(newline)
-}
+    $("#objectivesIndiv").append(newline);
+};
+
+function updatePlayer (message) {
+    // If it is, compile all event info into one object
+    var playerEdit = playerData
+
+    // $.each(playerEdit.resources, function(){
+    //   for (var i = 0; i < message.effects.length; i++) {
+    //    if(message.effects[i].resource == this.resource)
+    //     this.quantity += message.effects[i].effect
+    //   }
+    // })
+
+    // Use AJAX to post the object to our editEvent service
+    $.ajax({
+      type: 'POST',
+      data: JSON.stringify(playerEdit),
+      contentType : 'application/json',
+      url: '/players/edit',
+    }).done(function( response ) {
+      // Check for successful (blank) response
+      if (response.msg !== '') {
+        // If something goes wrong, alert the error message that our service returned
+        console.log('Error: ' + response.msg);
+      }
+    });
+  }

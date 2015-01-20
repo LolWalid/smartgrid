@@ -1,5 +1,7 @@
 // Eventlist data array for filling in info box
 var eventListData = [];
+var players
+var socket = io.connect('/');
 
 // DOM Ready =============================================================
 ready  = $(function() {
@@ -16,6 +18,8 @@ ready  = $(function() {
 
   // Edit Event button click
   $('#btnEditEvent').on('click', editEvent);
+    $('#eventList table tbody').on('click', 'td a.sendEvent', sendEvent);
+
 
   $('.add_field_button').on('click', addField);
   $('.remove_field').on('click', removeField);
@@ -36,10 +40,16 @@ function updateResources() {
   })
 }
 
+function updatePlayers () {
+  $.getJSON('/players/list', function (data) {
+    players = data;
+  });
+}
 
 // Fill table with data
 function populateTable() {
 
+  updatePlayers()
   updateResources();
   // Empty content string
   var tableContent = '';
@@ -52,7 +62,20 @@ function populateTable() {
       tableContent += '<tr>';
       tableContent += '<td><a href="#" class="linkshowevent" rel="' + this._id + '" title="Show Details">' + this.eventTitle + '</a></td>';
       tableContent += '<td>' + this.description + '</td>';
+      tableContent += '<td>' + (this.common ? "Common" : "Individual") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteevent" rel="' + this._id + '">Delete</a></td>';
+      if (!this.common) {
+        tableContent += '<td><select id="sendto">';
+
+        $.each(players, function(){
+          tableContent += '<option value="'+ this._id +'">Player '+ this._id +'</option>';
+        });
+        tableContent += '</select></td>';
+      }
+      else   {
+        tableContent += '<td>All players</td>';
+      }
+      tableContent += '<td><a href="#" class="sendEvent" rel="' + this._id + '">Send</a></td>';
       tableContent += '</tr>';
     });
 
@@ -64,7 +87,7 @@ function populateTable() {
 
 // Show Event Info
 function showEventInfo(event) {
-  
+
   // Prevent Link from Firing
   event.preventDefault();
 
@@ -149,17 +172,20 @@ function addEvent(event) {
         var json = {'resource': resources[i].value, 'effect': effects[i].value};
         effectsJson = effectsJson.concat(json);
       }
-    };
+    }
 
+    var isCommon = $('#addEvent fieldset input#inputEventCommon').is(":checked")
+    
     // If it is, compile all event info into one object
     var newEvent = {
-
       eventTitle : $('#addEvent fieldset input#inputEventTitle').val(),
       description : $('#addEvent fieldset input#inputEventDescription').val(),
-      achieve : $('#addEvent fieldset input#inputEventAchieve').val(),
-      resource : $('#addEvent fieldset input#inputEventResource').val(),
+      // achieve : $('#addEvent fieldset input#inputEventAchieve').val(),
+      // resource : $('#addEvent fieldset input#inputEventResource').val(),
+      common : isCommon,
       effects : effectsJson
     };
+    console.log(newEvent)
 
     // Use AJAX to post the object to our addevent service
     $.ajax({
@@ -252,11 +278,14 @@ function editEvent(event) {
       }
     };
 
+    var isCommon = $('#addEvent fieldset input#inputEventCommon').is(":checked")
+    
     // If it is, compile all event info into one object
     var eventEdit = {
       id : $('#editEvent fieldset input#editEventId').val(),
       eventTitle: $('#editEvent fieldset input#editEventTitle').val(),
       description: $('#editEvent fieldset input#editEventDescription').val(),
+      common : isCommon,
       effects : effectsJson
     };
 
@@ -288,7 +317,7 @@ function editEvent(event) {
     alert('Please fill in all fields');
     return false;
   }
-  updateResources()
+  //updateResources()
 };
 
 
@@ -306,4 +335,38 @@ function addField (e) {
 function removeField(e) {
   e.preventDefault();
   $(this).parent('div').remove();
+}
+
+function sendEvent(e){
+  e.preventDefault();
+  var thisEventId = $(this).prop('rel');
+  var arrayPosition = eventListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisEventId);
+  var thisEventObject = eventListData[arrayPosition];
+  var _this = $(this);
+  //for (var i = 0; i < thisEventObject.players.length; i++) {
+    var eventToSend = {
+      joueur: (thisEventObject.common ? 0 : $(this).closest('tr').find("#sendto").val()),
+      //'joueur': thisEventObject.common == "true" ? 0 : thisEventObject.players[i],
+      titre: thisEventObject.EventTitle,
+      description: thisEventObject.description,
+      effects : thisEventObject.effects,
+      common : thisEventObject.common
+    };
+
+    socket.emit('new_event', eventToSend);
+
+    if (thisEventObject.common) {
+      updatePlayers();
+      $.each(players, function(){
+        updatePlayersObjectives(this._id, thisEventObject);
+      });
+    }
+    else {
+      var playerId = $(this).closest('tr').find("#sendto").val();
+      updatePlayersObjectives(playerId, thisEventObject);
+    }
+
+    //console.log("Message envoyé au joueur " + thisEventObject.common == "true" ? 0 : thisEventObject.players[i]);
+  //}
+
 }

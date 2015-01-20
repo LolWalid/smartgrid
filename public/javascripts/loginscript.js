@@ -2,27 +2,45 @@ var socket = io.connect('/');
 
 var players = [];
 
+
+function getResource(object) {
+	$.getJSON( '/resources/list', function( data ) {
+		$.each(data, function() {
+			if (object.resources)
+				object.resources.push({name : this.name, unit : this.unit, value : this.defaultValue})
+			else
+				object.resources = [{name : this.name, unit : this.unit, value : this.defaultValue}]
+		})
+	})
+}
+
+
 function addPlayer(id) {
 	data = {
 		_id: id,
+		resources : [],
 		money: 3000,
 		energy: 500,
 		satisfaction: 3,
 		score: 1350,
-	};
+	}
 
-	$.ajax({
-		url: '/players/add',
-		type: 'POST',
-		data: data,
-		dataType : 'json',
-	}).done(function(response){
-		if (response.msg === '')
-			window.location.href='/';
-		else
-			console.log(response.msg);
-
-	});
+	$.getJSON( '/resources/list', function( resourceList ) {
+		$.each(resourceList, function() {
+			data.resources.push({name : this.name, unit : this.unit, value : (this.defaultValue ? this.defaultValue : 0)})
+		})
+		$.ajax({
+			url: '/players/add',
+			type: 'POST',
+			data: JSON.stringify(data),
+			contentType : 'application/json',
+		}).done(function(response){
+			if (response.msg === '')
+				window.location.href='/';
+			else
+				console.log(response.msg);
+		});
+	})
 };
 
 function updatePlayers () {

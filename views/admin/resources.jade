@@ -7,6 +7,9 @@ block content
       table
         thead
           th Name
+          th Unit
+          th Default Value
+          th Shared
           th Delete
         tbody
     h2 Add a resource
@@ -14,7 +17,10 @@ block content
       fieldset
         input#inputResourceName(type='text', placeholder='Resource')
         label Shared resource ?
-          input#inputResourceCommon(type='checkbox')
+          input#inputResourceShared(type='checkbox')
+        br
+        input#inputResourceValue(type='text', placeholder='Default Value')
+        input#inputResourceUnit(type='text', placeholder='unit')
         br
         button#btnAddResource Add
 

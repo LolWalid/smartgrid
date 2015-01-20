@@ -40,7 +40,12 @@ io.sockets.on('connection', function(socket) {
 
     socket.on('new_obj', function(message) {
         var socketID = connectedPlayers[message.joueur];
-        socketID.emit('server_message', message);
+        socketID.emit('server_objective_message', message);
+    });
+
+    socket.on('new_event', function(message) {
+        var socketID = connectedPlayers[message.joueur];
+        socketID.emit('server_event_message', message);
     });
 
     socket.on('update_view', function(message) {
