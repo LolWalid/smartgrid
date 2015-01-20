@@ -60,16 +60,16 @@ function isConnected(i) {
 }
 
 function addDisconnected() {
-	var tablecontent = '<option value="0" + >Admin</option>';
+	var tableContent = '<option value="0" + >Admin</option>';
 	var tableConnected = '';
 	for( var i = 1; i <= 10 ; i++) {
 		if (!isConnected(i)) {
-			tablecontent += '<option value=' + i + '>Joueur ' + i +'</option>';
+			tableContent += '<option value=' + i + '>Joueur ' + i +'</option>';
 		}
 		else
 			tableConnected += '<li>Joueur ' + i + '</li>';
 	}
-	$('#pseudo').html(tablecontent);
+	$('#pseudo').html(tableContent);
 	$(".connected").html(tableConnected);
 }
 
@@ -100,7 +100,7 @@ $(document).ready(function(){
 		else if (pseudo != '0') {
 			event.preventDefault();
 			var login = { login : pseudo};
-			//socket.emit('addPlayer', {'room' : 'players'});
+			socket.emit('addPlayer', {'player': pseudo});
 			$.ajax({
 				url: '/login',
 				type: 'POST',

@@ -334,10 +334,8 @@ function sendObjectif (event) {
   var arrayPosition = objectifListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisObjectifId);
   var thisObjectifObject = objectifListData[arrayPosition];
   var _this = $(this);
-  //for (var i = 0; i < thisObjectifObject.players.length; i++) {
     var objToSend = {
       joueur: (thisObjectifObject.common ? 0 : $(this).closest('tr').find("#sendto").val()),
-      //'joueur': thisObjectifObject.common == "true" ? 0 : thisObjectifObject.players[i],
       titre: thisObjectifObject.objectifTitle,
       description: thisObjectifObject.description,
       common : thisObjectifObject.common
@@ -355,9 +353,6 @@ function sendObjectif (event) {
       var playerId = $(this).closest('tr').find("#sendto").val();
       updatePlayersObjectives(playerId, thisObjectifObject);
     }
-
-    //console.log("Message envoyé au joueur " + thisObjectifObject.common == "true" ? 0 : thisObjectifObject.players[i]);
-  //}
 };
 
 

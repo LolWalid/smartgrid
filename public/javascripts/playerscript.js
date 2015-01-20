@@ -16,7 +16,7 @@ $(document).ready(function() {
       for (var i = 0; i < data.objectives.length; i++) {
         addObj(data.objectives[i])
       }
-  })
+    })
   //Remplir la liste d'objectifs
   /*  $.get('objectives/list', function (data) {
       for (var i = 0; i < data.length; i++) {
@@ -36,16 +36,14 @@ $(document).ready(function() {
 
   //Recevoir nouvel ojectif
   socket.on('server_objective_message', function(message) {
-    if (message.joueur == 0 || message.joueur == playerID)
-      newQuest(message);
-
+    newQuest(message);
   });
+
   //Recevoir nouvel event
   socket.on('server_event_message', function(message) {
-    if (message.joueur == 0 || message.joueur == playerID)
-      newEvent(message);
-
+    newEvent(message);
   });
+
   socket.on('update_view', function(message) {
     console.log(message)
     if (message === 'all') {
@@ -56,7 +54,6 @@ $(document).ready(function() {
     }
   })
 });
-
 
 function newQuest(message) {
   $("body").append("<div class='new_msg'></div>")
@@ -90,9 +87,9 @@ function newEvent(message) {
 function addObj(message) {
 
   newline = '<div id="obj" class="obj1"><strong>'+ message.titre +'</strong> : '+ message.description +'</div>'
-  //console.log(message.common);
+
   if (message.common)
-    $("#objectivesCommon").append(newline);
+    $("#objectivesCommon").append(newline)
   else
     $("#objectivesIndiv").append(newline);
 };
@@ -122,4 +119,3 @@ function updatePlayer (message) {
       }
     });
   }
-

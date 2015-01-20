@@ -26,16 +26,26 @@ var app = express();
 app.server = http.createServer(app);
 var io = require('socket.io').listen(app.server);
 
-io.sockets.on('connection', function(socket) {
-    socket.on('addPlayer', function (data) {socket.join(data.room);});
+var connectedPlayers = [];
 
-    socket.on('delPlayer', function (data) {socket.leave(data.room)});
+io.sockets.on('connection', function(socket) {
+
+    socket.on('addPlayer', function (data) {
+        connectedPlayers[data.player] = socket;
+    });
+
+    socket.on('delPlayer', function (data) {
+        // TODO : delete data.player from connectedPlayers
+    });
 
     socket.on('new_obj', function(message) {
-        socket.broadcast.emit('server_objective_message', message);
+        var socketID = connectedPlayers[message.joueur];
+        socketID.emit('server_objective_message', message);
     });
+
     socket.on('new_event', function(message) {
-        socket.broadcast.emit('server_event_message', message);
+        var socketID = connectedPlayers[message.joueur];
+        socketID.emit('server_event_message', message);
     });
 
     socket.on('update_view', function(message) {

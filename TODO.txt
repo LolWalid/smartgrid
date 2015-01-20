@@ -1,6 +1,6 @@
 TODO LIST : 
 
-ALPHA:  - gestion des clients, pouvoir les supprimer de la bd et les deconnecter (dans les 2 cas supprimer la varaible de session)
+ALPHA:  -> PRESQUE DONE gestion des clients, pouvoir les supprimer de la bd et les deconnecter (dans les 2 cas supprimer la varaible de session)
         -> DONE gestion des messages (envoyé  qu'au joueur connecté)
 
 DEF:  -> DONE ajout en bd des objectifs pour les joueurs 
