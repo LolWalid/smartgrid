@@ -41,6 +41,10 @@ io.sockets.on('connection', function(socket) {
     socket.on('update_view', function(message) {
         socket.broadcast.emit('update_view', message);
     });
+
+    socket.on('new_decision', function(message) {
+        socket.broadcast.emit('server_decision_message', message);
+    });
 });
 
 

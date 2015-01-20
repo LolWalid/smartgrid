@@ -71,6 +71,17 @@ fieldset {
   border: 1px solid black;
 }
 
+.new_msg {
+  margin: auto;
+  padding: 15px;
+  width: 300px;
+  background-color: rgb(100,200,0);
+  border: 1px solid black;
+  position: absolute;
+  top: 15%;
+  left: 45%;
+}
+
 a.navbar-brand {
   border-right: 1px solid #e7e7e7;
 }
