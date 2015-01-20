@@ -29,6 +29,9 @@ function populateTable() {
     $.each(data, function(){
       tableContent += '<tr>';
       tableContent += '<td>' + this.name + '</td>';
+      tableContent += '<td>' + this.unit + '</td>';
+      tableContent += '<td>' + this.defaultValue + '</td>';
+      tableContent += '<td>' + (this.shared ? 'Yes' : 'No') + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteresource" rel="' + this._id + '">Delete</a></td>';
       tableContent += '</tr>';
     });
@@ -43,7 +46,7 @@ function addResource(event) {
 
   // Super basic validation - increase errorCount variable if any fields are blank
   var errorCount = 0;
-  $('#newResource input').each(function(index, val) {
+  $('#newResource input').not("#inputResourceUnit").each(function(index, val) {
     if($(this).val() === '') { errorCount++; }
   });
 
@@ -53,7 +56,9 @@ function addResource(event) {
     // If it is, compile all objectif info into one object
     var newObjectif = {
       name : $('#newResource fieldset input#inputResourceName').val(),
-      common : $('#newResource fieldset input#inputResourceCommon').is(":checked")
+      shared : $('#newResource fieldset input#inputResourceShared').is(":checked"),
+      defaultValue : parseInt($('#newResource fieldset input#inputResourceValue').val()),
+      unit : $('#newResource fieldset input#inputResourceUnit').val()
     }
 //    newObjectif.effects = effectsJson;
 

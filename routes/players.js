@@ -6,13 +6,6 @@ var sess;
 router.get('/data', function (req, res) {
   sess = req.session;
   var db = req.db;
-/*  var data = {
-    id: sess.joueur,
-    money: 3000,
-    energy: 500,
-    satisfaction: 3,
-    score: 1350
-  }*/
     db.collection('players').findById(sess.joueur, function (err, items) {
     if (err)
       console.log(err);
@@ -37,7 +30,7 @@ router.post('/add', function(req, res) {
     var db = req.db;
 
     var data = req.body;
-
+    console.log(data);
     db.collection('players').insert(data, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
