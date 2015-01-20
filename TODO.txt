@@ -1,7 +1,7 @@
-TODO (pour Dimanche/lundi):
+﻿TODO (pour Dimanche/lundi):
 
-ALPHA:  - gestion des clients, pouvoir les supprimer de la bd et les deconnecter (dans les 2 cas supprimer la varaible de session)
-        - gestion des messages (envoyé  qu'au joueur connecté)
+ALPHA:  - gestion des clients, pouvoir les supprimer de la bd et les deconnecter (dans les 2 cas, supprimer la variable de session)
+        - gestion des messages (envoyé qu'au joueur connecté)
 
 DEF:  -> DONE ajout en bd des objectifs pour les joueurs 
       - web socket : envoie des event (idem que objectifs cad commun ou individuel)

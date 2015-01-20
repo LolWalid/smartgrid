@@ -16,7 +16,7 @@ $(document).ready(function() {
       for (var i = 0; i < data.objectives.length; i++) {
         addObj(data.objectives[i])
       }
-  })
+    })
   //Remplir la liste d'objectifs
   /*  $.get('objectives/list', function (data) {
       for (var i = 0; i < data.length; i++) {
@@ -36,10 +36,9 @@ $(document).ready(function() {
 
   //Recevoir nouvel ojectif
   socket.on('server_message', function(message) {
-    if (message.joueur == 0 || message.joueur == playerID)
-      newQuest(message);
-
+    newQuest(message);
   });
+
   socket.on('update_view', function(message) {
     console.log(message)
     if (message === 'all') {
@@ -65,11 +64,11 @@ function newQuest(message) {
 }
 
 function addObj(message) {
+  console.log(message)
   $("#new").empty().hide()
-  newline = '<div id="obj" class="obj1"><strong>'+ message.titre +'</strong> : '+ message.description +'</div>'
-  console.log(message.common);
+  newline = '<div id="obj" class="obj1"><strong>'+ message.title +'</strong> : '+ message.description +'</div>'
   if (message.common)
-    $("#objectivesCommon").append(newline);
+    $("#objectivesCommon").append(newline)
   else
-    $("#objectivesIndiv").append(newline);
-};
+    $("#objectivesIndiv").append(newline)
+}

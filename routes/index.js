@@ -33,7 +33,7 @@ router.get('/objectives', function(req, res) {
 router.post('/login', function(req, res) {
 	sess = req.session;
 	sess.joueur = req.body.login;
-  res.send({ msg: 'done'});
+  res.send({msg: 'done'});
 });
 
 router.get('/logout', function(req, res) {
