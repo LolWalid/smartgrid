@@ -11,7 +11,6 @@ $(document).ready(function() {
   $.get('/players/data', function (data) {
     playerID = data._id
     playerData = data
-    console.log("Joueur n°" + playerID)
     if (data.objectives)
       for (var i = 0; i < data.objectives.length; i++) {
         addObj(data.objectives[i])
@@ -50,7 +49,7 @@ $(document).ready(function() {
 function newQuest(message) {
   $("body").append("<div class='new_msg'></div>")
   $(".new_msg").append('<h3>Nouvel objectif !</h3>')
-  $(".new_msg").append('<p><strong>'+message.objectifTitle+'</strong><br />')
+  $(".new_msg").append('<p><strong>'+message.title+'</strong><br />')
   $(".new_msg").append(message.description+'</p><br />')
   $(".new_msg").append('<input type="button" id="ok_obj" value="OK" />')
 
@@ -63,7 +62,7 @@ function newQuest(message) {
 function newEvent(message) {
   $("body").append("<div class='new_msg'></div>")
   $(".new_msg").append('<h3>Nouvel Évènement !</h3>')
-  $(".new_msg").append('<p><strong>'+message.titre+'</strong><br />')
+  $(".new_msg").append('<p><strong>'+message.title+'</strong><br />')
   $(".new_msg").append(message.description+'</p><br />')
   $(".new_msg").append('<input type="button" id="ok_event" value="OK" />')
   $(".new_msg").append('<input type="button" id="not_ok_event" value="NOT OK" />')
@@ -97,7 +96,7 @@ function newLogout(message) {
 
 function addObj(message) {
 
-  newline = '<div id="obj" class="obj1"><strong>'+ message.objectifTitle +'</strong> : '+ message.description +'</div>'
+  newline = '<div id="obj" class="obj1"><strong>'+ message.title +'</strong> : '+ message.description +'</div>'
 
   if (message.common)
     $("#objectivesCommon").append(newline)

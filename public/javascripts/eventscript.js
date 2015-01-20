@@ -60,7 +60,7 @@ function populateTable() {
     // For each item in our JSON, add a table row and cells to the content string
     $.each(data, function(){
       tableContent += '<tr>';
-      tableContent += '<td><a href="#" class="linkshowevent" rel="' + this._id + '" title="Show Details">' + this.eventTitle + '</a></td>';
+      tableContent += '<td><a href="#" class="linkshowevent" rel="' + this._id + '" title="Show Details">' + this.title + '</a></td>';
       tableContent += '<td>' + this.description + '</td>';
       tableContent += '<td>' + (this.common ? "Common" : "Individual") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteevent" rel="' + this._id + '">Delete</a></td>';
@@ -106,13 +106,13 @@ function showEventInfo(event) {
 
 
   //Populate Info Box
-  $('#eventInfoTitle').text(thisEventObject.eventTitle);
+  $('#eventInfoTitle').text(thisEventObject.title);
   $('#eventInfoDescription').text(thisEventObject.description);
 
   $('#eventInfoResource').text(thisEventObject.resource);
   $('#eventInfoAchieve').text(thisEventObject.achieve);
 
-  $('#editEventTitle').val(thisEventObject.eventTitle);
+  $('#editEventTitle').val(thisEventObject.title);
   $('#editEventDescription').val(thisEventObject.description);
   $('#editEventId').val(thisEventObject._id);
 
@@ -178,7 +178,7 @@ function addEvent(event) {
     
     // If it is, compile all event info into one object
     var newEvent = {
-      eventTitle : $('#addEvent fieldset input#inputEventTitle').val(),
+      title : $('#addEvent fieldset input#inputEventTitle').val(),
       description : $('#addEvent fieldset input#inputEventDescription').val(),
       // achieve : $('#addEvent fieldset input#inputEventAchieve').val(),
       // resource : $('#addEvent fieldset input#inputEventResource').val(),
@@ -283,7 +283,7 @@ function editEvent(event) {
     // If it is, compile all event info into one object
     var eventEdit = {
       id : $('#editEvent fieldset input#editEventId').val(),
-      eventTitle: $('#editEvent fieldset input#editEventTitle').val(),
+      title: $('#editEvent fieldset input#editEventTitle').val(),
       description: $('#editEvent fieldset input#editEventDescription').val(),
       common : isCommon,
       effects : effectsJson
@@ -347,7 +347,7 @@ function sendEvent(e){
     var eventToSend = {
       joueur: (thisEventObject.common ? 0 : $(this).closest('tr').find("#sendto").val()),
       //'joueur': thisEventObject.common == "true" ? 0 : thisEventObject.players[i],
-      titre: thisEventObject.EventTitle,
+      title: thisEventObject.title,
       description: thisEventObject.description,
       effects : thisEventObject.effects,
       common : thisEventObject.common

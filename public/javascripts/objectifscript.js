@@ -77,7 +77,7 @@ function populateTable() {
     // For each item in our JSON, add a table row and cells to the content string
     $.each(data, function(){
       tableContent += '<tr>';
-      tableContent += '<td><a href="#" class="linkshowobjectif" rel="' + this._id + '" title="Show Details">' + this.objectifTitle + '</a></td>';
+      tableContent += '<td><a href="#" class="linkshowobjectif" rel="' + this._id + '" title="Show Details">' + this.title + '</a></td>';
       tableContent += '<td>' + this.description + '</td>';
       tableContent += '<td>' + (this.common ? "Common" : "Individual") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteobjectif" rel="' + this._id + '">Delete</a></td>';
@@ -136,12 +136,12 @@ function showObjectifInfo(event) {
   */
 
   //Populate Info Box
-  $('#objectifInfoTitle').text(thisObjectifObject.objectifTitle);
+  $('#objectifInfoTitle').text(thisObjectifObject.title);
   $('#objectifInfoDescription').text(thisObjectifObject.description);
   $('#objectifInfoResource').text(thisObjectifObject.resource);
   $('#objectifInfoAchieve').text(thisObjectifObject.achieve);
 
-  $('#editObjectifTitle').val(thisObjectifObject.objectifTitle);
+  $('#editObjectifTitle').val(thisObjectifObject.title);
   $('#editObjectifDescription').val(thisObjectifObject.description);
   $('#editObjectifResource').val(thisObjectifObject.resource);
   $('#editObjectifAchieve').val(thisObjectifObject.achieve);
@@ -176,7 +176,7 @@ function addObjectif(event) {
     // If it is, compile all objectif info into one object
     var isCommon = $('#addObjectif fieldset input#inputObjectifCommon').is(":checked")
     var newObjectif = {
-      objectifTitle : $('#addObjectif fieldset input#inputObjectifTitle').val(),
+      title : $('#addObjectif fieldset input#inputObjectifTitle').val(),
       description : $('#addObjectif fieldset #inputObjectifDescription').val(),
       achieve : $('#addObjectif fieldset input#inputObjectifAchieve').val(),
       resource : $(this).siblings(".resourceSelect").val(),
@@ -270,7 +270,7 @@ function editObjectif(event) {
     // If it is, compile all objectif info into one object
     var objectif = {
       'id': $('#editObjectif fieldset input#editObjectifId').val(),
-      'objectifTitle': $('#editObjectif fieldset input#editObjectifTitle').val(),
+      'title': $('#editObjectif fieldset input#editObjectifTitle').val(),
       'description': $('#editObjectif fieldset input#editObjectifDescription').val(),
       'resource': $('#editObjectif fieldset input#editObjectifResource').val(),
       'achieve': $('#editObjectif fieldset input#editObjectifAchieve').val(),
@@ -336,7 +336,7 @@ function sendObjectif (event) {
   var _this = $(this);
     var objToSend = {
       joueur: (thisObjectifObject.common ? 0 : $(this).closest('tr').find("#sendto").val()),
-      titre: thisObjectifObject.objectifTitle,
+      title: thisObjectifObject.title,
       description: thisObjectifObject.description,
       common : thisObjectifObject.common
     };
