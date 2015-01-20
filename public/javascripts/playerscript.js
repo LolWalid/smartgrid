@@ -120,10 +120,4 @@ function updatePlayer (message) {
       }
     });
   }
-  else {
-    // If errorCount is more than 0, error out
-    alert('Please fill in all fields');
-    return false;
-  }
-  //updateResources()
 };
