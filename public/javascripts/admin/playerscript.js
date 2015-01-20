@@ -41,7 +41,7 @@ function deletePlayer(event) {
 			contentType: 'application/json',
 			url: '/players/delete/' + id
 		}).done(function(response) {
-			socket.emit('delPlayer', {'player': id});
+			socket.emit('delete player', {'player': id});
 			alert('Player ' + id + ' deleted');
 			window.location.href='/players/admin';
 		});

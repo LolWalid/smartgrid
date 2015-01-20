@@ -29,27 +29,16 @@ var io = require('socket.io').listen(app.server);
 var connectedPlayers = [];
 
 io.sockets.on('connection', function(socket) {
-
-    socket.on('addPlayer', function (data) {
-        connectedPlayers[data.player] = socket;
-    });
-
-    socket.on('delPlayer', function (data) {
-        // TODO : delete data.player from connectedPlayers
-        var socketID = connectedPlayers[data.player];
-        socketID.emit('server_logout_message', data);
-        connectedPlayers.slice(data.player);
-        console.log('CONNECTED : ' + connectedPlayers[data.player]);
+    socket.on('delete player', function(message) {
+        socket.broadcast.emit('server_logout_message', message);
     });
 
     socket.on('new_obj', function(message) {
-        var socketID = connectedPlayers[message.joueur];
-        socketID.emit('server_objective_message', message);
+        socket.broadcast.emit('server_objective_message', message);
     });
 
     socket.on('new_event', function(message) {
-        var socketID = connectedPlayers[message.joueur];
-        socketID.emit('server_event_message', message);
+        socket.broadcast.emit('server_event_message', message);
     });
 
     socket.on('update_view', function(message) {
