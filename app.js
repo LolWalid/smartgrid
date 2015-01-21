@@ -30,23 +30,23 @@ var connectedPlayers = [];
 
 io.sockets.on('connection', function(socket) {
     socket.on('delete player', function(message) {
-        socket.broadcast.emit('server_logout_message', message);
+        socket.broadcast.emit('server logout message', message);
     });
 
-    socket.on('new_obj', function(message) {
-        socket.broadcast.emit('server_objective_message', message);
+    socket.on('new objective', function(message) {
+        socket.broadcast.emit('server objective message', message);
     });
 
-    socket.on('new_event', function(message) {
-        socket.broadcast.emit('server_event_message', message);
+    socket.on('new event', function(message) {
+        socket.broadcast.emit('server event message', message);
     });
 
-    socket.on('update_view', function(message) {
-        socket.broadcast.emit('update_view', message);
+    socket.on('update view', function(message) {
+        socket.broadcast.emit('update view', message);
     });
 
-    socket.on('new_decision', function(message) {
-        socket.broadcast.emit('server_decision_message', message);
+    socket.on('new decision', function(message) {
+        socket.broadcast.emit('server decision message', message);
     });
 });
 

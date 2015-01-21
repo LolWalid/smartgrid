@@ -1,7 +1,7 @@
 TODO LIST : 
 
 ALPHA:  -> DONE gestion des clients, pouvoir les supprimer de la bd et les deconnecter (dans les 2 cas supprimer la variable de session)
-        -> IMPOSSIBRU gestion des messages (envoyé  qu'au joueur connecté)
+        -> IMPOSSIBRU gestion des messages (envoyés qu'au joueur connecté)
 
 DEF:  -> DONE ajout en bd des objectifs pour les joueurs 
       -> DONE web socket, envoie des event (pas besoin de stocker dans les players)

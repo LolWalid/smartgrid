@@ -30,7 +30,6 @@ router.post('/add', function(req, res) {
     var db = req.db;
 
     var data = req.body;
-    console.log(data);
     db.collection('players').insert(data, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }

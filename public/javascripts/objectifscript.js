@@ -36,7 +36,7 @@ ready = $(function() {
 
   $('#updateView').on('click', function(event) {
     event.preventDefault();
-    socket.emit('update_view', 'all');
+    socket.emit('update view', 'all');
   });
 });
 
@@ -341,7 +341,7 @@ function sendObjectif (event) {
       common : thisObjectifObject.common
     };
 
-    socket.emit('new_obj', objToSend);
+    socket.emit('new objective', objToSend);
 
     if (thisObjectifObject.common) {
       updatePlayers();

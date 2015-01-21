@@ -100,7 +100,7 @@ $(document).ready(function(){
 		else if (pseudo != '0') {
 			event.preventDefault();
 			var login = { login : pseudo};
-			socket.emit('addPlayer', {'player': pseudo});
+			socket.emit('add player', {'player': pseudo});
 			$.ajax({
 				url: '/login',
 				type: 'POST',

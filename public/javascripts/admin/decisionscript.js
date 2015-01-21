@@ -20,7 +20,7 @@ function sendDecision(event) {
       type : $("#decisionType").val()
     }
 
-    socket.emit('new_decision', new_decision)
+    socket.emit('new decision', new_decision)
   }
   else {
     alert('Please fill in all fields')

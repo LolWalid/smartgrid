@@ -353,7 +353,7 @@ function sendEvent(e){
       common : thisEventObject.common
     };
 
-    socket.emit('new_event', eventToSend);
+    socket.emit('new event', eventToSend);
 
     if (thisEventObject.common) {
       updatePlayers();
