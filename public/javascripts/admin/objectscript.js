@@ -1,10 +1,8 @@
 // Objectlist data array for filling in info box
 var objectListData = [];
-var players
-var socket = io.connect('/');
 
 // DOM Ready =============================================================
-ready  = $(function() {
+$(document).ready(function() {
   // Populate the object table on initial page load
   populateTable();
 
@@ -25,8 +23,6 @@ ready  = $(function() {
   $('.remove_field').on('click', removeField);
 });
 
-$(document).ready(ready);
-$(document).on('page:load', ready);
 // Functions =============================================================
 
 function updateResources() {
@@ -38,12 +34,6 @@ function updateResources() {
     })
     $(".resource").html(tableResources)
   })
-}
-
-function updatePlayers () {
-  $.getJSON('/players/list', function (data) {
-    players = data;
-  });
 }
 
 // Fill table with data

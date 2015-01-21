@@ -1,5 +1,3 @@
-var socket = io.connect('/')
-
 $(document).ready(function() {
 
   $('#btnSendDecision').on('click', sendDecision)
@@ -26,4 +24,51 @@ function sendDecision(event) {
     alert('Please fill in all fields')
     return false
   }
+}
+
+function receiveDecision() {
+
+  var responseYes = 0
+  var responseNo = 0
+
+    var liYes = ''
+    var liNo = ''
+
+    $.each(response, function() {
+    if (this.response === 'Oui') {
+      liYes += '<li><a href="#">Player ' + this.joueur + '</a></li>'
+      responseYes++
+    }
+    else if (this.response === 'No'){
+      liNo += '<li><a href="#">Player ' + this.joueur + '</a></li>'
+      responseNo++
+    }
+  })
+
+  var tableContentYes = '<div class="dropdown">\
+  <button class="btn btn-default dropdown-toggle" type="button" id="reponseYes" data-toggle="dropdown" aria-expanded="true">' +
+  'Yes : ' +  responseYes +
+  '<span class="caret"></span>\
+  </button>'
+
+  var tableContentNo =  '<div class="dropdown">\
+  <button class="btn btn-default dropdown-toggle" type="button" id="reponseNo" data-toggle="dropdown" aria-expanded="true">' +
+  'No :' + responseNo +
+  '<span class="caret"></span>\
+  </button>'
+
+  tableContentYes +=  '<ul class="dropdown-menu" role="menu" aria-labelledby="reponseYes">'
+  tableContentNo +=  '<ul class="dropdown-menu" role="menu" aria-labelledby="reponseYes">'
+
+  tableContentYes += liYes
+  tableContentNo += liNo
+
+  tableContentYes += '</ul></div>'
+  tableContentNo += '</ul></div>'
+  $("#response").html('');
+
+  if (responseYes != 0 )
+    $("#response").append(tableContentYes)
+    if (responseNo != 0 )
+    $("#response").append(tableContentNo)
 }

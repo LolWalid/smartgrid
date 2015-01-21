@@ -3,10 +3,6 @@ var objectifListData = [];
 var players;
 var resources;
 
-var socket = io.connect('/');
-
-
-
 // DOM Ready =============================================================
 ready = $(function() {
 
