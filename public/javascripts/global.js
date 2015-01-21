@@ -47,7 +47,7 @@ function updatePlayerView() {
 }
 
 function displayDecisionMessage(message) {
-  var tableContent = '<div class="new_msg">'
+  var tableContent = '<div class="message decision">'
   tableContent += '<h3>Faites un choix</h3>'
   tableContent += '<p><strong>' + message.name + '</strong><br />'
   tableContent += message.description + '</p><br />'
@@ -61,7 +61,7 @@ function displayDecisionMessage(message) {
 }
 
 function displayObjectiveMessage(message) {
-  var tableContent = '<div class="new_msg">'
+  var tableContent = '<div class="message objective">'
   tableContent += '<h3>Nouvel objectif !</h3>'
   tableContent += '<p><strong>' + message.title + '</strong><br />'
   tableContent += message.description + '</p><br />'
@@ -75,9 +75,9 @@ function displayObjectiveMessage(message) {
 }
 
 function displayEventMessage(message) {
-  var tableContent = '<div class="new_msg">'
+  var tableContent = '<div class="message event">'
   tableContent += '<h3>Nouvel Évènement !</h3>'
-  tableContent += '<p><strong>'+message.title + '</strong><br />'
+  tableContent += '<p><strong>' + message.title + '</strong><br />'
   tableContent += message.description + '</p><br />'
   tableContent += '<input type="button" class="ok_event" value="OK" />'
   tableContent += '<input type="button" id="not_ok_event" value="NOT OK" />'
@@ -91,7 +91,7 @@ function displayEventMessage(message) {
 }
 
 function displayLogoutMessage(message) {
-  var tableContent = '<div class="new_msg">'
+  var tableContent = '<div class="message logout">'
   tableContent += '<h3>Oups !</h3>'
   tableContent += '<p><strong>Vous allez être déconnecté.</strong><br />'
   tableContent += 'L\'administrateur vient de forcer votre déconnexion.</p><br />'

@@ -1,6 +1,7 @@
 body {
   padding: 30px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: rgb(240,240,255);
 }
 
 .container {
@@ -62,24 +63,31 @@ fieldset {
   padding:0; margin:0;
 }
 
-#new {
-  display: none;
+.message {
   margin: auto;
   padding: 15px;
-  width: 300px;
-  background-color: rgb(100,200,0);
-  border: 1px solid black;
-}
-
-.new_msg {
-  margin: auto;
-  padding: 15px;
-  width: 300px;
-  background-color: rgb(100,200,0);
+  width: 30%;
   border: 1px solid black;
   position: absolute;
   top: 15%;
-  left: 45%;
+  left: 40%;
+  border-radius: 10px;
+}
+
+.decision {
+  background-color: rgb(90,180,220);
+}
+
+.objective {
+  background-color: rgb(20,180,75);
+}
+
+.event {
+  background-color: rgb(222,3,247);
+}
+
+.logout {
+  background-color: rgb(245,0,0);
 }
 
 a.navbar-brand {

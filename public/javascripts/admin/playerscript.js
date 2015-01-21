@@ -42,7 +42,6 @@ function deletePlayer(event) {
 			url: '/players/delete/' + id
 		}).done(function(response) {
 			socket.emit('delete player', {'player': id});
-			alert('Player ' + id + ' deleted');
 			window.location.href='/players/admin';
 		});
 	}
