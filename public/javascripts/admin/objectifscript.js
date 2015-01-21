@@ -22,6 +22,13 @@ ready = $(function() {
 
   $('#objectifList table tbody').on('click', 'td a.linkdeleteobjectif', deleteObjectif);
 
+  $('#displayAddForm').on('click', function () {
+    $("#editObjectif").slideUp(function() {
+    $('#editObjectif input').val('');
+      $("#addObjectif").slideToggle();
+    });
+  });
+
   // Add Objectif button click
   $('#btnAddObjectif').on('click', addObjectif);
 
@@ -104,6 +111,10 @@ function showObjectifInfo(event) {
   // Prevent Link from Firing
   event.preventDefault();
 
+  $("#addObjectif").slideUp(function () {
+    $("#editObjectif").slideDown();
+  });
+
   // Retrieve objectifname from link rel attribute
   var thisObjectifId = $(this).prop('rel');
 
@@ -177,7 +188,7 @@ function addObjectif(event) {
       achieve : $('#addObjectif input#inputObjectifAchieve').val(),
       resource : $(this).siblings(".resourceSelect").val(),
       common : isCommon,
-      //players : isCommon ? [0] : $('#addObjectif fieldset select#inputObjectifPlayers').val() || []
+      //players : isCommon ? [0] : $('#addObjectif  select#inputObjectifPlayers').val() || []
     }
 //    newObjectif.effects = effectsJson;
 
@@ -254,6 +265,8 @@ function deleteObjectif(event) {
 function editObjectif(event) {
   event.preventDefault();
 
+  $("#addObjectif").hide();
+
   // Super basic validation - increase errorCount variable if any fields are blank
   var errorCount = 0;
   $('#editObjectif input').each(function(index, val) {
@@ -265,11 +278,11 @@ function editObjectif(event) {
 
     // If it is, compile all objectif info into one object
     var objectif = {
-      'id': $('#editObjectif fieldset input#editObjectifId').val(),
-      'title': $('#editObjectif fieldset input#editObjectifTitle').val(),
-      'description': $('#editObjectif fieldset input#editObjectifDescription').val(),
-      'resource': $('#editObjectif fieldset input#editObjectifResource').val(),
-      'achieve': $('#editObjectif fieldset input#editObjectifAchieve').val(),
+      'id': $('#editObjectif input#editObjectifId').val(),
+      'title': $('#editObjectif input#editObjectifTitle').val(),
+      'description': $('#editObjectif input#editObjectifDescription').val(),
+      'resource': $('#editObjectif input#editObjectifResource').val(),
+      'achieve': $('#editObjectif input#editObjectifAchieve').val(),
     };
 
     // Use AJAX to post the object to our editObjectif service
@@ -283,7 +296,7 @@ function editObjectif(event) {
       // Check for successful (blank) response
       if (response.msg === '') {
         // Clear the form inputs
-        $('#editObjectif fieldset input').val('');
+        $('#editObjectif input').val('');
 
         // Update the table
         populateTable();
@@ -330,25 +343,25 @@ function sendObjectif (event) {
   var arrayPosition = objectifListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisObjectifId);
   var thisObjectifObject = objectifListData[arrayPosition];
   var _this = $(this);
-    var objToSend = {
-      joueur: (thisObjectifObject.common ? 0 : $(this).closest('tr').find("#sendto").val()),
-      title: thisObjectifObject.title,
-      description: thisObjectifObject.description,
-      common : thisObjectifObject.common
-    };
+  var objToSend = {
+    joueur: (thisObjectifObject.common ? 0 : $(this).closest('tr').find("#sendto").val()),
+    title: thisObjectifObject.title,
+    description: thisObjectifObject.description,
+    common : thisObjectifObject.common
+  };
 
-    socket.emit('new objective', objToSend);
+  socket.emit('new objective', objToSend);
 
-    if (thisObjectifObject.common) {
-      updatePlayers();
-      $.each(players, function(){
-        updatePlayersObjectives(this._id, thisObjectifObject);
-      });
-    }
-    else {
-      var playerId = $(this).closest('tr').find("#sendto").val();
-      updatePlayersObjectives(playerId, thisObjectifObject);
-    }
+  if (thisObjectifObject.common) {
+    updatePlayers();
+    $.each(players, function(){
+      updatePlayersObjectives(this._id, thisObjectifObject);
+    });
+  }
+  else {
+    var playerId = $(this).closest('tr').find("#sendto").val();
+    updatePlayersObjectives(playerId, thisObjectifObject);
+  }
 };
 
 

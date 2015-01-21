@@ -30,8 +30,8 @@ block content
           th Send
         tbody
 
-    #addObjectif
-      h2 Add an objective
+    h2#displayAddForm.displayTitle Add an objective
+    #addObjectif(style="display:none")
       form.form-horizontal
         .form-group
           label.col-sm-2.control-label(for="inputObjectifTitle") Title
@@ -60,8 +60,8 @@ block content
           .col-sm-offset-2.col-sm-10
             button#btnAddObjectif.btn.btn-success Add objective
 
-    #editObjectif
-      h2 Edit an objective
+    h2 Edit an objective
+    #editObjectif(style="display:none")
       fieldset
         input#editObjectifId(type='hidden')
         input#editObjectifTitle(type='text', placeholder='Objective title')
