@@ -29,13 +29,6 @@ block content
         tbody
     #addEvent
       h2 Add an event
-      
-      fieldset
-        div.add_input_effects
-          div
-            select.resource
-            input.effect(type='text', placeholder='Effect')
-            a.remove_field(href="#")  Remove
 
       form.form-horizontal
         .form-group
@@ -47,24 +40,25 @@ block content
           .col-sm-10
             .checkbox
               label
-                input#inputEventCommon(type="checkbox") 
+                input#inputEventCommon(type="checkbox")
                 | Common event
         .add_input_effects
           .form-group
             label.col-sm-2.control-label(for="inputObjectifResource") Resource
-            .col-sm-10
+            .col-sm-4
               select.resource.form-control
-          .form-group
-            label.col-sm-2.control-label Effect
-            .col-sm-10
+            label.col-sm-1.control-label Effect
+            .col-sm-4
               input.effect.form-control(type='text', placeholder='Effect')
+            .col-sm-1
+              button.add_field_button.btn.btn-warning
+                span +
         .form-group
           label.col-sm-2.control-label Description
           .col-sm-10
             textarea#inputEventDescription.form-control(type='text', placeholder='Description')
         .form-group
           .col-sm-offset-2.col-sm-10
-            button.add_field_button.btn.btn-warning Add More Fields
             button#btnAddEvent.btn.btn-success Add event
 
 
