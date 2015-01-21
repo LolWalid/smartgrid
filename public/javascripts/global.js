@@ -1,6 +1,6 @@
 var socket = io.connect('/')
 
-var playerID
+var playerData
 
 $(document).ready(function() {
   // Récupération data joueur
@@ -8,7 +8,7 @@ $(document).ready(function() {
 
   // Recevoir message de décision
   socket.on('server decision message', function (message) {
-      displayDecisionMessage(message)
+    displayDecisionMessage(message)
   })
 
   // Recevoir nouvel objectif
@@ -46,19 +46,36 @@ function updatePlayerView() {
 }
 
 function displayDecisionMessage(message) {
+
   var tableContent = '<div class="message decision">'
   tableContent += '<div class="message-heading">'
-  tableContent += '<h3 class="message-title">Faites un choix</h3>'
+
+  tableContent += '<h3 class="message-title">Nouvelle décision à prendre</h3>'
   tableContent += '</div><div class="message-body">'
   tableContent += '<p><strong>' + message.name + '</strong><br />'
   tableContent += message.description + '</p><br />'
-  tableContent += '<input type="button" class="close" value="Close" />'
+
+  if (message.type === 'Concensus')
+    tableContent += '<input type="button" class="close" value="Close" />'
+  else {
+    tableContent += '<input type="button" class="btn btn-success vote" value="Oui" /><span> </span>'
+    tableContent += '<input type="button" class="btn btn-danger vote" value="Non" />'
+  }
+
   tableContent += '</div></div>'
   $('body').append(tableContent)
+
+  $('.vote').on('click',sendResponse)
 
   $(".close").click(function() {
     $(this).closest('.message').remove()
   })
+}
+
+function sendResponse(event) {
+  event.preventDefault
+  console.log($(this).val())
+  socket.emit('response vote', {joueur : playerData._id, response : $(this).val()})
 }
 
 function displayObjectiveMessage(message) {

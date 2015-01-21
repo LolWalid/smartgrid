@@ -1,5 +1,3 @@
-var socket = io.connect('http://localhost:3000')
-
 var tableContent
 
 $(document).ready(function () {
@@ -9,7 +7,7 @@ $(document).ready(function () {
 	$("#connectedPlayers table tbody").on('click', 'td a.linkdeleteplayer', deletePlayer);
 
 	$("#deleteAll").on('click', deleteAllPlayers);
-	
+
 })
 
 function populateTable() {

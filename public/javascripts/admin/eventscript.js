@@ -1,10 +1,9 @@
 // Eventlist data array for filling in info box
 var eventListData = [];
 var players
-var socket = io.connect('/');
 
 // DOM Ready =============================================================
-ready  = $(function() {
+$(document).ready(function() {
   // Populate the event table on initial page load
   populateTable();
 
@@ -25,8 +24,6 @@ ready  = $(function() {
   $('.remove_field').on('click', removeField);
 });
 
-$(document).ready(ready);
-$(document).on('page:load', ready);
 // Functions =============================================================
 
 function updateResources() {
@@ -137,7 +134,7 @@ function showEventInfo(event) {
       var options = ''
 
       for (var j = 0; j < resources.length; j++) {
-      
+
        options += '<option value="' + resources[j].name + '"' + (resources[j].name == effects[i].resource ? 'selected' : '' ) + '>' + resources[j].name + '</option>'
       }
       $('#resource' + i).html(options)
@@ -175,7 +172,7 @@ function addEvent(event) {
     }
 
     var isCommon = $('#addEvent fieldset input#inputEventCommon').is(":checked")
-    
+
     // If it is, compile all event info into one object
     var newEvent = {
       title : $('#addEvent fieldset input#inputEventTitle').val(),
@@ -279,7 +276,7 @@ function editEvent(event) {
     };
 
     var isCommon = $('#addEvent fieldset input#inputEventCommon').is(":checked")
-    
+
     // If it is, compile all event info into one object
     var eventEdit = {
       id : $('#editEvent fieldset input#editEventId').val(),

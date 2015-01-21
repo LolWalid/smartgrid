@@ -49,6 +49,10 @@ io.sockets.on('connection', function(socket) {
     socket.on('new decision', function(message) {
         socket.broadcast.emit('server decision message', message);
     });
+
+    socket.on('response vote', function(message) {
+        socket.broadcast.emit('server decision response', message);
+    });
 });
 
 
