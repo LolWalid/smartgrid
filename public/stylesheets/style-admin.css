@@ -1,0 +1,51 @@
+.container {
+  padding-top: 50px;
+  padding-left: 320px;
+  position:relative;
+}
+
+.list {
+  margin:0 0 30px 0;
+}
+
+.list table {
+  border-collapse:separate;
+  border-spacing:1px;
+  background:#CCC;
+}
+
+.list table th {
+  background:#EEE;
+  font-weight:600;
+  padding:10px 20px;
+  text-align:center;
+}
+
+.list table tbody {
+  padding:0; margin:0;
+  border-collapse:collapse;
+  border-spacing:0px;
+}
+
+.list table td {
+  background:#FFF;
+  padding:5px 10px;
+  text-align:center;
+}
+
+.info {
+  width:250px;
+  position:absolute;
+  top:50px; left:0;
+}
+
+.info p,p#effects {
+  padding:15px;
+  border:1px solid #CCC;
+  background:rgba(80,120,255,0.05);
+}
+
+fieldset {
+  border:0;
+  padding:0; margin:0;
+}
