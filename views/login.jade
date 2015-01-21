@@ -10,11 +10,13 @@ html
     .container
       .jumbotron
         h1 Bienvenue sur SmartGrid !
-        form#login-form
-          select#pseudo
+        form#login-form.form-inline
+          select#pseudo.form-control
+          input#password.form-control(type='password', placeholder='Password')
           br
-          input#password(type='password', placeholder='Password')
+          br
           input#submit(type='submit', class='btn btn-lg btn-success',value='Connexion')
+        br
         h2 Liste des joueurs connectés
         ul.connected
 
