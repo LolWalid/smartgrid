@@ -1,7 +1,7 @@
 TODO LIST : 
 
-ALPHA:  -> PRESQUE DONE gestion des clients, pouvoir les supprimer de la bd et les deconnecter (dans les 2 cas supprimer la variable de session)
-        -> DONE gestion des messages (envoyé  qu'au joueur connecté)
+ALPHA:  -> DONE gestion des clients, pouvoir les supprimer de la bd et les deconnecter (dans les 2 cas supprimer la variable de session)
+        -> IMPOSSIBRU gestion des messages (envoyé  qu'au joueur connecté)
 
 DEF:  -> DONE ajout en bd des objectifs pour les joueurs 
       -> DONE web socket, envoie des event (pas besoin de stocker dans les players)
@@ -13,4 +13,4 @@ Walid:  -> DONE page ajout de ressource,
 
 Alpha ou moi: - envoi de decisions communes pour les joueurs + gestion (concensus etc...)
 
-Ecrire un mini tuto
+ALPHA : Ecrire un mini tuto
