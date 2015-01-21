@@ -8,13 +8,12 @@ $(document).ready(function() {
 
   // Recevoir message de décision
   socket.on('server decision message', function (message) {
-    if (message.joueur == 0 || message.joueur === playerData._id)     
       displayDecisionMessage(message)
   })
 
   // Recevoir nouvel objectif
   socket.on('server objective message', function (message) {
-    if (message.joueur == 0 || message.joueur === playerData._id)     
+    if (message.joueur == 0 || message.joueur === playerData._id)
       displayObjectiveMessage(message)
   })
 
