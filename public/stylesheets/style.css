@@ -25,6 +25,11 @@ a {
   color: black;
 }
 
+.btn-right {
+  float: right;
+  margin-bottom: 10px;
+}
+
 #wrapper {
   padding-left:312px;
   position:relative;

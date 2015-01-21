@@ -57,7 +57,7 @@ function displayDecisionMessage(message) {
   $('body').append(tableContent)
 
   $(".close").click(function() {
-    $(this).parent().remove()
+    $(this).closest('.message').remove()
   })
 }
 
@@ -68,7 +68,7 @@ function displayObjectiveMessage(message) {
   tableContent += '</div><div class="message-body">'
   tableContent += '<p><strong>' + message.title + '</strong><br />'
   tableContent += message.description + '</p><br />'
-  tableContent += '<input type="button" class="ok_obj" value="OK" />'
+  tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-right" value="OK" />'
   tableContent += '</div></div>'
   $('body').append(tableContent)
 
@@ -84,7 +84,7 @@ function displayEventMessage(message) {
   tableContent += '</div><div class="message-body">'
   tableContent += '<p><strong>' + message.title + '</strong><br />'
   tableContent += message.description + '</p><br />'
-  tableContent += '<input type="button" class="ok_event" value="OK" />'
+  tableContent += '<input type="button" class="ok_event btn btn-lg btn-warning btn-right" value="OK" />'
   tableContent += '<input type="button" id="not_ok_event" value="NOT OK" />'
   tableContent += '</div></div>'
   $('body').append(tableContent)
@@ -102,7 +102,7 @@ function displayLogoutMessage(message) {
   tableContent += '</div><div class="message-body">'
   tableContent += '<p><strong>Vous allez être déconnecté.</strong><br />'
   tableContent += 'L\'administrateur vient de forcer votre déconnexion.</p><br />'
-  tableContent += '<input type="button" class="ok_event" value="OK" />'
+  tableContent += '<input type="button" class="ok_event btn btn-lg btn-danger btn-right" value="OK" />'
   tableContent += '</div></div>'
   $('body').append(tableContent)
 
