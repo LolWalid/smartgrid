@@ -44,16 +44,21 @@ block content
               label
                 input#inputObjectifCommon(type="checkbox") 
                 | Common objective
-        br
-        .col-sm-3
-          select#inputObjectifResource.resourceSelect.form-control
-        .col-sm-6
-          input#inputObjectifAchieve.form-control(type='text', placeholder='Value to reach')
-        br
-        textarea#inputObjectifDescription.form-control(type='text', placeholder='Description')
-        br
-        //- button.add_field_button Add More Fields
-        button#btnAddObjectif.btn.btn-success Add objective
+        .form-group
+          label.col-sm-2.control-label(for="inputObjectifResource") Resource
+          .col-sm-10
+            select#inputObjectifResource.resourceSelect.form-control
+        .form-group
+          label.col-sm-2.control-label Value
+          .col-sm-10
+            input#inputObjectifAchieve.form-control(type='text', placeholder='Value to reach')
+        .form-group
+          label.col-sm-2.control-label Description
+          .col-sm-10
+            textarea#inputObjectifDescription.form-control(type='text', placeholder='Description')
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            button#btnAddObjectif.btn.btn-success Add objective
 
     #editObjectif
       h2 Edit an objective
