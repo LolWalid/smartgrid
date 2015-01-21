@@ -12,17 +12,32 @@ block content
           th Shared
           th Delete
         tbody
+
     h2 Add a resource
     #newResource
-      fieldset
-        input#inputResourceName(type='text', placeholder='Resource')
-        label Shared resource ?
-          input#inputResourceShared(type='checkbox')
-        br
-        input#inputResourceValue(type='text', placeholder='Default Value')
-        input#inputResourceUnit(type='text', placeholder='unit')
-        br
-        button#btnAddResource Add
+      form.form-horizontal
+        .form-group
+          label.col-sm-2.control-label(for="inputResourceName") Name
+          .col-sm-10
+            input#inputResourceName.form-control(type='text', placeholder='Resource')
+        .form-group
+          label.col-sm-2.control-label(for="inputResourceShared") Type
+          .col-sm-10
+            .checkbox
+              label
+                input#inputResourceShared(type="checkbox") 
+                | Shared resource
+        .form-group
+          label.col-sm-2.control-label(for="inputResourceValue") Default value
+          .col-sm-10
+            input#inputResourceValue.form-control(type='text', placeholder='Default value')
+        .form-group
+          label.col-sm-2.control-label(for="inputResourceUnit") Unit
+          .col-sm-10
+            input#inputResourceUnit.form-control(type='text', placeholder='Unit')
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            button#btnAddResource.btn.btn-success Add resource
 
   script(src='/javascripts/admin/resourcescript.js')
 
