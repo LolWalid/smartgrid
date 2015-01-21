@@ -170,11 +170,11 @@ function addObjectif(event) {
     }
     */
     // If it is, compile all objectif info into one object
-    var isCommon = $('#addObjectif fieldset input#inputObjectifCommon').is(":checked")
+    var isCommon = $('#addObjectif input#inputObjectifCommon').is(":checked")
     var newObjectif = {
-      title : $('#addObjectif fieldset input#inputObjectifTitle').val(),
-      description : $('#addObjectif fieldset #inputObjectifDescription').val(),
-      achieve : $('#addObjectif fieldset input#inputObjectifAchieve').val(),
+      title : $('#addObjectif input#inputObjectifTitle').val(),
+      description : $('#addObjectif #inputObjectifDescription').val(),
+      achieve : $('#addObjectif input#inputObjectifAchieve').val(),
       resource : $(this).siblings(".resourceSelect").val(),
       common : isCommon,
       //players : isCommon ? [0] : $('#addObjectif fieldset select#inputObjectifPlayers').val() || []
@@ -193,8 +193,8 @@ function addObjectif(event) {
       if (response.msg === '') {
 
         // Clear the form inputs
-        $('#addObjectif fieldset input').not(":checkbox").val('');
-        $('#addObjectif fieldset textarea').val('');
+        $('#addObjectif input').not(":checkbox").val('');
+        $('#addObjectif textarea').val('');
 
         // Update the table
         populateTable();
