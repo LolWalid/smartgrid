@@ -1,7 +1,5 @@
 $(document).ready(function() {
-
   $('#btnSendDecision').on('click', sendDecision)
-
 })
 
 function sendDecision(event) {
@@ -17,7 +15,7 @@ function sendDecision(event) {
       description : $("#inputDescription").val(),
       type : $("#decisionType").val()
     }
-
+    response = []
     socket.emit('new decision', new_decision)
   }
   else {
@@ -31,15 +29,15 @@ function receiveDecision() {
   var responseYes = 0
   var responseNo = 0
 
-    var liYes = ''
-    var liNo = ''
+  var liYes = ''
+  var liNo = ''
 
-    $.each(response, function() {
+  $.each(response, function() {
     if (this.response === 'Oui') {
       liYes += '<li><a href="#">Player ' + this.joueur + '</a></li>'
       responseYes++
     }
-    else if (this.response === 'No'){
+    else if (this.response === 'Non'){
       liNo += '<li><a href="#">Player ' + this.joueur + '</a></li>'
       responseNo++
     }
@@ -47,13 +45,13 @@ function receiveDecision() {
 
   var tableContentYes = '<div class="dropdown">\
   <button class="btn btn-default dropdown-toggle" type="button" id="reponseYes" data-toggle="dropdown" aria-expanded="true">' +
-  'Yes : ' +  responseYes +
+  'Yes : ' +  responseYes + ' ' +
   '<span class="caret"></span>\
   </button>'
 
   var tableContentNo =  '<div class="dropdown">\
   <button class="btn btn-default dropdown-toggle" type="button" id="reponseNo" data-toggle="dropdown" aria-expanded="true">' +
-  'No :' + responseNo +
+  'No :' + responseNo + ' '+
   '<span class="caret"></span>\
   </button>'
 
@@ -69,6 +67,10 @@ function receiveDecision() {
 
   if (responseYes != 0 )
     $("#response").append(tableContentYes)
-    if (responseNo != 0 )
+  if (responseNo != 0 )
     $("#response").append(tableContentNo)
+
+  if (response.length === players.length)
+    $("#response").append('All Players have responded')
+  console.log(players.length)
 }

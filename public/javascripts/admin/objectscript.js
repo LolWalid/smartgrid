@@ -16,8 +16,6 @@ $(document).ready(function() {
 
   // Edit Object button click
   $('#btnEditObject').on('click', editObject);
-    $('#objectList table tbody').on('click', 'td a.sendObject', sendObject);
-
 
   $('.add_field_button').on('click', addField);
   $('.remove_field').on('click', removeField);
@@ -54,18 +52,6 @@ function populateTable() {
       tableContent += '<td>' + this.description + '</td>';
       tableContent += '<td>' + (this.common ? "Common" : "Individual") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteobject" rel="' + this._id + '">Delete</a></td>';
-      if (!this.common) {
-        tableContent += '<td><select id="sendto">';
-
-        $.each(players, function(){
-          tableContent += '<option value="'+ this._id +'">Player '+ this._id +'</option>';
-        });
-        tableContent += '</select></td>';
-      }
-      else   {
-        tableContent += '<td>All players</td>';
-      }
-      tableContent += '<td><a href="#" class="sendObject" rel="' + this._id + '">Send</a></td>';
       tableContent += '</tr>';
     });
 
@@ -325,36 +311,3 @@ function removeField(event) {
   $(this).parent('div').remove();
 }
 
-function sendObject(event){
-  event.preventDefault();
-  var thisObjectId = $(this).prop('rel');
-  var arrayPosition = objectListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisObjectId);
-  var thisObjectObject = objectListData[arrayPosition];
-  var _this = $(this);
-  //for (var i = 0; i < thisObjectObject.players.length; i++) {
-    var objectToSend = {
-      joueur: (thisObjectObject.common ? 0 : $(this).closest('tr').find("#sendto").val()),
-      //'joueur': thisObjectObject.common == "true" ? 0 : thisObjectObject.players[i],
-      title: thisObjectObject.title,
-      description: thisObjectObject.description,
-      effects : thisObjectObject.effects,
-      common : thisObjectObject.common
-    };
-
-    socket.emit('new object', objectToSend);
-
-    if (thisObjectObject.common) {
-      updatePlayers();
-      $.each(players, function(){
-        updatePlayersObjectives(this._id, thisObjectObject);
-      });
-    }
-    else {
-      var playerId = $(this).closest('tr').find("#sendto").val();
-      updatePlayersObjectives(playerId, thisObjectObject);
-    }
-
-    //console.log("Message envoyé au joueur " + thisObjectObject.common == "true" ? 0 : thisObjectObject.players[i]);
-  //}
-
-}

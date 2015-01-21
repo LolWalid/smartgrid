@@ -76,6 +76,7 @@ function sendResponse(event) {
   event.preventDefault
   console.log($(this).val())
   socket.emit('response vote', {joueur : playerData._id, response : $(this).val()})
+  $(this).closest('.message').remove()
 }
 
 function displayObjectiveMessage(message) {
