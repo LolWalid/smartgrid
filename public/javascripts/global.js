@@ -48,11 +48,13 @@ function updatePlayerView() {
 
 function displayDecisionMessage(message) {
   var tableContent = '<div class="message decision">'
-  tableContent += '<h3>Faites un choix</h3>'
+  tableContent += '<div class="message-heading">'
+  tableContent += '<h3 class="message-title">Faites un choix</h3>'
+  tableContent += '</div><div class="message-body">'
   tableContent += '<p><strong>' + message.name + '</strong><br />'
   tableContent += message.description + '</p><br />'
   tableContent += '<input type="button" class="close" value="Close" />'
-  tableContent += '</div>'
+  tableContent += '</div></div>'
   $('body').append(tableContent)
 
   $(".close").click(function() {

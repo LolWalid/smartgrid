@@ -79,7 +79,7 @@ fieldset {
   border-radius: 4px;
   width: 30%;
   position: absolute;
-  top: 15%;
+  top: 20%;
   left: 40%;
 }
 
@@ -102,7 +102,13 @@ fieldset {
 }
 
 .decision {
-  background-color: rgb(90,180,220);
+  border-color: #337ab7;
+}
+
+.decision > .message-heading {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #337ab7;
 }
 
 .objective {
