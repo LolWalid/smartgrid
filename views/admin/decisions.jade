@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  .container
+    #decisionInfo.info
+      h2 Decision Info
+      p
+        strong Title :
+        |  <span id='decisionInfoName'></span>
+        br
+        strong Description :
+        |  <span id='decisionInfoDescription'></span>
+        br
+        strong Type :
+        |  <span id='decisionInfoType'></span>
+        br
+      #response
+
+    h2 Decision List
+    #decisionList.list
+      table
+        thead
+          th Title
+          th Description
+          th Type
+          th Delete ?
+          th Send
+        tbody
+
+    #newDecision
+      h2 Add Decision
+      form.form-horizontal
+        .form-group
+          label.col-sm-2.control-label(for="inputDecisionTitle") Title
+          .col-sm-10
+            input#inputDecisionTitle.form-control(type='text', placeholder='Objective title')
+
+        .form-group
+          label.col-sm-2.control-label(for="decisionType") Type
+          .col-sm-10
+            select#decisionType.resourceSelect.form-control
+                option(value='Concensus') Concensus
+                option(value='Vote') Vote
+
+        .form-group
+          label.col-sm-2.control-label(for="inputDescription") Description
+          .col-sm-10
+            textarea#inputDescription.form-control(type='text', placeholder='Description')
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            button#addDecision.btn.btn-success Add decision
+
+  script(src='/javascripts/admin/decisionscript.js')
