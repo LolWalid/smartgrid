@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  #wrapper
+  .container
     #objectifInfo.info
       h2 Objective Info
       p
@@ -32,20 +32,28 @@ block content
 
     #addObjectif
       h2 Add an objective
-      fieldset
-        input#inputObjectifTitle(type='text', placeholder='Objective title')
-        label Common objective ?
-        input#inputObjectifCommon(type='checkbox')
-        //br
-        //select#inputObjectifPlayers(name='players', size='10', multiple='multiple')
+      form.form-horizontal
+        .form-group
+          label.col-sm-2.control-label(for="inputObjectifTitle") Title
+          .col-sm-10
+            input#inputObjectifTitle.form-control(type='text', placeholder='Objective title')
+        .form-group
+          label.col-sm-2.control-label(for="inputObjectifCommon") Type
+          .col-sm-10
+            .checkbox
+              label
+                input#inputObjectifCommon(type="checkbox") 
+                | Common objective
         br
-        select#inputObjectifResource.resourceSelect
-        input#inputObjectifAchieve(type='text', placeholder='Value to reach')
+        .col-sm-3
+          select#inputObjectifResource.resourceSelect.form-control
+        .col-sm-6
+          input#inputObjectifAchieve.form-control(type='text', placeholder='Value to reach')
         br
-        textarea#inputObjectifDescription(type='text', placeholder='Description')
+        textarea#inputObjectifDescription.form-control(type='text', placeholder='Description')
         br
         //- button.add_field_button Add More Fields
-        button#btnAddObjectif Add objective
+        button#btnAddObjectif.btn.btn-success Add objective
 
     #editObjectif
       h2 Edit an objective
