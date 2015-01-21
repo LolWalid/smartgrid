@@ -62,45 +62,51 @@ function displayDecisionMessage(message) {
 
 function displayObjectiveMessage(message) {
   var tableContent = '<div class="message objective">'
-  tableContent += '<h3>Nouvel objectif !</h3>'
+  tableContent += '<div class="message-heading">'
+  tableContent += '<h3 class="message-title">Nouvel objectif !</h3>'
+  tableContent += '</div><div class="message-body">'
   tableContent += '<p><strong>' + message.title + '</strong><br />'
   tableContent += message.description + '</p><br />'
   tableContent += '<input type="button" class="ok_obj" value="OK" />'
-  tableContent += '</div>'
+  tableContent += '</div></div>'
   $('body').append(tableContent)
 
   $(".ok_obj").click(function() {
-    $(this).parent().remove()
+    $(this).closest('.message').remove()
   })
 }
 
 function displayEventMessage(message) {
   var tableContent = '<div class="message event">'
-  tableContent += '<h3>Nouvel Évènement !</h3>'
+  tableContent += '<div class="message-heading">'
+  tableContent += '<h3 class="message-title">Nouvel Évènement !</h3>'
+  tableContent += '</div><div class="message-body">'
   tableContent += '<p><strong>' + message.title + '</strong><br />'
   tableContent += message.description + '</p><br />'
   tableContent += '<input type="button" class="ok_event" value="OK" />'
   tableContent += '<input type="button" id="not_ok_event" value="NOT OK" />'
-  tableContent += '</div>'
+  tableContent += '</div></div>'
   $('body').append(tableContent)
 
   $(".ok_event").click(function() {
-    $(this).parent().remove()
+    $(this).closest('.message').remove()
     updatePlayer(message)
   })
 }
 
 function displayLogoutMessage(message) {
   var tableContent = '<div class="message logout">'
-  tableContent += '<h3>Oups !</h3>'
+  tableContent += '<div class="message-heading">'
+  tableContent += '<h3 class="message-title">Oups !</h3>'
+  tableContent += '</div><div class="message-body">'
   tableContent += '<p><strong>Vous allez être déconnecté.</strong><br />'
   tableContent += 'L\'administrateur vient de forcer votre déconnexion.</p><br />'
   tableContent += '<input type="button" class="ok_event" value="OK" />'
-  tableContent += '</div>'
+  tableContent += '</div></div>'
   $('body').append(tableContent)
 
   $(".ok_event").click(function() {
-    $(this).parent().remove()
+    $(this).closest('.message').remove()
     $.ajax({
       url: '/logout',
       type: 'POST',

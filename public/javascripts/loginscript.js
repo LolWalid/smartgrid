@@ -2,7 +2,6 @@ var socket = io.connect('/');
 
 var players = [];
 
-
 function getResource(object) {
 	$.getJSON( '/resources/list', function( data ) {
 		$.each(data, function() {
@@ -77,6 +76,15 @@ function addDisconnected() {
 $(document).ready(function(){
 	var i;
 	updatePlayers();
+
+	$("#pseudo").change(function () {
+		if ($(this).val() != 0) {
+			$("#password").hide();
+		}
+		else {
+			$("#password").show();
+		}
+	});
 
 	var login,password;
 	$("#login-form").submit(function(event){

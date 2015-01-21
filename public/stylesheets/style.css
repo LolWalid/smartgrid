@@ -13,7 +13,16 @@ h2 {
 }
 
 a {
-  color: #00B7FF;
+  color: #2222ff;
+}
+
+.navbar,
+.jumbotron {
+  background-color: rgb(200,200,255);
+}
+
+.navbar-default .navbar-text {
+  color: black;
 }
 
 #wrapper {
@@ -65,13 +74,31 @@ fieldset {
 
 .message {
   margin: auto;
-  padding: 15px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
   width: 30%;
-  border: 1px solid black;
   position: absolute;
   top: 15%;
   left: 40%;
-  border-radius: 10px;
+}
+
+.message-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.message-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: inherit;
+}
+
+.message-body {
+  padding: 15px;
 }
 
 .decision {
@@ -79,19 +106,37 @@ fieldset {
 }
 
 .objective {
-  background-color: rgb(20,180,75);
+  border-color: #d6e9c6;
+}
+
+.objective > .message-heading {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
 }
 
 .event {
-  background-color: rgb(222,3,247);
+  border-color: #faebcc;
+}
+
+.event > .message-heading {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
 }
 
 .logout {
-  background-color: rgb(245,0,0);
+  border-color: #ebccd1;
+}
+
+.logout > .message-heading {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
 }
 
 a.navbar-brand {
-  border-right: 1px solid #e7e7e7;
+  border-right: 1px solid #aaaaff;
 }
 
 #profil {

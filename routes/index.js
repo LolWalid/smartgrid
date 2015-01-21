@@ -36,15 +36,9 @@ router.get('/objectives', function(req, res) {
 
 router.post('/login', function(req, res) {
 	sess = req.session;
-	sess.joueur = req.body.login;
+	
+  sess.joueur = req.body.login;
   res.send({msg: 'done'});
-});
-
-router.get('/logout', function(req, res) {
-  sess = req.session;
-
-  delete sess.joueur;
-  res.send('Vous êtes maintenant déconnecté.');
 });
 
 router.post('/logout', function(req,res) {

@@ -2,18 +2,20 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='///netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='/javascripts/jquery.min.js')
     script(src='/javascripts/socket.io.js')
   body
-    #login
-      form#login-form
-        select#pseudo
-        br
-        input#password(type='password', placeholder='Password')
-        input#submit(type='submit', value='Connexion')
-    h2 Liste des joueurs connectés
-    ul.connected
+    .container
+      .jumbotron
+        h1 Bienvenue sur SmartGrid !
+        form#login-form
+          select#pseudo
+          br
+          input#password(type='password', placeholder='Password')
+          input#submit(type='submit', class='btn btn-lg btn-success',value='Connexion')
+        h2 Liste des joueurs connectés
+        ul.connected
 
   script(src='/javascripts/loginscript.js')
