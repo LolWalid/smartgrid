@@ -1,0 +1,62 @@
+extends layout
+
+block content
+  #wrapper
+    #objectInfo.info
+      h2 Object Info
+      p
+        strong Title :
+        |  <span id='objectInfoTitle'></span>
+        br
+        strong Description :
+        |  <span id='objectInfoDescription'></span>
+        br
+      h2 Effects :
+      p#effects
+
+
+    h2 Objects List
+    #objectList.list
+      table
+        thead
+          th Title
+          th Description
+          th Type
+          th Delete ?
+          th Send to
+          th Send
+        tbody
+    #addObject
+      h2 Add an Object
+      fieldset
+        input#inputObjectTitle(type='text', placeholder='Object title')
+        label Common Object ?
+          input#inputObjectCommon(type='checkbox')
+        br
+        label Cost
+        select.resource.cost
+        input#price(type='text', placeholder='Effect')
+        br
+        textarea#objectDescription(type='text', placeholder='Description')
+        br
+        div.add_input_effects
+          div
+            select.resource
+            input.effect(type='text', placeholder='Effect')
+            a.remove_field(href="#")  Remove
+        button.add_field_button Add More Fields
+        button#btnAddObject Add Object
+
+    #editObject
+      h2 Edit an Object
+      fieldset
+        input#editObjectId(type='hidden')
+        input#editObjectTitle(type='text', placeholder='Object title')
+        input#editObjectDescription(type='text', placeholder='Description')
+        br
+        div.add_input_effects
+          div
+        button.add_field_button Add More Fields
+
+        button#btnEditObject Edit Object
+    script(src='/javascripts/admin/objectscript.js')

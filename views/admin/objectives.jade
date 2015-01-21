@@ -30,8 +30,8 @@ block content
           th Send
         tbody
 
-    h2 Add an objective
     #addObjectif
+      h2 Add an objective
       fieldset
         input#inputObjectifTitle(type='text', placeholder='Objective title')
         label Common objective ?
@@ -47,20 +47,20 @@ block content
         //- button.add_field_button Add More Fields
         button#btnAddObjectif Add objective
 
-  h2 Edit an objective
-  #editObjectif
-    fieldset
-      input#editObjectifId(type='hidden')
-      input#editObjectifTitle(type='text', placeholder='Objective title')
-      input#editObjectifDescription(type='text', placeholder='Description')
-      br
-      select#editObjectifResource.resourceSelect
-      input#editObjectifAchieve(type='text', placeholder='Effect')
-      br
-      //- button.add_field_button Add More Fields
-      button#btnEditObjectif Edit objective
+    #editObjectif
+      h2 Edit an objective
+      fieldset
+        input#editObjectifId(type='hidden')
+        input#editObjectifTitle(type='text', placeholder='Objective title')
+        input#editObjectifDescription(type='text', placeholder='Description')
+        br
+        select#editObjectifResource.resourceSelect
+        input#editObjectifAchieve(type='text', placeholder='Effect')
+        br
+        //- button.add_field_button Add More Fields
+        button#btnEditObjectif Edit objective
 
-  h2
-    a#updateView(href="#") UPDATE
+    h2
+      a#updateView(href="#") UPDATE
 
   script(src='/javascripts/objectifscript.js')
