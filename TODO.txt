@@ -3,7 +3,7 @@ TODO LIST :
 On passe aux choses serieuses ! Les joueurs vont pouvoir commencer à jouer
 
 Partie ADMIN :
-  - Ajouter les récompenses dans les objectifs
+  Done - Ajouter les récompenses dans les objectifs
   - Gerer tous les messages que les joueurs vont envoyer (modifier les ressources !)
   - Gerer les réponses des consensus
 

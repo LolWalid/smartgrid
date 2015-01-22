@@ -16,3 +16,15 @@ function updatePlayers () {
     players = data;
   });
 }
+
+
+function updateResources() {
+  $.getJSON( '/resources/list', function( data ) {
+    resources = data
+    var tableResources = ''
+    $.each(data, function() {
+      tableResources += '<option value="' + this.name + '">' + this.name + '</option>'
+    })
+    $(".resource").html(tableResources)
+  })
+}

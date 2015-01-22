@@ -7,13 +7,7 @@ var resources;
 $(document).ready(function() {
 
   // Fill players options
-/*  for (i=1; i <= 10; i++) {
-    $('#inputObjectifPlayers').append('<option value="'+ i +'">Player '+ i +'</option>');
-  }*/
-  // Hide/unhide playerslist
-/*  $('#inputObjectifCommon').on('change', function() {
-    $('#inputObjectifPlayers').toggle()
-  })*/
+
   // Populate the objectif table on initial page load
   populateTable();
 
@@ -40,25 +34,6 @@ $(document).ready(function() {
 
 
 // Functions =============================================================
-
-
-function updatePlayers () {
-  $.getJSON('/players/list', function (data) {
-    players = data;
-  });
-}
-
-function updateResources() {
-  $.getJSON( '/resources/list', function( data ) {
-    resources = data
-    var tableResources = ''
-    $.each(data, function() {
-      tableResources += '<option value="' + this.name + '">' + this.name + '</option>'
-    })
-    $(".resourceSelect").html(tableResources)
-  })
-}
-
 
 // Fill table with data
 function populateTable() {
@@ -118,24 +93,6 @@ function showObjectifInfo(event) {
   // Get our Objectif Object
   var thisObjectifObject = objectifListData[arrayPosition];
 
-
-  //console.log(thisObjectifObject["effects[0][resource]"]);
-
-/*  var tableContent = '';
-
-  if( typeof(effects.length)!="undefined") {
-    for( var i = 0; i< effects.length;i++ ) {
-      tableContent += '<strong>Ressources : </strong>';
-      tableContent += '<span>'+ effects[i].resource + '</span>';
-      tableContent += "<br>"
-      tableContent += '<strong>Effet : </strong>';
-      tableContent += '<span>'+ effects[i].effect + '</span>';
-    }
-  }
-
-  $('#effects').html(tableContent);
-  */
-
   //Populate Info Box
   $('#objectifInfoTitle').text(thisObjectifObject.title);
   $('#objectifInfoDescription').text(thisObjectifObject.description);
@@ -166,18 +123,6 @@ function addObjectif(event) {
   // Check and make sure errorCount's still at zero
   if(errorCount === 0) {
 
-/*    var resources = $('#addObjectif .resource');
-    var effects = $('#addObjectif .effect');
-
-    var effectsJson = [];
-
-    if( typeof(effects.length)!="undefined") {
-      for (var i=0; i<effects.length; i++) {
-        var json = {'resource': resources[i].value, 'effect': effects[i].value};
-        effectsJson = effectsJson.concat(json);
-      }
-    }
-    */
     // If it is, compile all objectif info into one object
     var isCommon = $('#addObjectif input#inputObjectifCommon').is(":checked")
     var newObjectif = {
@@ -188,9 +133,7 @@ function addObjectif(event) {
       reward : $('#addObjectif #inputObjectifRewardResource').val(),
       rewardValue : $('#addObjectif #inputObjectifRewardValue').val(),
       common : isCommon,
-      //players : isCommon ? [0] : $('#addObjectif  select#inputObjectifPlayers').val() || []
     }
-//    newObjectif.effects = effectsJson;
 
     // Use AJAX to post the object to our addobjectif service
     $.ajax({
@@ -298,7 +241,9 @@ function editObjectif(event) {
       // Check for successful (blank) response
       if (response.msg === '') {
         // Clear the form inputs
-        $('#editObjectif input').val('');
+
+        $('#editObjectif input').not(":checkbox").val('');
+        $('#editObjectif textarea').val('');
 
         // Update the table
         populateTable();

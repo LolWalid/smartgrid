@@ -32,22 +32,6 @@ $(document).ready(function() {
 
 // Functions =============================================================
 
-function updateResources() {
-  $.getJSON( '/resources/list', function( data ) {
-    resources = data
-    var tableResources = ''
-    $.each(data, function() {
-      tableResources += '<option value="' + this.name + '">' + this.name + '</option>'
-    })
-    $(".resource").html(tableResources)
-  })
-}
-
-function updatePlayers () {
-  $.getJSON('/players/list', function (data) {
-    players = data;
-  });
-}
 
 // Fill table with data
 function populateTable() {
@@ -332,11 +316,10 @@ function editEvent(event) {
 function addField (e) {
   e.preventDefault();
   $(this).parents('.add_input_effects').append('<div class="form-group">\
-    <label class="col-sm-2 control-label" for="inputObjectifResource">Resource</label>\
-    <div class="col-sm-4">\
+    <label class="col-sm-2 control-label" for="inputObjectifResource">Other Effect</label>\
+    <div class="col-sm-5">\
     <select class="resource form-control"></select>\
     </div>\
-    <label class="col-sm-1 control-label">Effect</label>\
     <div class="col-sm-4">\
     <input type="text" class="effect form-control" placeholder="Effect">\
     </div>\
@@ -345,7 +328,7 @@ function addField (e) {
     </div>\
     </div>');
   $('.remove_field').last().on('click', removeField);
-  updateResources();
+  //updateResources();
 }
 
 function removeField(e) {
