@@ -1,16 +1,21 @@
-TODO LIST : 
+TODO LIST :
 
-ALPHA:  -> DONE gestion des clients, pouvoir les supprimer de la bd et les deconnecter (dans les 2 cas supprimer la variable de session)
-        -> IMPOSSIBRU gestion des messages (envoyés qu'au joueur connecté)
+On passe aux choses serieuses ! Les joueurs vont pouvoir commencer à jouer
 
-DEF:  -> DONE ajout en bd des objectifs pour les joueurs 
-      -> DONE web socket, envoie des event (pas besoin de stocker dans les players)
-      -> PRESQUE DONE (en commentaire, les objets players sont pas encore conformes) gestion des msg cad reduire les ressources des joueurs concernés
+Partie ADMIN :
+  - Ajouter les recompenses dans les objectifs
+  - Gerer tout les messages que les joueurs vont envoyer (modifier les ressources !)
+  - Gerer les reponses des concensus
 
-Walid:  -> DONE page ajout de ressource,
-        -> DONE revoir la partie crud des objectifs pour faire un truc vraiment générique (aller chercher les noms des ressources dans la bd)
-        - continuer les AAP
 
-Alpha ou moi: - envoi de decisions communes pour les joueurs + gestion (concensus etc...)
+Partie PLAYER :
+  - Le joueur a une liste d'objet disponible, question : Peut il acheter 2 fois le meme objet ? Si non ajouter une liste d'objet dans le player en db (les ids seront suffisants) sinon ajouter un champs multiple dans objects ?
+  - ajouter des interactions entre les joueurs ?
+  - ajouter la notion de ressources partagées, je vous propose d'ajouter une collection "City" qui aura des valeurs initiales par défaut
 
-ALPHA : Ecrire un mini tuto
+
+
+Bonus :
+  - continuer les AAP
+  - Ecrire un mini tuto (cf Bootstrap tour)
+

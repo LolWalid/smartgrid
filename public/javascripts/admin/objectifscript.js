@@ -4,7 +4,7 @@ var players;
 var resources;
 
 // DOM Ready =============================================================
-ready = $(function() {
+$(document).ready(function() {
 
   // Fill players options
 /*  for (i=1; i <= 10; i++) {
@@ -43,8 +43,7 @@ ready = $(function() {
   });
 });
 
-$(document).ready(ready);
-$(document).on('page:load', ready);
+
 // Functions =============================================================
 
 

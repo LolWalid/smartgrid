@@ -106,7 +106,8 @@ function move(elem) {
 ready = $(function() {
   $("#map").css({
     'position': 'relative',
-    'margin-left': 50*taille + "px"
+    'margin-left': 50 * (taille-1) + "px",
+    'margin-top' : '50px'
   });
 
   for (var i=0; i < taille; i++) {
@@ -167,7 +168,7 @@ ready = $(function() {
   add(3,2,"img/roadTEast.png",0);
   add(4,2,"img/roadTEast.png",0);
 
-  add_house(0,0);
+  //add_house(0,0);
   $("#map")
   .append('<img \
     src="img/vehicules/bus_cote.png" \
