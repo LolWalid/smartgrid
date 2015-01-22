@@ -3,14 +3,18 @@ TODO LIST :
 On passe aux choses serieuses ! Les joueurs vont pouvoir commencer à jouer
 
 Partie ADMIN :
-  - Ajouter les récompenses dans les objectifs
-  - Gerer tous les messages que les joueurs vont envoyer (modifier les ressources !)
-  - Gerer les réponses des consensus
+  - ALPHA -> OK : Ajouter les récompenses dans les objectifs
+  - Gérer tous les messages que les joueurs vont envoyer (modifier les ressources !)
+  - Gérer les réponses des consensus
 
 
 Partie PLAYER :
-  - Le joueur a une liste d'objets disponibles, question : Peut il acheter 2 fois le même objet ? Si non ajouter une liste d'objets dans le player en db (les ids seront suffisants) sinon ajouter un champs multiple dans objects ?
-  - ajouter des interactions entre les joueurs ?
+  - Le joueur a une liste d'objets disponibles, question : 
+  	Peut il acheter 2 fois le même objet ? 
+  		Si non ajouter une liste d'objets dans le player en db (les ids seront suffisants) 
+  		Si oui ajouter un champs multiple dans objects
+  	-> Ajouter un champs multiple dans Objects
+  - ajouter des interactions entre les joueurs ? 
   - ajouter la notion de ressources partagées, je vous propose d'ajouter une collection "City" qui aura des valeurs initiales par défaut
 
 Bonus :
