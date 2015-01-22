@@ -141,11 +141,15 @@ function showObjectifInfo(event) {
   $('#objectifInfoDescription').text(thisObjectifObject.description);
   $('#objectifInfoResource').text(thisObjectifObject.resource);
   $('#objectifInfoAchieve').text(thisObjectifObject.achieve);
+  $('#objectifInfoReward').text(thisObjectifObject.reward);
+  $('#objectifInfoRewardValue').text(thisObjectifObject.rewardValue);
 
   $('#editObjectifTitle').val(thisObjectifObject.title);
   $('#editObjectifDescription').val(thisObjectifObject.description);
   $('#editObjectifResource').val(thisObjectifObject.resource);
   $('#editObjectifAchieve').val(thisObjectifObject.achieve);
+  $('#editObjectifRewardResource').val(thisObjectifObject.reward);
+  $('#editObjectifRewardValue').val(thisObjectifObject.rewardValue);
   $('#editObjectifId').val(thisObjectifObject._id);
 };
 
@@ -177,10 +181,12 @@ function addObjectif(event) {
     // If it is, compile all objectif info into one object
     var isCommon = $('#addObjectif input#inputObjectifCommon').is(":checked")
     var newObjectif = {
-      title : $('#addObjectif input#inputObjectifTitle').val(),
+      title : $('#addObjectif #inputObjectifTitle').val(),
       description : $('#addObjectif #inputObjectifDescription').val(),
-      achieve : $('#addObjectif input#inputObjectifAchieve').val(),
-      resource : $(this).siblings(".resourceSelect").val(),
+      achieve : $('#addObjectif #inputObjectifAchieve').val(),
+      resource : $('#addObjectif #inputObjectifResource').val(),
+      reward : $('#addObjectif #inputObjectifRewardResource').val(),
+      rewardValue : $('#addObjectif #inputObjectifRewardValue').val(),
       common : isCommon,
       //players : isCommon ? [0] : $('#addObjectif  select#inputObjectifPlayers').val() || []
     }
@@ -272,11 +278,13 @@ function editObjectif(event) {
 
     // If it is, compile all objectif info into one object
     var objectif = {
-      'id': $('#editObjectif input#editObjectifId').val(),
-      'title': $('#editObjectif input#editObjectifTitle').val(),
-      'description': $('#editObjectif input#editObjectifDescription').val(),
-      'resource': $('#editObjectif input#editObjectifResource').val(),
+      'id': $('#editObjectif #editObjectifId').val(),
+      'title': $('#editObjectif #editObjectifTitle').val(),
+      'description': $('#editObjectif #editObjectifDescription').val(),
+      'resource': $('#editObjectif #editObjectifResource').val(),
       'achieve': $('#editObjectif input#editObjectifAchieve').val(),
+      'reward': $('#editObjectif #editObjectifRewardResource').val(),
+      'rewardValue': $('#editObjectif #editObjectifRewardValue').val()
     };
 
     // Use AJAX to post the object to our editObjectif service

@@ -5,18 +5,23 @@ block content
     #objectifInfo.info
       h2 Objective Info
       p
-        strong Title :
-        |  <span id='objectifInfoTitle'></span>
+        strong Title : 
+        span#objectifInfoTitle
         br
-        strong Description :
-        |  <span id='objectifInfoDescription'></span>
+        strong Description : 
+        span#objectifInfoDescription
         br
-        strong Resource :
-        |  <span id='objectifInfoResource'></span>
+        strong Resource : 
+        span#objectifInfoResource
         br
-        strong Value to reach :
-        |  <span id='objectifInfoAchieve'></span>
+        strong Value to reach : 
+        span#objectifInfoAchieve
         br
+        strong Reward resource : 
+        span#objectifInfoReward
+        br
+        strong Reward value : 
+        span#objectifInfoRewardValue
 
     h2 Objectives List
     #objectifList.list
@@ -47,14 +52,20 @@ block content
                 | Common objective
         .form-group
           label.col-sm-2.control-label(for="inputObjectifResource") Resource
-          .col-sm-10
+          .col-sm-5
             select#inputObjectifResource.resourceSelect.form-control
-        .form-group
-          label.col-sm-2.control-label Value
-          .col-sm-10
+          label.col-sm-1.control-label(for="inputObjectifAchieve") Value
+          .col-sm-4
             input#inputObjectifAchieve.form-control(type='text', placeholder='Value to reach')
         .form-group
-          label.col-sm-2.control-label Description
+          label.col-sm-2.control-label Reward
+          .col-sm-5
+            select#inputObjectifRewardResource.resourceSelect.form-control
+          label.col-sm-1.control-label Value
+          .col-sm-4
+            input#inputObjectifRewardValue.form-control(type='text', placeholder='Reward value')
+        .form-group
+          label.col-sm-2.control-label(for="inputObjectifDescription") Description
           .col-sm-10
             textarea#inputObjectifDescription.form-control(type='text', placeholder='Description')
         .form-group
@@ -63,15 +74,39 @@ block content
 
     h2 Edit objective
     #editObjectif.notDisplayed
-      fieldset
-        input#editObjectifId(type='hidden')
-        input#editObjectifTitle(type='text', placeholder='Objective title')
-        input#editObjectifDescription(type='text', placeholder='Description')
-        br
-        select#editObjectifResource.resourceSelect
-        input#editObjectifAchieve(type='text', placeholder='Effect')
-        br
-        //- button.add_field_button Add More Fields
-        button#btnEditObjectif Edit objective
+      form.form-horizontal
+          input#editObjectifId(type='hidden')
+          .form-group
+            label.col-sm-2.control-label(for="editObjectifTitle") Title
+            .col-sm-10
+              input#editObjectifTitle.form-control(type='text')
+          .form-group
+            label.col-sm-2.control-label(for="editObjectifCommon") Type
+            .col-sm-10
+              .checkbox
+                label
+                  input#editObjectifCommon(type="checkbox") 
+                  | Common objective
+          .form-group
+            label.col-sm-2.control-label(for="editObjectifResource") Resource
+            .col-sm-5
+              select#editObjectifResource.resourceSelect.form-control
+            label.col-sm-1.control-label(for="editObjectifAchieve") Value
+            .col-sm-4
+              input#editObjectifAchieve.form-control(type='text', placeholder='Value to reach')
+          .form-group
+            label.col-sm-2.control-label Reward
+            .col-sm-5
+              select#editObjectifRewardResource.resourceSelect.form-control
+            label.col-sm-1.control-label Value
+            .col-sm-4
+              input#editObjectifRewardValue.form-control(type='text', placeholder='Reward value')
+          .form-group
+            label.col-sm-2.control-label(for="editObjectifDescription") Description
+            .col-sm-10
+              textarea#editObjectifDescription.form-control(type='text', placeholder='Description')
+          .form-group
+            .col-sm-offset-2.col-sm-10
+              button#btnEditObjectif.btn.btn-warning Edit objective
 
   script(src='/javascripts/admin/objectifscript.js')
