@@ -11,6 +11,13 @@ $(document).ready(function() {
 
   $('#objectList table tbody').on('click', 'td a.linkdeleteobject', deleteObject);
 
+  $('#displayAddForm').on('click', function () {
+    $("#editObject").slideUp(function() {
+      $('#editObject input').val('');
+      $("#addObject").slideToggle();
+    });
+  });
+
   // Add Object button click
   $('#btnAddObject').on('click', addObject);
 
@@ -67,6 +74,10 @@ function showObjectInfo(event) {
   // Probject Link from Firing
   event.preventDefault();
 
+  $("#addObject").slideUp(function () {
+    $("#editObject").slideDown();
+  });
+
   $("#editObject .remove_field").trigger('click');
 
   // Retrieve objectname from link rel attribute
@@ -115,12 +126,12 @@ function showObjectInfo(event) {
       for (var j = 0; j < resources.length; j++) {
 
        options += '<option value="' + resources[j].name + '"' + (resources[j].name == effects[i].resource ? 'selected' : '' ) + '>' + resources[j].name + '</option>'
-      }
-      $('#resource' + i).html(options)
-    }
-  }
+     }
+     $('#resource' + i).html(options)
+   }
+ }
 
-  $('#effects').html(tableContent);
+ $('#effects').html(tableContent);
 };
 
 // Add Object
@@ -148,12 +159,12 @@ function addObject(event) {
       }
     }
 
-    var isCommon = $('#addObject fieldset input#inputObjectCommon').is(":checked")
+    var isCommon = $('#addObject input#inputObjectCommon').is(":checked")
 
     // If it is, compile all object info into one object
     var newObject = {
-      title : $('#addObject fieldset input#inputObjectTitle').val(),
-      description : $('#addObject fieldset textarea#objectDescription').val(),
+      title : $('#addObject input#inputObjectTitle').val(),
+      description : $('#addObject textarea#objectDescription').val(),
       common : isCommon,
       costResource : $('#addObject select.cost').val(),
       price : parseInt($('#addObject input#price').val()),
@@ -173,7 +184,7 @@ function addObject(event) {
       if (response.msg === '') {
 
         // Clear the form inputs
-        $('#addObject fieldset input').val('');
+        $('#addObject input').val('');
 
         // Update the table
         populateTable();
@@ -252,13 +263,13 @@ function editObject(event) {
       }
     };
 
-    var isCommon = $('#addObject fieldset input#inputObjectCommon').is(":checked")
+    var isCommon = $('#addObject input#inputObjectCommon').is(":checked")
 
     // If it is, compile all object info into one object
     var objectEdit = {
-      id : $('#editObject fieldset input#editObjectId').val(),
-      title: $('#editObject fieldset input#editObjectTitle').val(),
-      description: $('#editObject fieldset input#editObjectDescription').val(),
+      id : $('#editObject input#editObjectId').val(),
+      title: $('#editObject input#editObjectTitle').val(),
+      description: $('#editObject input#editObjectDescription').val(),
       common : isCommon,
       effects : effectsJson
     };
@@ -274,7 +285,7 @@ function editObject(event) {
       // Check for successful (blank) response
       if (response.msg === '') {
         // Clear the form inputs
-        $('#editObject fieldset input').val('');
+        $('#editObject input').val('');
 
         // Update the table
         populateTable();
@@ -295,19 +306,27 @@ function editObject(event) {
 };
 
 
-function addField (event) {
-  event.preventDefault();
-  $(this).siblings('.add_input_effects').append('<div>\
-    <select class="resource">\
-    <input type="text" class="effect" placeholder="Effect">\
-    <a href="#" class="remove_field">Remove</a>\
+function addField (e) {
+  e.preventDefault();
+  $(this).parents('.add_input_effects').append('<div class="form-group">\
+    <label class="col-sm-2 control-label">Resource</label>\
+    <div class="col-sm-4">\
+    <select class="resource form-control"></select>\
+    </div>\
+    <label class="col-sm-1 control-label">Effect</label>\
+    <div class="col-sm-4">\
+    <input type="text" class="effect form-control" placeholder="Other effect of the object">\
+    </div>\
+    <div class="col-sm-1">\
+    <button class="remove_field btn btn-danger"><span>-</span></button>\
+    </div>\
     </div>');
-  $(this).siblings('.add_input_effects').children().last().find('.remove_field').on('click', removeField);
+  $('.remove_field').last().on('click', removeField);
   updateResources();
 }
 
-function removeField(event) {
-  event.preventDefault();
-  $(this).parent('div').remove();
+function removeField(e) {
+  e.preventDefault();
+  $(this).parents('div.form-group').remove();
 }
 

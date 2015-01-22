@@ -7,6 +7,9 @@ $(document).ready(function() {
   $('#decisionList table tbody').on('click', 'td a.linkdeletedecision', deleteDecision);
   $('#decisionList table tbody').on('click', 'td a.sendDecision', sendDecision);
 
+  $('#displayAddForm').on('click', function () {
+    $("#newDecision").slideToggle();
+  });
 })
 
 

@@ -30,9 +30,9 @@ block content
           th Send
         tbody
 
-    h2#displayAddForm.displayTitle Add an objective 
+    h2#displayAddForm.displayTitle New objective 
        span.caret 
-    #addObjectif(style="display:none")
+    #addObjectif.notDisplayed
       form.form-horizontal
         .form-group
           label.col-sm-2.control-label(for="inputObjectifTitle") Title
@@ -61,8 +61,8 @@ block content
           .col-sm-offset-2.col-sm-10
             button#btnAddObjectif.btn.btn-success Add objective
 
-    h2 Edit an objective
-    #editObjectif(style="display:none")
+    h2 Edit objective
+    #editObjectif.notDisplayed
       fieldset
         input#editObjectifId(type='hidden')
         input#editObjectifTitle(type='text', placeholder='Objective title')
@@ -73,8 +73,5 @@ block content
         br
         //- button.add_field_button Add More Fields
         button#btnEditObjectif Edit objective
-
-    h2
-      a#updateView(href="#") UPDATE
 
   script(src='/javascripts/admin/objectifscript.js')

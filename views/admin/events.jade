@@ -16,7 +16,6 @@ block content
 
 
     h2 Events List
-    a.new(href="#") new event
     #eventList.list
       table
         thead
@@ -27,16 +26,17 @@ block content
           th Send to
           th Send
         tbody
-    #addEvent
-      h2 Add an event
 
+    h2#displayAddForm.displayTitle New event 
+      span.caret
+    #addEvent.notDisplayed
       form.form-horizontal
         .form-group
           label.col-sm-2.control-label(for="inputEventTitle") Title
           .col-sm-10
             input#inputEventTitle.form-control(type='text', placeholder='Event title')
         .form-group
-          label.col-sm-2.control-label(for="inputObjectifCommon") Type
+          label.col-sm-2.control-label(for="inputEventCommon") Type
           .col-sm-10
             .checkbox
               label
@@ -44,7 +44,7 @@ block content
                 | Common event
         .add_input_effects
           .form-group
-            label.col-sm-2.control-label(for="inputObjectifResource") Resource
+            label.col-sm-2.control-label(for="inputEventResource") Resource
             .col-sm-4
               select.resource.form-control
             label.col-sm-1.control-label Effect
@@ -62,8 +62,8 @@ block content
             button#btnAddEvent.btn.btn-success Add event
 
 
-    #editEvent
-      h2 Edit an event
+    h2 Edit event
+    #editEvent.notDisplayed
       fieldset
         input#editEventId(type='hidden')
         input#editEventTitle(type='text', placeholder='Event title')

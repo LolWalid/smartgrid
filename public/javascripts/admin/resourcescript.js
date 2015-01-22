@@ -9,6 +9,10 @@ ready = $(function() {
 
   $('#btnAddResource').on('click', addResource);
 
+  $('#displayAddForm').on('click', function () {
+    $("#newResource").slideToggle();
+  });
+
   // Edit Objectif button click
   //$('#btnEditObjectif').on('click', editObjectif);
 
@@ -55,10 +59,10 @@ function addResource(event) {
 
     // If it is, compile all objectif info into one object
     var newObjectif = {
-      name : $('#newResource fieldset input#inputResourceName').val(),
-      shared : $('#newResource fieldset input#inputResourceShared').is(":checked"),
-      defaultValue : parseInt($('#newResource fieldset input#inputResourceValue').val()),
-      unit : $('#newResource fieldset input#inputResourceUnit').val()
+      name : $('#newResource input#inputResourceName').val(),
+      shared : $('#newResource input#inputResourceShared').is(":checked"),
+      defaultValue : parseInt($('#newResource input#inputResourceValue').val()),
+      unit : $('#newResource input#inputResourceUnit').val()
     }
 //    newObjectif.effects = effectsJson;
 
@@ -74,8 +78,8 @@ function addResource(event) {
       if (response.msg === '') {
 
         // Clear the form inputs
-        $('#newResource fieldset input').val('');
-        $('#newResource fieldset textarea').val('');
+        $('#newResource input').val('');
+        $('#newResource textarea').val('');
 
         // Update the table
         populateTable();

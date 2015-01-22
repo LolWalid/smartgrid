@@ -24,30 +24,51 @@ block content
           th Type
           th Delete ?
         tbody
-    #addObject
-      h2 Add an Object
-      fieldset
-        input#inputObjectTitle(type='text', placeholder='Object title')
-        label Common Object ?
-          input#inputObjectCommon(type='checkbox')
-        br
-        label Cost
-        select.resource.cost
-        input#price(type='text', placeholder='Effect')
-        br
-        textarea#objectDescription(type='text', placeholder='Description')
-        br
-        div.add_input_effects
-          h4 Effects
-          div
-            select.resource
-            input.effect(type='text', placeholder='Effect')
-            a.remove_field(href="#")  Remove
-        button.add_field_button Add More Fields
-        button#btnAddObject Add Object
 
-    #editObject
-      h2 Edit an Object
+    h2#displayAddForm.displayTitle New object 
+      span.caret
+    #addObject.notDisplayed
+      form.form-horizontal
+        .form-group
+          label.col-sm-2.control-label(for="inputObjectTitle") Title
+          .col-sm-10
+            input#inputObjectTitle.form-control(type='text', placeholder='Object title')
+        .form-group
+          label.col-sm-2.control-label(for="inputObjectCommon") Type
+          .col-sm-10
+            .checkbox
+              label
+                input#inputObjectCommon(type="checkbox")
+                | Common object
+        .form-group
+            label.col-sm-2.control-label Resource
+            .col-sm-4
+              select.resource.form-control
+            label.col-sm-1.control-label Price
+            .col-sm-4
+              input.effect.form-control(type='text', placeholder='Cost of the object')
+        .add_input_effects
+          .form-group
+            label.col-sm-2.control-label Resource
+            .col-sm-4
+              select.resource.form-control
+            label.col-sm-1.control-label Effect
+            .col-sm-4
+              input.effect.form-control(type='text', placeholder='Effect of the object')
+            .col-sm-1
+              button.add_field_button.btn.btn-warning
+                span +
+        .form-group
+          label.col-sm-2.control-label Description
+          .col-sm-10
+            textarea#objectDescription.form-control(type='text', placeholder='Description')
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            button#btnAddObject.btn.btn-success Add object
+
+
+    h2 Edit Object
+    #editObject.notDisplayed
       fieldset
         input#editObjectId(type='hidden')
         input#editObjectTitle(type='text', placeholder='Object title')

@@ -12,13 +12,19 @@ $(document).ready(function() {
 
   $('#eventList table tbody').on('click', 'td a.linkdeleteevent', deleteEvent);
 
+  $('#displayAddForm').on('click', function () {
+    $("#editEvent").slideUp(function() {
+      $('#editEvent input').val('');
+      $("#addEvent").slideToggle();
+    });
+  });
+
   // Add Event button click
   $('#btnAddEvent').on('click', addEvent);
 
   // Edit Event button click
   $('#btnEditEvent').on('click', editEvent);
-    $('#eventList table tbody').on('click', 'td a.sendEvent', sendEvent);
-
+  $('#eventList table tbody').on('click', 'td a.sendEvent', sendEvent);
 
   $('.add_field_button').on('click', addField);
   $('.remove_field').on('click', removeField);
@@ -88,6 +94,10 @@ function showEventInfo(event) {
   // Prevent Link from Firing
   event.preventDefault();
 
+  $("#addEvent").slideUp(function () {
+    $("#editEvent").slideDown();
+  });
+
   $("#editEvent .remove_field").trigger('click');
 
   // Retrieve eventname from link rel attribute
@@ -136,13 +146,13 @@ function showEventInfo(event) {
       for (var j = 0; j < resources.length; j++) {
 
        options += '<option value="' + resources[j].name + '"' + (resources[j].name == effects[i].resource ? 'selected' : '' ) + '>' + resources[j].name + '</option>'
-      }
-      $('#resource' + i).html(options)
-    }
-  }
+     }
+     $('#resource' + i).html(options)
+   }
+ }
 
 
-  $('#effects').html(tableContent);
+ $('#effects').html(tableContent);
 
 };
 
@@ -322,18 +332,18 @@ function editEvent(event) {
 function addField (e) {
   e.preventDefault();
   $(this).parents('.add_input_effects').append('<div class="form-group">\
-              <label class="col-sm-2 control-label" for="inputObjectifResource">Resource</label>\
-              <div class="col-sm-4">\
-                <select class="resource form-control"></select>\
-              </div>\
-              <label class="col-sm-1 control-label">Effect</label>\
-              <div class="col-sm-4">\
-                <input type="text" class="effect form-control" placeholder="Effect">\
-              </div>\
-              <div class="col-sm-1">\
-                <button class="remove_field btn btn-danger"><span>-</span></button>\
-              </div>\
-            </div>');
+    <label class="col-sm-2 control-label" for="inputObjectifResource">Resource</label>\
+    <div class="col-sm-4">\
+    <select class="resource form-control"></select>\
+    </div>\
+    <label class="col-sm-1 control-label">Effect</label>\
+    <div class="col-sm-4">\
+    <input type="text" class="effect form-control" placeholder="Effect">\
+    </div>\
+    <div class="col-sm-1">\
+    <button class="remove_field btn btn-danger"><span>-</span></button>\
+    </div>\
+    </div>');
   $('.remove_field').last().on('click', removeField);
   updateResources();
 }

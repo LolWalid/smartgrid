@@ -53,3 +53,7 @@ fieldset {
 .displayTitle {
   cursor: pointer;
 }
+
+.notDisplayed {
+  display: none;
+}

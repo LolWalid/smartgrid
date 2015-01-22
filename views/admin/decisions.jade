@@ -27,8 +27,9 @@ block content
           th Send
         tbody
 
-    #newDecision
-      h2 Add Decision
+    h2#displayAddForm.displayTitle New decision 
+      span.caret
+    #newDecision.notDisplayed
       form.form-horizontal
         .form-group
           label.col-sm-2.control-label(for="inputDecisionTitle") Title
