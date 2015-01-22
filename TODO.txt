@@ -5,7 +5,7 @@ On passe aux choses serieuses ! Les joueurs vont pouvoir commencer à jouer
 Partie ADMIN :
   - Ajouter les récompenses dans les objectifs
   - Gerer tous les messages que les joueurs vont envoyer (modifier les ressources !)
-  - Gerer les réponses des concensus
+  - Gerer les réponses des consensus
 
 
 Partie PLAYER :
