@@ -23,10 +23,15 @@ $(document).ready(function() {
 })
 
 function addObj(message) {
-  newline = '<div id="obj" class="obj1"><strong>'+ message.title +'</strong> : '+ message.description +'</div>'
 
-  if (message.common)
+  if (message.common) {
+    newline = '<div class="objectif commun">\
+    <strong>'+ message.title +'</strong> : '+ message.description +'</div>'
     $("#objectivesCommon").append(newline)
-  else
+  }
+  else {
+    newline = '<div class="objectif individuel">\
+    <strong>'+ message.title +'</strong> : '+ message.description +'</div>'
     $("#objectivesIndiv").append(newline)
+  }
 }
