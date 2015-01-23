@@ -146,8 +146,8 @@ function addObject(event) {
   // Check and make sure errorCount's still at zero
   if(errorCount === 0) {
 
-    var resources = $('#addObject .resource').not(".cost");
-    var effects = $('#addObject .effect');
+    var resources = $('#addObject .resource').not("#inputObjectResource");
+    var effects = $('#addObject .effect').not("#inputObjectPrice");
 
     var effectsJson = [];
 
@@ -165,8 +165,8 @@ function addObject(event) {
       title : $('#addObject input#inputObjectTitle').val(),
       description : $('#addObject textarea#objectDescription').val(),
       common : isCommon,
-      costResource : $('#addObject select.cost').val(),
-      price : parseInt($('#addObject input#price').val()),
+      costResource : $('#addObject select#inputObjectResource').val(),
+      price : parseInt($('#addObject input#inputObjectPrice').val()),
       effects : effectsJson
     };
     console.log(newObject)
