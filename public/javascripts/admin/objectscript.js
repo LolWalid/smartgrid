@@ -24,7 +24,7 @@ $(document).ready(function() {
   // Edit Object button click
   $('#btnEditObject').on('click', editObject);
 
-  $('.add_field_button').on('click', addField);
+  $('.add_field').on('click', addField);
   $('.remove_field').on('click', removeField);
 });
 
@@ -104,10 +104,19 @@ function showObjectInfo(event) {
       tableContent += '<span>'+ effects[i].effect + '</span>';
       tableContent += '<br>';
 
-      $('#editObject .add_input_effects').append('<div>\
-        <select id="resource' + i + '" class="resource" value="' + effects[i].resource +'"">\
-        <input type="text" class="effect" placeholder="Effect" value="' + effects[i].effect +'"">\
-        <a href="#" class="remove_field">Remove</a>\
+      $('#editObject .add_input_effects').prepend('\
+        <div class="form-group">\
+          <label class="col-sm-2 control-label">Resource</label>\
+          <div class="col-sm-4">\
+            <select class="resource form-control" id="resource' + i + '" value="' + effects[i].resource +'""></select>\
+          </div>\
+          <label class="col-sm-1 control-label">Effect</label>\
+          <div class="col-sm-4">\
+            <input type="text" class="effect form-control" placeholder="Other effect of the object" value="' + effects[i].effect +'"">\
+          </div>\
+          <div class="col-sm-1">\
+            <button class="remove_field btn btn-danger"><span>-</span></button>\
+          </div>\
         </div>');
       $("#editObject .remove_field").on('click', removeField);
       //updateResources();
@@ -298,24 +307,27 @@ function editObject(event) {
 
 function addField (e) {
   e.preventDefault();
-  $(this).parents('.add_input_effects').append('<div class="form-group">\
-    <label class="col-sm-2 control-label">Bonus/Malus</label>\
-    <div class="col-sm-5">\
-    <select class="resource form-control"></select>\
-    </div>\
-    <div class="col-sm-4">\
-    <input type="text" class="effect form-control" placeholder="Other effect of the object">\
-    </div>\
-    <div class="col-sm-1">\
-    <button class="remove_field btn btn-danger"><span>-</span></button>\
-    </div>\
+  console.log("teub")
+  $(this).parents('.add_input_effects').prepend('\
+    <div class="form-group">\
+      <label class="col-sm-2 control-label">Resource</label>\
+      <div class="col-sm-4">\
+        <select class="resource form-control" id="resource"></select>\
+      </div>\
+      <label class="col-sm-1 control-label">Effect</label>\
+      <div class="col-sm-4">\
+        <input type="text" class="effect form-control" placeholder="Other effect of the object">\
+      </div>\
+      <div class="col-sm-1">\
+        <button class="remove_field btn btn-danger"><span>-</span></button>\
+      </div>\
     </div>');
   $('.remove_field').last().on('click', removeField);
-  //updateResources();
+  updateResources();
 }
 
 function removeField(e) {
   e.preventDefault();
-  $(this).parents('div.form-group').remove();
+  $(this).parents('div.form-group').first().remove();
 }
 

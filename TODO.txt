@@ -18,6 +18,6 @@ Partie PLAYER :
   - ajouter la notion de ressources partagées, je vous propose d'ajouter une collection "City" qui aura des valeurs initiales par défaut
 
 Bonus :
-  - continuer les AAP
+  - continuer les AAP lolz
   - Ecrire un mini tuto (cf Bootstrap tour)
 
