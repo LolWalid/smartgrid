@@ -64,14 +64,18 @@ block content
 
     h2 Edit event
     #editEvent.notDisplayed
-      fieldset
-        input#editEventId(type='hidden')
-        input#editEventTitle(type='text', placeholder='Event title')
-        input#editEventDescription(type='text', placeholder='Description')
-        br
-        div.add_input_effects
-          div
-        button.add_field_button Add More Fields
-
-        button#btnEditEvent Edit event
+      form.form-horizontal
+        input#editEventId.form-control(type='hidden')
+        .form-group
+          label.col-sm-2.control-label(for="editEventTitle") Title
+          .col-sm-10
+            input#editEventTitle.form-control(type='text', placeholder='Event title')
+        .form-group
+          label.col-sm-2.control-label(for="editEventDescription") Description
+          .col-sm-10
+            input#editEventDescription.form-control(type='text', placeholder='Description')
+        .add_input_effects.form-group
+          .col-sm-offset-2.col-sm-10
+            button.add_field_button.btn.btn-warning Add More Fields
+        button#btnEditEvent.btn.btn-warning Edit Event
     script(src='/javascripts/admin/eventscript.js')
