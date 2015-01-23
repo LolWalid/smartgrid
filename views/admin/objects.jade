@@ -25,7 +25,7 @@ block content
           th Delete ?
         tbody
 
-    h2#displayAddForm.displayTitle New object 
+    h2#displayAddForm.displayTitle New object
       span.caret
     #addObject
       form.form-horizontal
@@ -41,22 +41,20 @@ block content
                 input#inputObjectCommon(type="checkbox")
                 | Common object
         .form-group
-            label.col-sm-2.control-label Resource
-            .col-sm-4
-              select.resource.form-control
-            label.col-sm-1.control-label Price
+            label.col-sm-2.control-label Price
+            .col-sm-5
+              select#inputObjectResource.resource.form-control
             .col-sm-4
               input#inputObjectPrice.effect.form-control(type='text', placeholder='Cost of the object')
         .add_input_effects
           .form-group
-            label.col-sm-2.control-label Resource
-            .col-sm-4
+            label.col-sm-2.control-label Bonus/Malus
+            .col-sm-5
               select.resource.form-control
-            label.col-sm-1.control-label Effect
             .col-sm-4
               input.effect.form-control(type='text', placeholder='Effect of the object')
             .col-sm-1
-              button.add_field_button.btn.btn-warning
+              button.add_field_button.btn.btn-warning(href='#')
                 span +
         .form-group
           label.col-sm-2.control-label Description
@@ -66,14 +64,13 @@ block content
           .col-sm-offset-2.col-sm-10
             button#btnAddObject.btn.btn-success Add object
 
-
     h2 Edit Object
     #editObject.notDisplayed
       form.form-horizontal
         input#editObjectId(type='hidden')
-        .form-group 
+        .form-group
           label.col-sm-2.control-label(for="editObjectTitle") Title
-          .col-sm-10 
+          .col-sm-10
             input#editObjectTitle.form-control(type='text', placeholder='Object title')
         .form-group
           label.col-sm-2.control-label Resource
@@ -82,9 +79,9 @@ block content
           label.col-sm-1.control-label Price
           .col-sm-4
             input.effect.form-control(type='text', placeholder='Cost of the object')
-        .form-group 
+        .form-group
           label.col-sm-2.control-label(for="editObjectDescription") Description
-          .col-sm-10 
+          .col-sm-10
             input#editObjectDescription.form-control(type='text', placeholder='Description')
         .add_input_effects.form-group
           button.add_field.btn.btn-warning Add More Fields

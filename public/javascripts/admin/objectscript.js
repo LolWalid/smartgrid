@@ -24,7 +24,7 @@ $(document).ready(function() {
   // Edit Object button click
   $('#btnEditObject').on('click', editObject);
 
-  $('.add_field').on('click', addField);
+  $('.add_field_button').on('click', addField);
   $('.remove_field').on('click', removeField);
 });
 
@@ -308,13 +308,12 @@ function editObject(event) {
 function addField (e) {
   e.preventDefault();
   console.log("teub")
-  $(this).parents('.add_input_effects').prepend('\
+  $(this).parents('.add_input_effects').append('\
     <div class="form-group">\
-      <label class="col-sm-2 control-label">Resource</label>\
-      <div class="col-sm-4">\
+      <label class="col-sm-2 control-label">Bonus/Malus</label>\
+      <div class="col-sm-5">\
         <select class="resource form-control" id="resource"></select>\
       </div>\
-      <label class="col-sm-1 control-label">Effect</label>\
       <div class="col-sm-4">\
         <input type="text" class="effect form-control" placeholder="Other effect of the object">\
       </div>\
