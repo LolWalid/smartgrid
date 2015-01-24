@@ -2,7 +2,6 @@ var socket = io.connect('/')
 
 var objectifsListData = []
 
-var playerID
 var playerData
 
 $(document).ready(function() {
