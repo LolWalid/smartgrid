@@ -104,13 +104,12 @@ function showObjectInfo(event) {
       tableContent += '<span>'+ effects[i].effect + '</span>';
       tableContent += '<br>';
 
-      $('#editObject .add_input_effects').prepend('\
+      $('#editObject .add_input_effects').append('\
         <div class="form-group">\
-          <label class="col-sm-2 control-label">Resource</label>\
-          <div class="col-sm-4">\
+          <label class="col-sm-2 control-label">Bonus/Malus</label>\
+          <div class="col-sm-5">\
             <select class="resource form-control" id="resource' + i + '" value="' + effects[i].resource +'""></select>\
           </div>\
-          <label class="col-sm-1 control-label">Effect</label>\
           <div class="col-sm-4">\
             <input type="text" class="effect form-control" placeholder="Other effect of the object" value="' + effects[i].effect +'"">\
           </div>\
@@ -307,7 +306,6 @@ function editObject(event) {
 
 function addField (e) {
   e.preventDefault();
-  console.log("teub")
   $(this).parents('.add_input_effects').append('\
     <div class="form-group">\
       <label class="col-sm-2 control-label">Bonus/Malus</label>\

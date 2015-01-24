@@ -118,10 +118,18 @@ function showEventInfo(event) {
       tableContent += '<span>'+ effects[i].effect + '</span>';
       tableContent += '<br>';
 
-      $('#editEvent .add_input_effects').append('<div>\
-        <select id="resource' + i + '" class="resource" value="' + effects[i].resource +'"">\
-        <input type="text" class="effect" placeholder="Effect" value="' + effects[i].effect +'"">\
-        <a href="#" class="remove_field">Remove</a>\
+      $('#editEvent .add_input_effects').append('\
+        <div class="form-group">\
+          <label class="col-sm-2 control-label">Bonus/Malus</label>\
+          <div class="col-sm-5">\
+            <select class="resource form-control" id="resource' + i + '" value="' + effects[i].resource +'""></select>\
+          </div>\
+          <div class="col-sm-4">\
+            <input type="text" class="effect form-control" placeholder="Other effect of the event" value="' + effects[i].effect +'"">\
+          </div>\
+          <div class="col-sm-1">\
+            <button class="remove_field btn btn-danger"><span>-</span></button>\
+          </div>\
         </div>');
       $("#editEvent .remove_field").on('click', removeField);
       //updateResources();
@@ -315,25 +323,26 @@ function editEvent(event) {
 
 function addField (e) {
   e.preventDefault();
-  $(this).parents('.add_input_effects').append('<div class="form-group">\
-    <label class="col-sm-2 control-label" for="inputObjectifResource">Other Effect</label>\
-    <div class="col-sm-5">\
-    <select class="resource form-control"></select>\
-    </div>\
-    <div class="col-sm-4">\
-    <input type="text" class="effect form-control" placeholder="Effect">\
-    </div>\
-    <div class="col-sm-1">\
-    <button class="remove_field btn btn-danger"><span>-</span></button>\
-    </div>\
-    </div>');
+  $(this).parents('.add_input_effects').append('\
+        <div class="form-group">\
+          <label class="col-sm-2 control-label">Bonus/Malus</label>\
+          <div class="col-sm-5">\
+            <select class="resource form-control" id="resource"></select>\
+          </div>\
+          <div class="col-sm-4">\
+            <input type="text" class="effect form-control" placeholder="Other effect of the event" >\
+          </div>\
+          <div class="col-sm-1">\
+            <button class="remove_field btn btn-danger"><span>-</span></button>\
+          </div>\
+        </div>');
   $('.remove_field').last().on('click', removeField);
-  //updateResources();
+  updateResources();
 }
 
 function removeField(e) {
   e.preventDefault();
-  $(this).parents('div.form-group').remove();
+  $(this).parents('div.form-group').first().remove();
 }
 
 function sendEvent(e){
