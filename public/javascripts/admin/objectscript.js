@@ -146,8 +146,8 @@ function addObject(event) {
   // Check and make sure errorCount's still at zero
   if(errorCount === 0) {
 
-    var resources = $('#addObject .resource').not("#inputObjectResource");
-    var effects = $('#addObject .effect').not("#inputObjectPrice");
+    var resources = $('#addObject .add_input_effects .resource');
+    var effects = $('#addObject .add_input_effects .effect');
 
     var effectsJson = [];
 
