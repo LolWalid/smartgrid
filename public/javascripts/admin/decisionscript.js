@@ -124,11 +124,6 @@ function deleteDecision(event) {
   }
 };
 
-
-
-
-
-
 function sendDecision(event) {
   event.preventDefault()
   var thisDecisionId = $(this).prop('rel')
@@ -136,7 +131,6 @@ function sendDecision(event) {
   var thisDecisionObject = decisionList[arrayPosition];
   response = []
   socket.emit('new decision', thisDecisionObject)
-
 }
 
 function receiveDecision() {
