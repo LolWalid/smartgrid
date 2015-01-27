@@ -59,8 +59,7 @@ function showObject () {
 
   tableContent += "</ul>"
   tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-right" value="ok" />'
-//  tableContent += '<input type="button" class="linkbuyobject btn btn-lg btn-warning btn-left" value="Acheter" />'
-  tableContent += '</div>'
+  //tableContent += '<input type="button" class="linkbuyobject btn btn-lg btn-warning btn-left" value="Acheter" />'
 
   if ($('.popin').length === 0)
     $('body').append('<div class="message objective popin">' + tableContent + '</div>')

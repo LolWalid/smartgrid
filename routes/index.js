@@ -3,7 +3,6 @@ var router = express.Router();
 
 var sess;
 
-
 /* GET home page. */
 router.get('/', function(req, res) {
     sess = req.session;
@@ -23,7 +22,7 @@ router.get('/objectives', function(req, res) {
   if (sess.joueur)
     res.render('objectives', {title: 'Smartgrid', player: 'Joueur ' + sess.joueur });
   else
-    res.render('login', { title: 'Smartgrid - Connexion'});
+    res.render('login', {title: 'Smartgrid - Connexion'});
 });
 
 router.get('/objects', function(req, res) {
@@ -32,10 +31,17 @@ router.get('/objects', function(req, res) {
   if (sess.joueur)
     res.render('objects', {title: 'Smartgrid', player: 'Joueur ' + sess.joueur });
   else
-    res.render('login', { title: 'Smartgrid - Connexion'});
-
+    res.render('login', {title: 'Smartgrid - Connexion'});
 });
 
+router.get('/budget', function(req,res) {
+  sess = req.session;
+
+  if (sess.joueur)
+    res.render('budget', {title: 'Smartgrid', player: 'Joueur' + sess.joueur });
+  else
+    res.render('login', {title: 'Smartgrid - Connexion'});
+});
 
 router.post('/login', function(req, res) {
 	sess = req.session;
