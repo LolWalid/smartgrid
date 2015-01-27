@@ -10,6 +10,7 @@ block content
           a(data-toggle="tab", href="#myobjects", role="tab") Mes objets
 
       #objectList
+        h4 Magasin
         table.table
           thead
             tr
@@ -18,7 +19,14 @@ block content
               th(colspan="3") Actions
           tbody
       #myobjects
-        h4 Hello World
+        h4 Mes objets
+        table.table
+          thead
+            tr
+              th Nom
+              th Prix
+              th(colspan="3") Actions
+          tbody
 
 
   script(src='/javascripts/jquery-ui.js')
