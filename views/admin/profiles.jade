@@ -1,0 +1,93 @@
+extends layout
+
+block content
+  .container
+    #objectifInfo.info
+      h2 Profile info
+      p
+        strong Title : 
+        span#objectifInfoTitle
+        br
+        strong Description : 
+        span#objectifInfoDescription
+        br
+        strong Resource : 
+        span#objectifInfoResource
+        br
+        strong Value to reach : 
+        span#objectifInfoAchieve
+        br
+        strong Reward resource : 
+        span#objectifInfoReward
+        br
+        strong Reward value : 
+        span#objectifInfoRewardValue
+
+    h2 Profiles list
+    #objectifList.list
+      table
+        thead
+          th Name
+          th Description
+          th Delete ?
+          th Player
+        tbody
+
+    h2#displayAddForm.displayTitle New profile 
+       span.caret 
+    #addObjectif
+      form.form-horizontal
+        .form-group
+          label.col-sm-2.control-label(for="inputProfileGender") Gender
+          .col-sm-10
+            .radio
+              label
+                input(type='radio', name='inputProfileGender', value='m')
+                |Male
+            .radio
+              label
+                input(type='radio', name='inputProfileGender', value='f')
+                |Female
+        .form-group
+          label.col-sm-2.control-label(for="inputProfileName") Name
+          .col-sm-10
+            input#inputProfileName.form-control(type='text', placeholder='Profile name')
+        .form-group
+          label.col-sm-2.control-label(for="inputObjectifDescription") Description
+          .col-sm-10
+            textarea#inputObjectifDescription.form-control(type='text', placeholder='Description')
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            button#btnAddObjectif.btn.btn-success Add profile
+
+    h2 Edit profile
+    #editObjectif.notDisplayed
+      form.form-horizontal
+          input#editObjectifId(type='hidden')
+          .form-group
+            label.col-sm-2.control-label(for="editObjectifTitle") Title
+            .col-sm-10
+              input#editObjectifTitle.form-control(type='text')
+          .form-group
+            label.col-sm-2.control-label(for="editObjectifResource") Resource
+            .col-sm-5
+              select#editObjectifResource.resource.form-control
+            label.col-sm-1.control-label(for="editObjectifAchieve") Value
+            .col-sm-4
+              input#editObjectifAchieve.form-control(type='text', placeholder='Value to reach')
+          .form-group
+            label.col-sm-2.control-label Reward
+            .col-sm-5
+              select#editObjectifRewardResource.resource.form-control
+            label.col-sm-1.control-label Value
+            .col-sm-4
+              input#editObjectifRewardValue.form-control(type='text', placeholder='Reward value')
+          .form-group
+            label.col-sm-2.control-label(for="editObjectifDescription") Description
+            .col-sm-10
+              textarea#editObjectifDescription.form-control(type='text', placeholder='Description')
+          .form-group
+            .col-sm-offset-2.col-sm-10
+              button#btnEditObjectif.btn.btn-warning Edit profile
+
+  script(src='/javascripts/admin/profilescript.js')
