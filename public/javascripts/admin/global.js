@@ -9,6 +9,16 @@ $(document).ready(function() {
     updatePlayers();
     receiveDecision();
   })
+
+  socket.on('server buy object', function(message) {
+    // get the right player,
+
+
+    //update his data
+
+    //update db with ajax call
+
+  })
 })
 
 function updatePlayers () {

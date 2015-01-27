@@ -31,29 +31,34 @@ var io = require('socket.io').listen(app.server);
 var connectedPlayers = [];
 
 io.sockets.on('connection', function(socket) {
-    socket.on('delete player', function(message) {
-        socket.broadcast.emit('server logout message', message);
-    });
+  socket.on('delete player', function(message) {
+    socket.broadcast.emit('server logout message', message);
+  });
 
-    socket.on('new objective', function(message) {
-        socket.broadcast.emit('server objective message', message);
-    });
+  socket.on('new objective', function(message) {
+    socket.broadcast.emit('server objective message', message);
+  });
 
-    socket.on('new event', function(message) {
-        socket.broadcast.emit('server event message', message);
-    });
+  socket.on('new event', function(message) {
+    socket.broadcast.emit('server event message', message);
+  });
 
-    socket.on('update view', function(message) {
-        socket.broadcast.emit('update view', message);
-    });
+  socket.on('update view', function(message) {
+    socket.broadcast.emit('update view', message);
+  });
 
-    socket.on('new decision', function(message) {
-        socket.broadcast.emit('server decision message', message);
-    });
+  socket.on('new decision', function(message) {
+    socket.broadcast.emit('server decision message', message);
+  });
 
-    socket.on('response vote', function(message) {
-        socket.broadcast.emit('server decision response', message);
-    });
+  socket.on('response vote', function(message) {
+    socket.broadcast.emit('server decision response', message);
+  });
+
+  socket.on('buy object', function(message) {
+    console.log(message)
+    socket.broadcast.emit('server buy object', message);
+  });
 });
 
 
@@ -74,8 +79,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router
 app.use(function(req,res,next){
-    req.db = db;
-    next();
+  req.db = db;
+  next();
 });
 
 app.use('/', routes);
@@ -88,9 +93,9 @@ app.use('/decisions', decisions);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
 // error handlers
@@ -98,24 +103,24 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.locals.pretty = true;
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
+  app.locals.pretty = true;
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
     });
+  });
 }
 
 // production error handler
 // no stacktraces leaked to objectif
 app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
 });
 
 

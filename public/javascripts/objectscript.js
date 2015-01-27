@@ -4,7 +4,12 @@ $(document).ready(function() {
   getObjects();
   $('#objectList table tbody').on('click', 'td a.linkshowobject', showObject);
   $('#objectList table tbody').on('click', 'td a.linkbuyobject', buyObject);
+  $('#objectList table tbody').on('click', 'td a.linkrentobject', rentObject);
+  $('#objectList table tbody').on('click', 'td a.linkgiveobject', giveObject);
 
+  $( "#tabs" ).tabs({
+    collapsible: true
+  });
 })
 
 
@@ -20,6 +25,8 @@ function getObjects() {
       tableContent += '<td><a href="#" class="linkshowobject" rel="' + this._id + '" title="Show Details">' + this.title + '</a></td>';
       tableContent += '<td>' + this.price + " " +this.costResource + '</td>';
       tableContent += '<td><a href="#" class="linkbuyobject" rel="' + this._id + '">Acheter</a></td>';
+      tableContent += '<td><a href="#" class="linkrentobject" rel="' + this._id + '">Louer</a></td>';
+      tableContent += '<td><a href="#" class="linkgiveobject" rel="' + this._id + '">Donner</a></td>';
       tableContent += '</tr>';
     });
 
@@ -52,7 +59,7 @@ function showObject () {
 
   tableContent += "</ul>"
   tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-right" value="ok" />'
-  tableContent += '<input type="button" class="linkbuyobject btn btn-lg btn-warning btn-left" value="Acheter" />'
+//  tableContent += '<input type="button" class="linkbuyobject btn btn-lg btn-warning btn-left" value="Acheter" />'
   tableContent += '</div>'
 
   if ($('.popin').length === 0)
@@ -64,11 +71,21 @@ function showObject () {
   $(".ok_obj").click(function() {
     $(this).closest('.message').remove()
   })
-
-
 }
 
 function buyObject () {
-  console.log("Soon")
+  object = {
+    id : $(this).prop('rel'),
+    joueur : playerData._id
+  }
+  socket.emit("buy object", object)
+}
+
+function rentObject () {
+  console.log("rentObject")
+}
+
+function giveObject () {
+  console.log("giveObject")
 }
 
