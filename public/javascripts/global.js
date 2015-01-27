@@ -34,16 +34,24 @@ $(document).ready(function() {
   })
 })
 
+function getValue(name) {
+  var arrayPosition = playerData.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(name)
+  return playerData.resources[arrayPosition] ? playerData.resources[arrayPosition].value : 'NOT IN DB';
+}
+
 function updatePlayerView() {
   $.get('/players/data', function (data) {
     playerData = data
   }).done(function (response) {
-    $("#valeur_argent").text(" " + playerData.money)
-    $("#valeur_energie").text(" " + playerData.energy)
-    $("#valeur_satisfaction").text(" " + playerData.satisfaction)
-    $("#valeur_score").text(" " + playerData.score)
+
+    $("#valeur_argent").text(" " + getValue("Money"))
+    $("#valeur_energie").text(" " + getValue("Energy"))
+    $("#valeur_satisfaction").text(" " + getValue("Satisfaction"))
+    $("#valeur_score").text(" " + getValue("Score"))
   })
 }
+
+//on a pas bouffé alpha !
 
 function displayDecisionMessage(message) {
 
