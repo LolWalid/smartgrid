@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/admin', function(req, res) {
-  res.render('admin/objectives',  {title: 'Smartgrid - Admin', player: 'Admin' });
+  res.render('admin/objectives',  {title: 'Smartgrid - Admin'});
 });
 
 /*
@@ -11,7 +11,7 @@ router.get('/admin', function(req, res) {
  */
 router.get('/list', function(req, res) {
     var db = req.db;
-    db.collection('objectives').find().toArray(function (err, items) {
+    db.collection('objectives').find().toArray(function(err, items) {
         res.json(items);
     });
 });

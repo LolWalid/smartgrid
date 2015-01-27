@@ -5,7 +5,7 @@ var sess;
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    sess = req.session;
+  sess = req.session;
   if (sess.joueur)
     res.render('index', {title: 'Smartgrid', player: 'Joueur ' + sess.joueur });
   else
@@ -17,7 +17,7 @@ router.get('/map', function(req, res) {
 })
 
 router.get('/objectives', function(req, res) {
-    sess = req.session;
+  sess = req.session;
 
   if (sess.joueur)
     res.render('objectives', {title: 'Smartgrid', player: 'Joueur ' + sess.joueur });

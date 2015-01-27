@@ -16,7 +16,7 @@ router.get('/data', function (req, res) {
 });
 
 router.get('/admin', function (req, res) {
-  res.render('admin/players', {title: 'Smartgrid - Admin - Players',player: 'Admin'});
+  res.render('admin/players', {title: 'Smartgrid - Admin - Players'});
 });
 
 router.get('/list', function (req, res) {

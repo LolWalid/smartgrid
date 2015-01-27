@@ -21,7 +21,7 @@ var events = require('./routes/events');
 var resources = require('./routes/resources');
 var decisions = require('./routes/decisions');
 var objects = require('./routes/objects');
-
+var profiles = require('./routes/profiles');
 
 var app = express();
 
@@ -90,6 +90,7 @@ app.use('/events', events);
 app.use('/resources', resources);
 app.use('/objects', objects);
 app.use('/decisions', decisions);
+app.use('/profiles', profiles);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

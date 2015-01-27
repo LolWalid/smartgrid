@@ -78,7 +78,7 @@ function addResource(event) {
       if (response.msg === '') {
 
         // Clear the form inputs
-        $('#newResource input').val('');
+        $('#newResource input').not(":checkbox").val('');
         $('#newResource textarea').val('');
 
         // Update the table
