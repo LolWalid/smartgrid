@@ -42,15 +42,16 @@ function getObjects() {
 
 function setMyObjects() {
   tableContent = '';
-  $.each(playerData.objects, function(){
-    tableContent += '<tr>';
-    tableContent += '<td><a href="#" class="linkshowobject" rel="' + this._id + '" title="Show Details">' + this.title + '</a></td>';
-    tableContent += '<td>' + this.price + " " +this.costResource + '</td>';
-    tableContent += '<td><a href="#" class="linksellobject" rel="' + this._id + '">Vendre</a></td>';
-    tableContent += '<td><a href="#" class="linkrentobject" rel="' + this._id + '">Louer</a></td>';
-    tableContent += '<td><a href="#" class="linkgiveobject" rel="' + this._id + '">Donner</a></td>';
-    tableContent += '</tr>';
-  });
+  if (playerData.objects)
+    $.each(playerData.objects, function(){
+      tableContent += '<tr>';
+      tableContent += '<td><a href="#" class="linkshowobject" rel="' + this._id + '" title="Show Details">' + this.title + '</a></td>';
+      tableContent += '<td>' + this.price + " " +this.costResource + '</td>';
+      tableContent += '<td><a href="#" class="linksellobject" rel="' + this._id + '">Vendre</a></td>';
+      tableContent += '<td><a href="#" class="linkrentobject" rel="' + this._id + '">Louer</a></td>';
+      tableContent += '<td><a href="#" class="linkgiveobject" rel="' + this._id + '">Donner</a></td>';
+      tableContent += '</tr>';
+    });
   $('#myobjects table tbody').html(tableContent);
 }
 

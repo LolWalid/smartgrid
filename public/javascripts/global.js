@@ -12,7 +12,7 @@ var event = new CustomEvent(
     bubbles: true,
     cancelable: true
   }
-)
+  )
 
 $(document).ready(function() {
   // Récupération data joueur
@@ -44,6 +44,8 @@ $(document).ready(function() {
   socket.on('update view', function (message) {
     updatePlayerView()
   })
+
+  document.addEventListener("update", updateNavBar, false);
 })
 
 function getValue(name) {
@@ -56,13 +58,15 @@ function updatePlayerView() {
     playerData = data
   }).done(function (response) {
     document.dispatchEvent(event)
-    $("#valeur_argent").text(" " + getValue("Money"))
-    $("#valeur_energie").text(" " + getValue("Energy"))
-    $("#valeur_satisfaction").text(" " + getValue("Satisfaction"))
-    $("#valeur_score").text(" " + getValue("Score"))
   })
 }
 
+function updateNavBar() {
+  $("#valeur_argent").text(" " + getValue("Money"))
+  $("#valeur_energie").text(" " + getValue("Energy"))
+  $("#valeur_satisfaction").text(" " + getValue("Satisfaction"))
+  $("#valeur_score").text(" " + getValue("Score"))
+}
 //on a pas bouffé alpha !
 
 function displayDecisionMessage(message) {
