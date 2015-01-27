@@ -2,6 +2,18 @@ var socket = io.connect('/')
 
 var playerData
 
+var event = new CustomEvent(
+  "update",
+  {
+    detail: {
+      message: "update",
+      time: new Date(),
+    },
+    bubbles: true,
+    cancelable: true
+  }
+)
+
 $(document).ready(function() {
   // Récupération data joueur
   updatePlayerView()
@@ -43,7 +55,7 @@ function updatePlayerView() {
   $.get('/players/data', function (data) {
     playerData = data
   }).done(function (response) {
-
+    document.dispatchEvent(event)
     $("#valeur_argent").text(" " + getValue("Money"))
     $("#valeur_energie").text(" " + getValue("Energy"))
     $("#valeur_satisfaction").text(" " + getValue("Satisfaction"))
