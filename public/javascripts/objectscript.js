@@ -12,8 +12,6 @@ $(document).ready(function() {
   });
 
   document.addEventListener("update", setMyObjects, false);
-
-
 })
 
 
