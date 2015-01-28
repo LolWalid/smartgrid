@@ -30,7 +30,7 @@ var connectedPlayers = [];
 
 
 require('./app/seed.js').seed(db);
-require('./app/mysocket.js').sockets(io);
+require('./app/sockets.js').sockets(io);
 
 
 
