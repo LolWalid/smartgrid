@@ -18,7 +18,7 @@ $(document).ready(function() {
 
   $('#displayAddForm').on('click', function () {
     $("#editObjectif").slideUp(function() {
-    $('#editObjectif input').val('');
+      $('#editObjectif input').val('');
       $("#addObjectif").slideToggle();
     });
   });
@@ -208,8 +208,6 @@ function deleteObjectif(event) {
 function editObjectif(event) {
   event.preventDefault();
 
-  $("#addObjectif").hide();
-
   // Super basic validation - increase errorCount variable if any fields are blank
   var errorCount = 0;
   $('#editObjectif input').each(function(index, val) {
@@ -233,9 +231,9 @@ function editObjectif(event) {
     // Use AJAX to post the object to our editObjectif service
     $.ajax({
       type: 'POST',
-      data: objectif,
-      url: '/objectives/edit',
-      dataType: 'JSON'
+      contentType : 'application/json',
+      data: JSON.stringify(objectif),
+      url: '/objectives/edit'
     }).done(function( response ) {
 
       // Check for successful (blank) response
@@ -247,7 +245,6 @@ function editObjectif(event) {
 
         // Update the table
         populateTable();
-
       }
       else {
         // If something goes wrong, alert the error message that our service returned
