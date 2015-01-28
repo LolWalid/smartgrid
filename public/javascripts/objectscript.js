@@ -12,8 +12,6 @@ $(document).ready(function() {
   $( "#tabs" ).tabs();
 
   document.addEventListener("update", setMyObjects, false);
-
-
 })
 
 

@@ -46,12 +46,12 @@ router.post('/edit', function(req, res) {
 });
 
 /*
- * DELETE profil.
+ * DELETE profile.
  */
 router.delete('/delete/:id', function(req, res) {
     var db = req.db;
-    var objectifToDelete = req.params.id;
-    db.collection('profiles').removeById(objectifToDelete, function(err, result) {
+    var profileToDelete = req.params.id;
+    db.collection('profiles').removeById(profileToDelete, function(err, result) {
         res.send((result === 1) ? { msg: '' } : { msg:'error: ' + err });
     });
 });

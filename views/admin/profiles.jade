@@ -2,32 +2,38 @@ extends layout
 
 block content
   .container
-    #objectifInfo.info
+    #profileInfo.info
       h2 Profile info
       p
-        strong Title : 
-        span#objectifInfoTitle
+        strong Gender :
+        span#profileInfoGender
+        br
+        strong Name : 
+        span#profileInfoName
+        br
+        strong Marital Status : 
+        span#profileInfoMaritalStatus
+        br
+        strong Profession : 
+        span#profileInfoProfession
         br
         strong Description : 
-        span#objectifInfoDescription
+        span#profileInfoDescription
         br
-        strong Resource : 
-        span#objectifInfoResource
+        strong Income : 
+        span#profileInfoIncome
         br
-        strong Value to reach : 
-        span#objectifInfoAchieve
+        strong Expenses :
+        span#profileInfoExpenses
         br
-        strong Reward resource : 
-        span#objectifInfoReward
-        br
-        strong Reward value : 
-        span#objectifInfoRewardValue
 
     h2 Profiles list
-    #objectifList.list
+    #profilesList.list
       table
         thead
           th Name
+          th Marital status
+          th Profession
           th Description
           th Delete ?
           th Player
@@ -35,16 +41,16 @@ block content
 
     h2#displayAddForm.displayTitle New profile 
        span.caret 
-    #addObjectif
+    #addProfile
       form.form-horizontal
         .form-group
           label.col-sm-2.control-label(for="inputProfileGender") Gender
           .col-sm-10
-            .radio
+            .radio-inline
               label
                 input(type='radio', name='inputProfileGender', value='m')
                 |Male
-            .radio
+            .radio-inline
               label
                 input(type='radio', name='inputProfileGender', value='f')
                 |Female
@@ -53,41 +59,96 @@ block content
           .col-sm-10
             input#inputProfileName.form-control(type='text', placeholder='Profile name')
         .form-group
-          label.col-sm-2.control-label(for="inputObjectifDescription") Description
+          label.col-sm-2.control-label(for="inputProfileMaritalStatus") Marital status
           .col-sm-10
-            textarea#inputObjectifDescription.form-control(type='text', placeholder='Description')
+            .radio-inline
+              label
+                input(type='radio', name='inputProfileMaritalStatus', value='single')
+                |Single
+            .radio-inline
+              label
+                input(type='radio', name='inputProfileMaritalStatus', value='married')
+                |Married
+            .radio-inline
+              label
+                input(type='radio', name='inputProfileMaritalStatus', value='divorced')
+                |Divorced
+            .radio-inline
+              label
+                input(type='radio', name='inputProfileMaritalStatus', value='widowed')
+                |Widowed
+        .form-group
+          label.col-sm-2.control-label(for="inputProfileProfession") Profession
+          .col-sm-10
+            input#inputProfileProfession.form-control(type='text', placeholder='Profession')
+        .form-group
+          label.col-sm-2.control-label(for="inputProfileDescription") Description
+          .col-sm-10
+            textarea#inputProfileDescription.form-control(type='text', placeholder='Description')
+        .form-group
+          label.col-sm-2.control-label Income
+          .col-sm-2
+            input#inputProfileSalary.form-control(type='text', placeholder='Salary')
+          .col-sm-2
+            input#inputProfileSocialWelfare.form-control(type='text', placeholder='Social welfare')
+          label#totalI.col-sm-2.control-label 
+        .form-group
+          label.col-sm-2.control-label Expenses
+          .col-sm-2
+            input#inputProfileRent.form-control(type='text', placeholder='Rent')
+          .col-sm-2
+            input#inputProfileEnergy.form-control(type='text', placeholder='Energy')
+          .col-sm-2
+            input#inputProfileFood.form-control(type='text', placeholder='Food')
+          .col-sm-2
+            input#inputProfileTransportation.form-control(type='text', placeholder='Transportation')
+          .col-sm-2
+            input#inputProfileEducation.form-control(type='text', placeholder='Education, leisure, culture')
+          .col-sm-offset-2.col-sm-2
+            input#inputProfileRestaurants.form-control(type='text', placeholder='Restaurants')
+          .col-sm-2
+            input#inputProfileClothing.form-control(type='text', placeholder='Clothing')
+          .col-sm-2
+            input#inputProfileHealthcare.form-control(type='text', placeholder='Healthcare')
+          .col-sm-2
+            input#inputProfileAlcohol.form-control(type='text', placeholder='Alcohol, tobacco')
+          .col-sm-2
+            input#inputProfileCommunication.form-control(type='text', placeholder='Communication')
+          .col-sm-offset-2.col-sm-2
+            input#inputProfileOther.form-control(type='text', placeholder='Other expenses')
+          label#totalE.col-sm-2.control-label
         .form-group
           .col-sm-offset-2.col-sm-10
-            button#btnAddObjectif.btn.btn-success Add profile
+            button#btnAddProfile.btn.btn-success Add profile
 
     h2 Edit profile
-    #editObjectif.notDisplayed
+    #editProfile.notDisplayed
       form.form-horizontal
-          input#editObjectifId(type='hidden')
+          input#editprofileId(type='hidden')
           .form-group
-            label.col-sm-2.control-label(for="editObjectifTitle") Title
+            label.col-sm-2.control-label(for="editprofileTitle") Title
             .col-sm-10
-              input#editObjectifTitle.form-control(type='text')
+              input#editprofileTitle.form-control(type='text')
           .form-group
-            label.col-sm-2.control-label(for="editObjectifResource") Resource
+            label.col-sm-2.control-label(for="editprofileResource") Resource
             .col-sm-5
-              select#editObjectifResource.resource.form-control
-            label.col-sm-1.control-label(for="editObjectifAchieve") Value
+              select#editprofileResource.resource.form-control
+            label.col-sm-1.control-label(for="editprofileAchieve") Value
             .col-sm-4
-              input#editObjectifAchieve.form-control(type='text', placeholder='Value to reach')
+              input#editprofileAchieve.form-control(type='text', placeholder='Value to reach')
           .form-group
             label.col-sm-2.control-label Reward
             .col-sm-5
-              select#editObjectifRewardResource.resource.form-control
+              select#editprofileRewardResource.resource.form-control
             label.col-sm-1.control-label Value
             .col-sm-4
-              input#editObjectifRewardValue.form-control(type='text', placeholder='Reward value')
+              input#editprofileRewardValue.form-control(type='text', placeholder='Reward value')
           .form-group
-            label.col-sm-2.control-label(for="editObjectifDescription") Description
+            label.col-sm-2.control-label(for="editprofileDescription") Description
             .col-sm-10
-              textarea#editObjectifDescription.form-control(type='text', placeholder='Description')
+              textarea#editprofileDescription.form-control(type='text', placeholder='Description')
           .form-group
             .col-sm-offset-2.col-sm-10
-              button#btnEditObjectif.btn.btn-warning Edit profile
+              button#btnEditprofile.btn.btn-warning Edit profile
 
   script(src='/javascripts/admin/profilescript.js')
