@@ -20,7 +20,7 @@ function addLog(message, db, type) {
         case 'sale':
           log.description = 'Player ' + message.joueur + ' sold an object'
           break;
-        case 'give':
+        case 'gift':
           log.receiver = message.otherPlayer
           log.description = 'Player ' + message.joueur + ' gave an object' + ' to player ' + message.otherPlayer
           break;
