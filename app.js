@@ -19,6 +19,7 @@ var resources = require('./routes/resources');
 var decisions = require('./routes/decisions');
 var objects = require('./routes/objects');
 var profiles = require('./routes/profiles');
+var logs = require('./routes/logs');
 
 var app = express();
 
@@ -30,7 +31,7 @@ var connectedPlayers = [];
 
 
 require('./app/seed.js').seed(db);
-require('./app/sockets.js').sockets(io);
+require('./app/sockets.js').sockets(io, db);
 
 
 
@@ -63,6 +64,7 @@ app.use('/resources', resources);
 app.use('/objects', objects);
 app.use('/decisions', decisions);
 app.use('/profiles', profiles);
+app.use('/logs', logs);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
