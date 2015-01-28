@@ -106,24 +106,24 @@ function showObjectInfo(event) {
 
       $('#editObject .add_input_effects').append('\
         <div class="form-group">\
-          <label class="col-sm-2 control-label">Bonus/Malus</label>\
-          <div class="col-sm-5">\
-            <select class="resource form-control" id="resource' + i + '" value="' + effects[i].resource +'""></select>\
-          </div>\
-          <div class="col-sm-4">\
-            <input type="text" class="effect form-control" placeholder="Other effect of the object" value="' + effects[i].effect +'"">\
-          </div>\
-          <div class="col-sm-1">\
-            <button class="remove_field btn btn-danger"><span>-</span></button>\
-          </div>\
+        <label class="col-sm-2 control-label">Bonus/Malus</label>\
+        <div class="col-sm-5">\
+        <select class="resource form-control" id="resource' + i + '" value="' + effects[i].resource +'""></select>\
+        </div>\
+        <div class="col-sm-4">\
+        <input type="text" class="effect form-control" placeholder="Other effect of the object" value="' + effects[i].effect +'"">\
+        </div>\
+        <div class="col-sm-1">\
+        <button class="remove_field btn btn-danger"><span>-</span></button>\
+        </div>\
         </div>');
       $("#editObject .remove_field").on('click', removeField);
-      //updateResources();
+
       var options = ''
 
-      for (var j = 0; j < resources.length; j++) {
+      for (var j = 0; j < resourcesList.length; j++) {
 
-       options += '<option value="' + resources[j].name + '"' + (resources[j].name == effects[i].resource ? 'selected' : '' ) + '>' + resources[j].name + '</option>'
+       options += '<option value="' + resourcesList[j].name + '"' + (resourcesList[j].name == effects[i].resource ? 'selected' : '' ) + '>' + resourcesList[j].name + '</option>'
      }
      $('#resource' + i).html(options)
    }
@@ -149,10 +149,17 @@ function addObject(event) {
     var effects = $('#addObject .add_input_effects .effect');
 
     var effectsJson = [];
+    var arrayPosition
 
     if( typeof(effects.length)!="undefined") {
       for (var i=0; i<effects.length; i++) {
-        var json = {'resource': resources[i].value, 'effect': parseInt(effects[i].value)};
+        arrayPosition = resourcesList.map(function(arrayItem) { return arrayItem.name; }).indexOf(resources[i].value)
+
+        var json = {
+          'resource': resources[i].value,
+          'unit' : resourcesList[arrayPosition].unit,
+          'effect': parseInt(effects[i].value)
+        };
         effectsJson = effectsJson.concat(json);
       }
     }
@@ -160,11 +167,14 @@ function addObject(event) {
     var isCommon = $('#addObject input#inputObjectCommon').is(":checked")
 
     // If it is, compile all object info into one object
+
+    arrayPosition = resourcesList.map(function(arrayItem) { return arrayItem.name; }).indexOf($('#addObject select#inputObjectResource').val())
     var newObject = {
       title : $('#addObject input#inputObjectTitle').val(),
       description : $('#addObject textarea#objectDescription').val(),
       common : isCommon,
       costResource : $('#addObject select#inputObjectResource').val(),
+      costUnit : resourcesList[arrayPosition].unit,
       price : parseInt($('#addObject input#inputObjectPrice').val()),
       effects : effectsJson
     };
@@ -182,7 +192,8 @@ function addObject(event) {
       if (response.msg === '') {
 
         // Clear the form inputs
-        $('#addObject input').val('');
+        $('#addObject input').not(":checkbox").val('');
+        $('#addObject textarea').val('');
 
         // Update the table
         populateTable();
@@ -256,10 +267,16 @@ function editObject(event) {
 
     if( typeof(effects.length)!="undefined") {
       for (var i=0; i<effects.length; i++) {
-        var json = {'resource': resources[i].value, 'effect': effects[i].value};
+        var arrayPosition = resourcesList.map(function(arrayItem) { return arrayItem.name; }).indexOf(resource[i].value)
+
+        var json = {
+          'resource': resources[i].value,
+          'unit' : resourcesList[arrayPosition].unit,
+          'effect': parseInt(effects[i].value)
+        };
         effectsJson = effectsJson.concat(json);
       }
-    };
+    }
 
     var isCommon = $('#addObject input#inputObjectCommon').is(":checked")
 
@@ -308,16 +325,16 @@ function addField (e) {
   e.preventDefault();
   $(this).parents('.add_input_effects').append('\
     <div class="form-group">\
-      <label class="col-sm-2 control-label">Bonus/Malus</label>\
-      <div class="col-sm-5">\
-        <select class="resource form-control" id="resource"></select>\
-      </div>\
-      <div class="col-sm-4">\
-        <input type="text" class="effect form-control" placeholder="Other effect of the object">\
-      </div>\
-      <div class="col-sm-1">\
-        <button class="remove_field btn btn-danger"><span>-</span></button>\
-      </div>\
+    <label class="col-sm-2 control-label">Bonus/Malus</label>\
+    <div class="col-sm-5">\
+    <select class="resource form-control" id="resource"></select>\
+    </div>\
+    <div class="col-sm-4">\
+    <input type="text" class="effect form-control" placeholder="Other effect of the object">\
+    </div>\
+    <div class="col-sm-1">\
+    <button class="remove_field btn btn-danger"><span>-</span></button>\
+    </div>\
     </div>');
   $('.remove_field').last().on('click', removeField);
   updateResources();

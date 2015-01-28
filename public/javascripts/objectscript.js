@@ -4,12 +4,12 @@ $(document).ready(function() {
   getObjects();
   $('#objectList table tbody').on('click', 'td a.linkshowobject', showObject);
   $('#objectList table tbody').on('click', 'td a.linkbuyobject', buyObject);
-  $('#objectList table tbody').on('click', 'td a.linkrentobject', rentObject);
-  $('#objectList table tbody').on('click', 'td a.linkgiveobject', giveObject);
 
-  $( "#tabs" ).tabs({
-    collapsible: true
-  });
+  $('#myobjects table tbody').on('click', 'td a.linksellobject', sellObject);
+  $('#myobjects table tbody').on('click', 'td a.linkrentobject', rentObject);
+  $('#myobjects table tbody').on('click', 'td a.linkgiveobject', giveObject);
+
+  $( "#tabs" ).tabs();
 
   document.addEventListener("update", setMyObjects, false);
 })
@@ -25,7 +25,7 @@ function getObjects() {
     $.each(data, function(){
       tableContent += '<tr>';
       tableContent += '<td><a href="#" class="linkshowobject" rel="' + this._id + '" title="Show Details">' + this.title + '</a></td>';
-      tableContent += '<td>' + this.price + " " +this.costResource + '</td>';
+      tableContent += '<td>' + this.price + " " + (this.costUnit ? this.costUnit : this.costResource) + '</td>';
       tableContent += '<td><a href="#" class="linkbuyobject" rel="' + this._id + '">Acheter</a></td>';
       //tableContent += '<td><a href="#" class="linkrentobject" rel="' + this._id + '">Louer</a></td>';
       //tableContent += '<td><a href="#" class="linkgiveobject" rel="' + this._id + '">Donner</a></td>';
@@ -44,7 +44,7 @@ function setMyObjects() {
     $.each(playerData.objects, function(){
       tableContent += '<tr>';
       tableContent += '<td><a href="#" class="linkshowobject" rel="' + this._id + '" title="Show Details">' + this.title + '</a></td>';
-      tableContent += '<td>' + this.price + " " +this.costResource + '</td>';
+      tableContent += '<td>' + 0.5 * this.price + " " + (this.costUnit ? this.costUnit : this.costResource) + '</td>';
       tableContent += '<td><a href="#" class="linksellobject" rel="' + this._id + '">Vendre</a></td>';
       tableContent += '<td><a href="#" class="linkrentobject" rel="' + this._id + '">Louer</a></td>';
       tableContent += '<td><a href="#" class="linkgiveobject" rel="' + this._id + '">Donner</a></td>';
@@ -73,7 +73,7 @@ function showObject () {
   tableContent += "<ul>"
   console.log(thisObject.effects)
   $.each(thisObject.effects, function() {
-    tableContent +='<li>' + this.resource + ' : ' + this.effect + '</li>'
+    tableContent +='<li>' + this.resource + ' : ' + this.effect + ' ' + (this.unit ? this.unit : '') + '</li>'
   })
 
   tableContent += "</ul>"
@@ -85,7 +85,7 @@ function showObject () {
   else
     $('.popin').html(tableContent);
 
-  $('body input.linkbuyobject').on('click', buyObject);
+  //$('body input.linkbuyobject').on('click', buyObject);
   $(".ok_obj").click(function() {
     $(this).closest('.message').remove()
   })
@@ -93,17 +93,35 @@ function showObject () {
 
 function buyObject () {
   object = {
+    action : 'buy',
     object : $(this).prop('rel'),
     joueur : playerData._id
   }
-  socket.emit("buy object", object)
+  socket.emit("action on object", object)
+}
+
+function sellObject () {
+  object = {
+    action : 'sell',
+    object : $(this).prop('rel'),
+    joueur : playerData._id
+  }
+  socket.emit("action on object", object)
 }
 
 function rentObject () {
+  object = {
+    object : $(this).prop('rel'),
+    joueur : playerData._id
+  }
   console.log("rentObject")
 }
 
 function giveObject () {
+    object = {
+    object : $(this).prop('rel'),
+    joueur : playerData._id
+  }
   console.log("giveObject")
 }
 
