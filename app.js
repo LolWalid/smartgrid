@@ -11,9 +11,6 @@ var http = require('http');
 var mongo = require('mongoskin');
 var db = mongo.db("mongodb://localhost/sg", {native_parser: true});
 
-db.collection('players').remove({}, function(msg) {
-});
-
 var routes = require('./routes/index');
 var players = require('./routes/players');
 var objectives = require('./routes/objectives');
@@ -30,36 +27,11 @@ var io = require('socket.io').listen(app.server);
 
 var connectedPlayers = [];
 
-io.sockets.on('connection', function(socket) {
-  socket.on('delete player', function(message) {
-    socket.broadcast.emit('server logout message', message);
-  });
 
-  socket.on('new objective', function(message) {
-    socket.broadcast.emit('server objective message', message);
-  });
 
-  socket.on('new event', function(message) {
-    socket.broadcast.emit('server event message', message);
-  });
+require('./app/seed.js').seed(db);
+require('./app/mysocket.js').sockets(io);
 
-  socket.on('update view', function(message) {
-    socket.broadcast.emit('update view', message);
-  });
-
-  socket.on('new decision', function(message) {
-    socket.broadcast.emit('server decision message', message);
-  });
-
-  socket.on('response vote', function(message) {
-    socket.broadcast.emit('server decision response', message);
-  });
-
-  socket.on('buy object', function(message) {
-    console.log(message)
-    socket.broadcast.emit('server buy object', message);
-  });
-});
 
 
 app.server.listen(3000);
