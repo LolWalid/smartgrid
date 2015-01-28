@@ -6,8 +6,7 @@ $(document).ready(function() {
   $('#objectList table tbody').on('click', 'td a.linkbuyobject', buyObject);
 
   $('#myobjects table tbody').on('click', 'td a.linksellobject', sellObject);
-  $('#myobjects table tbody').on('click', 'td a.linkrentobject', rentObject);
-  $('#myobjects table tbody').on('click', 'td a.linkgiveobject', giveObject);
+  $('#myobjects table tbody').on('click', 'td a.linkgiveobject', giveObjectGui);
 
   $( "#tabs" ).tabs();
 
@@ -46,10 +45,10 @@ function setMyObjects() {
       tableContent += '<td><a href="#" class="linkshowobject" rel="' + this._id + '" title="Show Details">' + this.title + '</a></td>';
       tableContent += '<td>' + 0.5 * this.price + " " + (this.costUnit ? this.costUnit : this.costResource) + '</td>';
       tableContent += '<td><a href="#" class="linksellobject" rel="' + this._id + '">Vendre</a></td>';
-      tableContent += '<td><a href="#" class="linkrentobject" rel="' + this._id + '">Louer</a></td>';
-      tableContent += '<td><a href="#" class="linkgiveobject" rel="' + this._id + '">Donner</a></td>';
-      tableContent += '</tr>';
-    });
+//      tableContent += '<td><a href="#" class="linkrentobject" rel="' + this._id + '">Louer</a></td>';
+tableContent += '<td><a href="#" class="linkgiveobject" rel="' + this._id + '">Donner</a></td>';
+tableContent += '</tr>';
+});
   $('#myobjects table tbody').html(tableContent);
 }
 
@@ -68,7 +67,7 @@ function showObject () {
   tableContent = '<div class="message-heading">'
   tableContent += '<h3 class="message-title">' + thisObject.title + '</h3>'
   tableContent += '</div><div class="message-body">'
-  tableContent += thisObject.description + '</p><br />'
+  tableContent += '<p>' + thisObject.description + '</p><br />'
   tableContent += "<h4>Effets</h4>"
   tableContent += "<ul>"
   console.log(thisObject.effects)
@@ -78,6 +77,7 @@ function showObject () {
 
   tableContent += "</ul>"
   tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-right" value="ok" />'
+  tableContent += '</div>'
   //tableContent += '<input type="button" class="linkbuyobject btn btn-lg btn-warning btn-left" value="Acheter" />'
 
   if ($('.popin').length === 0)
@@ -102,26 +102,56 @@ function buyObject () {
 
 function sellObject () {
   object = {
-    action : 'sell',
+    action : 'sale',
     object : $(this).prop('rel'),
     joueur : playerData._id
   }
   socket.emit("action on object", object)
 }
 
-function rentObject () {
-  object = {
-    object : $(this).prop('rel'),
-    joueur : playerData._id
-  }
-  console.log("rentObject")
+function giveObjectGui() {
+  var thisObjectId = $(this).prop('rel')
+
+  var arrayPosition = objectListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisObjectId)
+
+  var thisObject = objectListData[arrayPosition]
+  tableContent = '<div class="message-heading">'
+  tableContent += '<h3 class="message-title">' + thisObject.title + '</h3>'
+  tableContent += '</div><div class="message-body">'
+  tableContent += '<p>' + "A qui souhaitez vous donner cet objet ?" + '</p>'
+  tableContent += '<td><select id="sendto" class="form-control">';
+
+  $.each(players, function(){
+    tableContent += '<option value="'+ this._id +'">Player '+ this._id +'</option>';
+  });
+  tableContent += '</select></td>'
+  tableContent += '<input type="hidden" id="objectID" value="' + thisObjectId + '"/>'
+  tableContent += '<br/>'
+  tableContent += '<input type="button" class="give_object btn btn-lg btn-success btn-left" value="ok"/>'
+  tableContent += '<input type="button" class="ok_obj btn btn-lg btn-warning btn-right" value="Cancel" />'
+
+  tableContent += '</div>'
+
+  if ($('.popin').length === 0)
+    $('body').append('<div class="message objective popin">' + tableContent + '</div>')
+  else
+    $('.popin').html(tableContent);
+
+  $(".ok_obj").click(function() {
+    $(this).closest('.message').remove()
+  })
+
+  $(".give_object").click(giveObject)
 }
 
 function giveObject () {
-    object = {
-    object : $(this).prop('rel'),
-    joueur : playerData._id
+  object = {
+    action : 'gift',
+    object : $("#objectID").val(),
+    joueur : playerData._id,
+    otherPlayer : $(" #sendto").val()
   }
-  console.log("giveObject")
+  $(this).closest('.message').remove()
+  socket.emit("action on object", object)
 }
 

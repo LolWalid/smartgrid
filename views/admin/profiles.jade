@@ -5,7 +5,7 @@ block content
     #profileInfo.info
       h2 Profile info
       p
-        strong Gender :
+        strong Gender : 
         span#profileInfoGender
         br
         strong Name : 
@@ -48,11 +48,11 @@ block content
           .col-sm-10
             .radio-inline
               label
-                input(type='radio', name='inputProfileGender', value='m')
+                input(type='radio', name='inputProfileGender', value='Male')
                 |Male
             .radio-inline
               label
-                input(type='radio', name='inputProfileGender', value='f')
+                input(type='radio', name='inputProfileGender', value='Female')
                 |Female
         .form-group
           label.col-sm-2.control-label(for="inputProfileName") Name
@@ -63,19 +63,19 @@ block content
           .col-sm-10
             .radio-inline
               label
-                input(type='radio', name='inputProfileMaritalStatus', value='single')
+                input(type='radio', name='inputProfileMaritalStatus', value='Single')
                 |Single
             .radio-inline
               label
-                input(type='radio', name='inputProfileMaritalStatus', value='married')
+                input(type='radio', name='inputProfileMaritalStatus', value='Married')
                 |Married
             .radio-inline
               label
-                input(type='radio', name='inputProfileMaritalStatus', value='divorced')
+                input(type='radio', name='inputProfileMaritalStatus', value='Divorced')
                 |Divorced
             .radio-inline
               label
-                input(type='radio', name='inputProfileMaritalStatus', value='widowed')
+                input(type='radio', name='inputProfileMaritalStatus', value='Widowed')
                 |Widowed
         .form-group
           label.col-sm-2.control-label(for="inputProfileProfession") Profession
@@ -124,31 +124,83 @@ block content
     h2 Edit profile
     #editProfile.notDisplayed
       form.form-horizontal
-          input#editprofileId(type='hidden')
-          .form-group
-            label.col-sm-2.control-label(for="editprofileTitle") Title
-            .col-sm-10
-              input#editprofileTitle.form-control(type='text')
-          .form-group
-            label.col-sm-2.control-label(for="editprofileResource") Resource
-            .col-sm-5
-              select#editprofileResource.resource.form-control
-            label.col-sm-1.control-label(for="editprofileAchieve") Value
-            .col-sm-4
-              input#editprofileAchieve.form-control(type='text', placeholder='Value to reach')
-          .form-group
-            label.col-sm-2.control-label Reward
-            .col-sm-5
-              select#editprofileRewardResource.resource.form-control
-            label.col-sm-1.control-label Value
-            .col-sm-4
-              input#editprofileRewardValue.form-control(type='text', placeholder='Reward value')
-          .form-group
-            label.col-sm-2.control-label(for="editprofileDescription") Description
-            .col-sm-10
-              textarea#editprofileDescription.form-control(type='text', placeholder='Description')
-          .form-group
-            .col-sm-offset-2.col-sm-10
-              button#btnEditprofile.btn.btn-warning Edit profile
+        input#editProfileId(type='hidden')
+        .form-group
+          label.col-sm-2.control-label(for="editProfileGender") Gender
+          .col-sm-10
+            .radio-inline
+              label
+                input(type='radio', name='editProfileGender', value='Male')
+                |Male
+            .radio-inline
+              label
+                input(type='radio', name='editProfileGender', value='Female')
+                |Female
+        .form-group
+          label.col-sm-2.control-label(for="editProfileName") Name
+          .col-sm-10
+            input#editProfileName.form-control(type='text', placeholder='Profile name')
+        .form-group
+          label.col-sm-2.control-label(for="editProfileMaritalStatus") Marital status
+          .col-sm-10
+            .radio-inline
+              label
+                input(type='radio', name='editProfileMaritalStatus', value='Single')
+                |Single
+            .radio-inline
+              label
+                input(type='radio', name='editProfileMaritalStatus', value='Married')
+                |Married
+            .radio-inline
+              label
+                input(type='radio', name='editProfileMaritalStatus', value='Divorced')
+                |Divorced
+            .radio-inline
+              label
+                input(type='radio', name='editProfileMaritalStatus', value='Widowed')
+                |Widowed
+        .form-group
+          label.col-sm-2.control-label(for="editProfileProfession") Profession
+          .col-sm-10
+            input#editProfileProfession.form-control(type='text', placeholder='Profession')
+        .form-group
+          label.col-sm-2.control-label(for="editProfileDescription") Description
+          .col-sm-10
+            textarea#editProfileDescription.form-control(type='text', placeholder='Description')
+        .form-group
+          label.col-sm-2.control-label Income
+          .col-sm-2
+            input#editProfileSalary.form-control(type='text', placeholder='Salary')
+          .col-sm-2
+            input#editProfileSocialWelfare.form-control(type='text', placeholder='Social welfare')
+          label#totalI.col-sm-2.control-label 
+        .form-group
+          label.col-sm-2.control-label Expenses
+          .col-sm-2
+            input#editProfileRent.form-control(type='text', placeholder='Rent')
+          .col-sm-2
+            input#editProfileEnergy.form-control(type='text', placeholder='Energy')
+          .col-sm-2
+            input#editProfileFood.form-control(type='text', placeholder='Food')
+          .col-sm-2
+            input#editProfileTransportation.form-control(type='text', placeholder='Transportation')
+          .col-sm-2
+            input#editProfileEducation.form-control(type='text', placeholder='Education, leisure, culture')
+          .col-sm-offset-2.col-sm-2
+            input#editProfileRestaurants.form-control(type='text', placeholder='Restaurants')
+          .col-sm-2
+            input#editProfileClothing.form-control(type='text', placeholder='Clothing')
+          .col-sm-2
+            input#editProfileHealthcare.form-control(type='text', placeholder='Healthcare')
+          .col-sm-2
+            input#editProfileAlcohol.form-control(type='text', placeholder='Alcohol, tobacco')
+          .col-sm-2
+            input#editProfileCommunication.form-control(type='text', placeholder='Communication')
+          .col-sm-offset-2.col-sm-2
+            input#editProfileOther.form-control(type='text', placeholder='Other expenses')
+          label#totalE.col-sm-2.control-label
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            button#btnEditProfile.btn.btn-success Edit profile
 
   script(src='/javascripts/admin/profilescript.js')
