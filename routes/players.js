@@ -53,7 +53,6 @@ router.get('/show/:id', function(req, res) {
 router.post('/edit', function(req, res) {
     var db = req.db
     var id = req.body._id
-    console.log(req.body)
     db.collection('players').updateById(id, {'$set':req.body}, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
