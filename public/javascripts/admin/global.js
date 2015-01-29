@@ -14,6 +14,7 @@ $(document).ready(function() {
   socket.on('server action on object', function(message) {
     playerActionObject(message)
   })
+  socket.on('new player', updatePlayers)
 })
 
 function playerActionObject(message) {

@@ -12,6 +12,7 @@ function addLog(message, db, type) {
   {
     case 'transaction' :
       log.sender = 'Player ' + message.joueur
+      log.object = message.object
       switch (message.action)
       {
         case 'buy':
@@ -35,13 +36,14 @@ function addLog(message, db, type) {
     break;
     default:
   }
-  console.log(log)
   db.collection('logs').insert(log, function(err, result) {});
 }
 
 function sockets(io, db) {
   io.sockets.on('connection', function(socket) {
-    socket.on('delete player', function(message) {      
+    socket.broadcast.emit('new player', message);
+
+    socket.on('delete player', function(message) {
       socket.broadcast.emit('server logout message', message);
       addLog(message, db, 'logout')
     });

@@ -47,6 +47,8 @@ $(document).ready(function() {
     updatePlayerView()
   })
 
+  socket.on('new player', updatePlayers)
+
   document.addEventListener("update", updateNavBar, false);
 })
 
