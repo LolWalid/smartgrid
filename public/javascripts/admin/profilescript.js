@@ -59,6 +59,23 @@ function showProfileInfo(event) {
 	$("#profileInfoProfession").text(profileObject.profession);
 	$("#profileInfoDescription").text(profileObject.description);
 
+	$("#profileInfoIncome").text('');
+	$("#profileInfoIncome").append('Salary : ' + profileObject.income.salary);
+	$("#profileInfoIncome").append('<br /> Social Welfare : ' + profileObject.income.socialWelfare);
+
+	$("#profileInfoExpenses").text('');
+	$("#profileInfoExpenses").append('Rent : ' + profileObject.expenses.rent);
+	$("#profileInfoExpenses").append('<br /> Energy : ' + profileObject.expenses.energy);
+	$("#profileInfoExpenses").append('<br /> Food : ' + profileObject.expenses.food);
+	$("#profileInfoExpenses").append('<br /> Transportation : ' + profileObject.expenses.transportation);
+	$("#profileInfoExpenses").append('<br /> Education : ' + profileObject.expenses.education);
+	$("#profileInfoExpenses").append('<br /> Restaurants : ' + profileObject.expenses.restaurants);
+	$("#profileInfoExpenses").append('<br /> Clothing : ' + profileObject.expenses.clothing);
+	$("#profileInfoExpenses").append('<br /> Healthcare : ' + profileObject.expenses.healthcare);
+	$("#profileInfoExpenses").append('<br /> Alcohol : ' + profileObject.expenses.alcohol);
+	$("#profileInfoExpenses").append('<br /> Communication : ' + profileObject.expenses.communication);
+	$("#profileInfoExpenses").append('<br /> Other : ' + profileObject.expenses.other);
+
 	$("#editProfileId").val(profileObject._id);
 	$("input[name=editProfileGender][value=" + profileObject.gender + "] ").prop('checked', true);
 	$("#editProfileName").val(profileObject.name);
