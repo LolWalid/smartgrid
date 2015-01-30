@@ -12,27 +12,42 @@ $(document).ready(function() {
   })
 
   socket.on('server action on object', function(message) {
-
-    var arrayPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(message.joueur)
-    var player = players[arrayPosition]
-
-    $.getJSON('/objects/show/' + message.object, function(data) {
-      switch (message.action){
-        case 'buy' :
-        playerBuyObject(player, data)
-        break
-        case 'sell' :
-        playerSellObject(player, data)
-        break
-      }
-    })
-
-    //update his data
-
-    //update db with ajax call
-
+    playerActionObject(message)
   })
+  socket.on('new player', updatePlayers)
 })
+
+function playerActionObject(message) {
+
+  var arrayPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(message.joueur)
+  var player = players[arrayPosition]
+
+  $.getJSON('/objects/show/' + message.object, function(data) {
+    switch (message.action){
+      case 'buy' :
+      playerBuyObject(player, data)
+      break
+      case 'sale' :
+      playerSellObject(player, data)
+      break
+      case 'gift' :
+      otherPlayerPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(message.otherPlayer)
+      playerSellObject(player, data, players[otherPlayerPosition])
+      break
+    }
+  })
+}
+
+function updateResources() {
+  $.getJSON( '/resources/list', function( data ) {
+    resourcesList = data
+    var tableResources = ''
+    $.each(data, function() {
+      tableResources += '<option value="' + this.name + '">' + this.name + '</option>'
+    })
+    $(".resource").html(tableResources)
+  })
+}
 
 function updatePlayers () {
   $.getJSON('/players/list', function (data) {
@@ -107,13 +122,54 @@ function playerSellObject(joueur, object) {
     console.log("Player is cheating.")
 }
 
-function updateResources() {
-  $.getJSON( '/resources/list', function( data ) {
-    resourcesList = data
-    var tableResources = ''
-    $.each(data, function() {
-      tableResources += '<option value="' + this.name + '">' + this.name + '</option>'
+function playerSellObject(joueur, object, otherPlayer) {
+  var indexOfObject = joueur.objects.map(function(arrayItem) { return arrayItem._id; }).indexOf(object._id)
+  var indexOfObject = joueur.objects.map(function(arrayItem) { return arrayItem._id; }).indexOf(object._id)
+
+  if (indexOfObject > -1 ) {
+    joueur.objects.splice(indexOfObject, 1)
+
+    $.each(object.effects, function() {
+      var arrayPosition = joueur.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(this.resource)
+      joueur.resources[arrayPosition].value -= this.effect
     })
-    $(".resource").html(tableResources)
+
+    $.ajax({
+      type: 'POST',
+      contentType : 'application/json',
+      data: JSON.stringify(joueur),
+      url: '/players/edit'
+    }).done(function(response) {
+      if (response.msg === '') {
+        console.log("update view")
+      }
+      else
+        console.log('Error: ' + response.msg)
+    })
+  }
+
+  receiver = otherPlayer
+  $.each(object.effects, function() {
+    var arrayPosition = receiver.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(this.resource)
+    receiver.resources[arrayPosition].value += this.effect
   })
+
+  if (receiver.objects)
+    receiver.objects.push(object)
+  else
+    receiver.objects = [object]
+
+  $.ajax({
+    type: 'POST',
+    contentType : 'application/json',
+    data: JSON.stringify(receiver),
+    url: '/players/edit'
+  }).done(function(response) {
+    if (response.msg === '') {
+      socket.emit('update view')
+    }
+    else
+      console.log('Error: ' + response.msg)
+  })
+
 }

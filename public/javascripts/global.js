@@ -1,6 +1,7 @@
 var socket = io.connect('/')
 
 var playerData
+var players
 
 var event = new CustomEvent(
   "update",
@@ -17,6 +18,7 @@ var event = new CustomEvent(
 $(document).ready(function() {
   // Récupération data joueur
   updatePlayerView()
+  updatePlayers()
 
   // Recevoir message de décision
   socket.on('server decision message', function (message) {
@@ -45,8 +47,17 @@ $(document).ready(function() {
     updatePlayerView()
   })
 
+  socket.on('new player', updatePlayers)
+
   document.addEventListener("update", updateNavBar, false);
 })
+
+function updatePlayers () {
+  $.getJSON('/players/list', function (data) {
+    players = data
+  });
+}
+
 
 function getValue(name) {
   var arrayPosition = playerData.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(name)

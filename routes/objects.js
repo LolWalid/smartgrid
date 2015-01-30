@@ -22,7 +22,6 @@ router.get('/admin', function(req, res) {
  router.post('/add', function(req, res) {
   var db = req.db;
 
-  console.log(req.body.length);
   var data = req.body;
 
   db.collection('objects').insert(data, function(err, result){
