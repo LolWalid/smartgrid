@@ -17,11 +17,7 @@ function getResource(object) {
 function addPlayer(id) {
 	data = {
 		_id: id,
-		resources : [],
-		money: 3000,
-		energy: 500,
-		satisfaction: 3,
-		score: 1350,
+		resources : []
 	}
 
 	$.getJSON( '/resources/list', function( resourceList ) {
