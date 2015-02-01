@@ -7,6 +7,7 @@ Partie ADMIN :
   - Walid -> OK : Gérer tous les messages que les joueurs vont envoyer (modifier les ressources !)
   - Gérer les réponses des consensus
   - Changer les éléments partagés : tout le monde -> par groupes
+  - page edit resources les objets les actions des joueurs, on peut ajouter au tableau un clic sur la 1ere case et bim page edit
 
 
 Partie PLAYER :
@@ -18,13 +19,14 @@ Bonus :
   - continuer les AAP lolz
   - Ecrire un mini tuto (cf Bootstrap tour)
 
+
 Notes de la réunion:
 
 Exemple de scénario de jeu:
 En temps limité, arriver à être autonome en électricité (cad 0 en facture EDF)
 Avec comme objectif de rester au dessus d'une certaine valeur de satisfaction
 
-Éléments de temps réel / par tour : 
+Éléments de temps réel / par tour :
 - salaires
 - factures
 - bonus/malus (des objets)
