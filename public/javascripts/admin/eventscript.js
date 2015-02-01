@@ -46,18 +46,14 @@ function populateTable() {
     eventListData = data;
     // For each item in our JSON, add a table row and cells to the content string
     $.each(data, function(){
+      console.log("after each")
       tableContent += '<tr>';
       tableContent += '<td><a href="#" class="linkshowevent" rel="' + this._id + '" title="Show Details">' + this.title + '</a></td>';
       tableContent += '<td>' + this.description + '</td>';
       tableContent += '<td>' + (this.common ? "Common" : "Individual") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteevent" rel="' + this._id + '">Delete</a></td>';
       if (!this.common) {
-        tableContent += '<td><select id="sendto" class="form-control">';
-
-        $.each(players, function(){
-          tableContent += '<option value="'+ this._id +'">Player '+ this._id +'</option>';
-        });
-        tableContent += '</select></td>';
+        tableContent += '<td>Select players</td>';
       }
       else   {
         tableContent += '<td>All players</td>';
@@ -120,16 +116,16 @@ function showEventInfo(event) {
 
       $('#editEvent .add_input_effects').append('\
         <div class="form-group">\
-          <label class="col-sm-2 control-label">Bonus/Malus</label>\
-          <div class="col-sm-5">\
-            <select class="resource form-control" id="resource' + i + '" value="' + effects[i].resource +'""></select>\
-          </div>\
-          <div class="col-sm-4">\
-            <input type="text" class="effect form-control" placeholder="Other effect of the event" value="' + effects[i].effect +'"">\
-          </div>\
-          <div class="col-sm-1">\
-            <button class="remove_field btn btn-danger"><span>-</span></button>\
-          </div>\
+        <label class="col-sm-2 control-label">Bonus/Malus</label>\
+        <div class="col-sm-5">\
+        <select class="resource form-control" id="resource' + i + '" value="' + effects[i].resource +'""></select>\
+        </div>\
+        <div class="col-sm-4">\
+        <input type="text" class="effect form-control" placeholder="Other effect of the event" value="' + effects[i].effect +'"">\
+        </div>\
+        <div class="col-sm-1">\
+        <button class="remove_field btn btn-danger"><span>-</span></button>\
+        </div>\
         </div>');
       $("#editEvent .remove_field").on('click', removeField);
       //updateResources();
@@ -184,7 +180,6 @@ function addEvent(event) {
       common : isCommon,
       effects : effectsJson
     };
-    console.log(newEvent)
 
     // Use AJAX to post the object to our addevent service
     $.ajax({
@@ -324,18 +319,18 @@ function editEvent(event) {
 function addField (e) {
   e.preventDefault();
   $(this).parents('.add_input_effects').append('\
-        <div class="form-group">\
-          <label class="col-sm-2 control-label">Bonus/Malus</label>\
-          <div class="col-sm-5">\
-            <select class="resource form-control" id="resource"></select>\
-          </div>\
-          <div class="col-sm-4">\
-            <input type="text" class="effect form-control" placeholder="Other effect of the event" >\
-          </div>\
-          <div class="col-sm-1">\
-            <button class="remove_field btn btn-danger"><span>-</span></button>\
-          </div>\
-        </div>');
+    <div class="form-group">\
+    <label class="col-sm-2 control-label">Bonus/Malus</label>\
+    <div class="col-sm-5">\
+    <select class="resource form-control" id="resource"></select>\
+    </div>\
+    <div class="col-sm-4">\
+    <input type="text" class="effect form-control" placeholder="Other effect of the event" >\
+    </div>\
+    <div class="col-sm-1">\
+    <button class="remove_field btn btn-danger"><span>-</span></button>\
+    </div>\
+    </div>');
   $('.remove_field').last().on('click', removeField);
   updateResources();
 }
@@ -345,36 +340,98 @@ function removeField(e) {
   $(this).parents('div.form-group').first().remove();
 }
 
+
+function sendEventGui(event) {
+  var tableContent = '<div class="message">'
+  tableContent += '<div class="message-heading">'
+  tableContent += '<h3 class="message-title">' + event.title + '</h3>'
+  tableContent += '</div><div class="message-body">'
+  tableContent += '<strong>' + 'Select Players' + '</strong><br />'
+  tableContent += '<div class="form-group">'
+  if (players.length != 0){
+    tableContent += '<select multiple class="form-control" id="selectPlayers">'
+    $.each(players, function(){
+      tableContent += '<option value="' +  this._id + '"> Player' + this._id + '</option>'
+    })
+    tableContent += '</select>'
+  }
+  else
+    tableContent += '<p> No player connected, refresh page<p>'
+
+  tableContent += '</div>'
+  tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-right" value="OK" />'
+  tableContent += '</div></div>'
+  $('body').append(tableContent)
+
+  $(".ok_obj").click(function() {
+    var playersSelected = $("#selectPlayers").val()
+    $(this).closest('.message').remove()
+    if (playersSelected) {
+      for (var i = 0; i < playersSelected.length; i++) {
+        sendThroughSocket(event, playersSelected[i])
+      }
+    }
+  })
+}
+
 function sendEvent(e){
   e.preventDefault();
   var thisEventId = $(this).prop('rel');
   var arrayPosition = eventListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisEventId);
   var thisEventObject = eventListData[arrayPosition];
-  var _this = $(this);
-  //for (var i = 0; i < thisEventObject.players.length; i++) {
-    var eventToSend = {
-      joueur: (thisEventObject.common ? 0 : $(this).closest('tr').find("#sendto").val()),
-      //'joueur': thisEventObject.common == "true" ? 0 : thisEventObject.players[i],
-      title: thisEventObject.title,
-      description: thisEventObject.description,
-      effects : thisEventObject.effects,
-      common : thisEventObject.common
-    };
+  if (thisEventObject.common)
+    sendThroughSocket(thisEventObject, 0)
+  else
+    sendEventGui(thisEventObject)
+}
 
-    socket.emit('new event', eventToSend);
+function sendThroughSocket(event, player) {
 
-    if (thisEventObject.common) {
-      updatePlayers();
-      $.each(players, function(){
-        updatePlayersObjectives(this._id, thisEventObject);
-      });
+  var eventToSend = {
+    joueur: player,
+    //'joueur': event.common == "true" ? 0 : event.players[i],
+    title: event.title,
+    description: event.description,
+    effects : event.effects,
+    common : event.common
+  };
+
+  socket.emit('new event', eventToSend);
+
+  if (event.common) {
+    updatePlayers();
+    $.each(players, function(){
+      updatePlayersEvents(this._id, eventToSend);
+    });
+  }
+  else {
+    updatePlayersEvents(player, eventToSend);
+  }
+}
+
+function updatePlayersEvents(id, event) {
+  var arrayPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(id);
+
+  player = players[arrayPosition]
+
+  $.each(event.effects, function() {
+    var arrayPosition = player.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(this.resource)
+    player.resources[arrayPosition].value += this.effect
+  })
+
+  $.ajax({
+    type: 'POST',
+    contentType : 'application/json',
+    data: JSON.stringify(player),
+    url: '/players/edit'
+  }).done(function(response) {
+    if (response.msg === '') {
+      console.log("update view")
+      socket.emit('update view')
     }
-    else {
-      var playerId = $(this).closest('tr').find("#sendto").val();
-      updatePlayersObjectives(playerId, thisEventObject);
-    }
+    else
+      console.log('Error: ' + response.msg)
+  })
 
-    //console.log("Message envoyé au joueur " + thisEventObject.common == "true" ? 0 : thisEventObject.players[i]);
-  //}
 
 }

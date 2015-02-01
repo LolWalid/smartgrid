@@ -60,3 +60,32 @@ fieldset {
 .add_field_button{
   margin-bottom: 15px;
 }
+
+.message {
+  margin: auto;
+  background-color: #ddd;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  width: 30%;
+  position: absolute;
+  top: 40%;
+  left: 40%;
+}
+
+.message-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.message-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: inherit;
+}
+
+.message-body {
+  padding: 15px;
+}

@@ -124,7 +124,6 @@ function playerSellObject(joueur, object) {
 
 function playerSellObject(joueur, object, otherPlayer) {
   var indexOfObject = joueur.objects.map(function(arrayItem) { return arrayItem._id; }).indexOf(object._id)
-  var indexOfObject = joueur.objects.map(function(arrayItem) { return arrayItem._id; }).indexOf(object._id)
 
   if (indexOfObject > -1 ) {
     joueur.objects.splice(indexOfObject, 1)

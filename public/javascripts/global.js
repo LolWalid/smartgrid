@@ -143,7 +143,6 @@ function displayEventMessage(message) {
 
   $(".ok_event").click(function() {
     $(this).closest('.message').remove()
-    updatePlayer(message)
   })
 }
 
@@ -154,11 +153,25 @@ function displayLogoutMessage(message) {
   tableContent += '</div><div class="message-body">'
   tableContent += '<p><strong>Vous allez être déconnecté.</strong><br />'
   tableContent += 'L\'administrateur vient de forcer votre déconnexion.</p><br />'
-  tableContent += '<input type="button" class="ok_event btn btn-lg btn-danger btn-right" value="OK" />'
+  //tableContent += '<input type="button" class="ok_event btn btn-lg btn-danger btn-right" value="OK" />'
   tableContent += '</div></div>'
   $('body').append(tableContent)
+  setInterval(function(){
+    $.each(players, function() {
+      $.ajax({
+        url: '/logout',
+        type: 'POST',
+        dataType: 'json',
+      }).done(function( response ) {
+        if (response.msg === 'done') {
+          window.location.href = '/'
+        }
+      })
+    })
+  }, 3000)
+}
 
-  $(".ok_event").click(function() {
+  /*$(".ok_event").click(function() {
     $(this).closest('.message').remove()
     $.ajax({
       url: '/logout',
@@ -169,8 +182,8 @@ function displayLogoutMessage(message) {
         window.location.href = '/'
       }
     })
-  })
-}
+})*/
+
 
 function updatePlayer (message) {
   var playerEdit = playerData
