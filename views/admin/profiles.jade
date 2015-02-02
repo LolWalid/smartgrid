@@ -63,8 +63,13 @@ block content
             input#inputProfileName.form-control(type='text', placeholder='Profile name')
         .form-group
           label.col-sm-2.control-label(for="inputProfileImage") Image
-          .col-sm-10
-            
+          .col-sm-10#listProfileImages
+            label
+              input(type='radio', name='inputProfileImage', value='mamadou')
+              img(src='/img/perso/mamadou.png', width='80')
+            label
+              input(type='radio', name='inputProfileImage', value='boulanger')
+              img(src='/img/perso/boulanger.png', width='80')
         .form-group
           label.col-sm-2.control-label(for="inputProfileMaritalStatus") Marital status
           .col-sm-10

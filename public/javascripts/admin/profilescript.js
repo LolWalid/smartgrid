@@ -46,6 +46,8 @@ function populateTable() {
 			$("#profilesList table tbody").html(tableContent);
 		});
 	});
+
+	$('#listProfileImages').append('<img src="/img/perso/'+  +'" ')
 }
 
 function showProfileInfo(event) {
