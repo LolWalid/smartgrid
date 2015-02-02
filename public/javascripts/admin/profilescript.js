@@ -47,7 +47,15 @@ function populateTable() {
 		});
 	});
 
-	$('#listProfileImages').append('<img src="/img/perso/'+  +'" ')
+	$.getJSON('/img/perso', function(data) {
+		for (var i=0; i<data.length; i++) {
+			var toAppend = '<label>';
+			toAppend += '<input type="radio" name="inputProfileImage" value="'+ data[i] +'" />';
+			toAppend += '<img src="/img/perso/'+ data[i] +'" width="80" />';
+			toAppend += '</label>';
+			$('#listProfileImages').append(toAppend);
+		}
+	});
 }
 
 function showProfileInfo(event) {

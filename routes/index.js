@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
 
 var sess;
 
@@ -12,9 +13,16 @@ router.get('/', function(req, res) {
   	res.render('login', { title: 'Smartgrid - Connexion'});
 });
 
+router.get('/img/perso', function(req,res) {
+  fs.readdir('./public/img/perso/', function(err, files){
+    if (!err) 
+      res.json(files);
+  });
+}); 
+
 router.get('/map', function(req, res) {
   res.render('admin/map')
-})
+});
 
 router.get('/objectives', function(req, res) {
   sess = req.session;
