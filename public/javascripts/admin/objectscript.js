@@ -165,6 +165,8 @@ function addObject(event) {
     }
 
     var isCommon = $('#addObject input#inputObjectCommon').is(":checked")
+    console.log($('#addObject input#inputObjectMultipleUse'))
+    console.log($('#addObject input#inputObjectMultipleUse').is(":checked"))
 
     // If it is, compile all object info into one object
 
@@ -173,6 +175,7 @@ function addObject(event) {
       title : $('#addObject input#inputObjectTitle').val(),
       description : $('#addObject textarea#objectDescription').val(),
       common : isCommon,
+      multipleUse : $('#addObject input#inputObjectMultipleUse').is(":checked") && isCommon,
       costResource : $('#addObject select#inputObjectResource').val(),
       costUnit : resourcesList[arrayPosition].unit,
       price : parseInt($('#addObject input#inputObjectPrice').val()),

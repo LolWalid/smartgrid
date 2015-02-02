@@ -35,11 +35,16 @@ block content
             input#inputObjectTitle.form-control(type='text', placeholder='Object title')
         .form-group
           label.col-sm-2.control-label(for="inputObjectCommon") Type
-          .col-sm-10
+          .col-sm-5
             .checkbox
               label
                 input#inputObjectCommon(type="checkbox")
                 | Common object
+          .col-sm-5
+            .checkbox
+              label
+                input#inputObjectMultipleUse(type="checkbox")
+                | Can be use by all players?
         .form-group
             label.col-sm-2.control-label Price
             .col-sm-5

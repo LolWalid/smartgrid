@@ -20,7 +20,7 @@ ready = $(function() {
 
 $(document).ready(ready);
 
-
+var undeletableResource = ["Money", "Energy", "Score", "Satisfaction"]
 function populateTable() {
 
   // Empty content string
@@ -36,7 +36,10 @@ function populateTable() {
       tableContent += '<td>' + this.unit + '</td>';
       tableContent += '<td>' + this.defaultValue + '</td>';
       tableContent += '<td>' + (this.shared ? 'Yes' : 'No') + '</td>';
-      tableContent += '<td><a href="#" class="linkdeleteresource" rel="' + this._id + '">Delete</a></td>';
+      if (undeletableResource.indexOf(this.name) < 0)
+        tableContent += '<td><a href="#" class="linkdeleteresource" rel="' + this._id + '">Delete</a></td>';
+      else
+        tableContent += '<td> Undeletable Resource</td>'
       tableContent += '</tr>';
     });
 

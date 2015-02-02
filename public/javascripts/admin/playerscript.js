@@ -10,16 +10,22 @@ $(document).ready(function () {
 
 })
 
+function getValue(player, name) {
+  var arrayPosition = player.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(name)
+  return player.resources[arrayPosition] ? (player.resources[arrayPosition].value + player.resources[arrayPosition].unit): 'NOT IN DB';
+}
+
+
 function populateTable() {
 	$.getJSON('/players/list', function(data) {
 		$.each(data, function(){
 			tableContent += '<tr>';
 			tableContent += '<td> Player '+ this._id +'</td>';
-			tableContent += '<td>'+ this.money +'</td>';
-			tableContent += '<td>'+ this.energy +'</td>';
-			tableContent += '<td>'+ this.satisfaction +'</td>';
-			tableContent += '<td>'+ this.score +'</td>';
-			tableContent += '<td><a href="#" class="linkdeleteplayer" rel="'+ this._id +'">Delete</a></td>';
+			tableContent += '<td>'+ getValue(this, "Money") +'</td>';
+			tableContent += '<td>'+ getValue(this, "Energy") +'</td>';
+			tableContent += '<td>'+ getValue(this, "Satisfaction") +'</td>';
+			tableContent += '<td>'+ getValue(this, "Score") +'</td>';
+			tableContent += '<td><a href="#" class="linkdeleteplayer" rel="'+ this._id +'">Kick</a></td>';
 			tableContent += '</tr>';
 		})
 
