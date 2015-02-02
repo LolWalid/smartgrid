@@ -1,5 +1,4 @@
 #SmartGrid
-=======
 
 Game using express with node.js and mongodb.
 
