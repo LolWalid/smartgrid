@@ -3,6 +3,23 @@ SmartGrid
 
 Game using express with node.js and mongodb.
 
+To launch the application :
+
+Create a directory data that will contain our database
+```
+mkdir data
+cd data
+```
+
+Launch the database server
+```
+mongod --dbpath .
+```
+Launch the server
+```
+npm start
+```
+
 Routes available:
 ```
 For players:
