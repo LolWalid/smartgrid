@@ -47,13 +47,14 @@ function populateTable() {
 		});
 	});
 
+	$('.listProfileImages').text('');
 	$.getJSON('/img/perso', function(data) {
 		for (var i=0; i<data.length; i++) {
 			var toAppend = '<label>';
-			toAppend += '<input type="radio" name="inputProfileImage" value="'+ data[i] +'" />';
+			toAppend += '<input type="radio" name="profileImage" value="'+ data[i] +'" />';
 			toAppend += '<img src="/img/perso/'+ data[i] +'" width="80" />';
 			toAppend += '</label>';
-			$('#listProfileImages').append(toAppend);
+			$('.listProfileImages').append(toAppend);
 		}
 	});
 }
@@ -72,6 +73,7 @@ function showProfileInfo(event) {
 
 	$("#profileInfoGender").text(profileObject.gender);
 	$("#profileInfoName").text(profileObject.name);
+	$("#profileInfoImage").html('<img src="/img/perso/'+profileObject.image+'" width="80" />');
 	$("#profileInfoMaritalStatus").text(profileObject.maritalStatus);
 	$("#profileInfoProfession").text(profileObject.profession);
 	$("#profileInfoDescription").text(profileObject.description);
@@ -96,6 +98,7 @@ function showProfileInfo(event) {
 	$("#editProfileId").val(profileObject._id);
 	$("input[name=editProfileGender][value=" + profileObject.gender + "] ").prop('checked', true);
 	$("#editProfileName").val(profileObject.name);
+	$("#editProfile input[name=profileImage][value='" + profileObject.image + "']").prop('checked', true);
 	$("input[name=editProfileMaritalStatus][value=" + profileObject.maritalStatus + "]").prop('checked', true);
 	$("#editProfileProfession").val(profileObject.profession);
 	$("#editProfileDescription").val(profileObject.description);
@@ -127,6 +130,7 @@ function addProfile(event) {
 		var newProfile = {
 			gender : $("#addProfile input[name=inputProfileGender]:checked").val(),
 			name : $("#addProfile #inputProfileName").val(),
+			image : $("#addProfile input[name=profileImage]:checked").val(),
 			maritalStatus : $("#addProfile input[name=inputProfileMaritalStatus]:checked").val(),
 			profession : $("#addProfile #inputProfileProfession").val(),
 			income : {
@@ -185,6 +189,7 @@ function editProfile(event) {
 			id : $("#editProfile #editProfileId").val(),
 			gender : $("#editProfile input[name=editProfileGender]:checked").val(),
 			name : $("#editProfile #editProfileName").val(),
+			image : $("#editProfile input[name=profileImage]:checked").val(),
 			maritalStatus : $("#editProfile input[name=editProfileMaritalStatus]:checked").val(),
 			profession : $("#editProfile #editProfileProfession").val(),
 			income : {

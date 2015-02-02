@@ -22,10 +22,8 @@ $(document).ready(function() {
 
   // Recevoir message de nouveau profil
   socket.on('server profile message', function (message) {
-    if (message.joueur === playerData._id) {
+    if (message.joueur === playerData._id) 
       displayProfileMessage(message)
-      updatePlayerProfile(message)
-    }
   })
 
   // Recevoir message de décision
@@ -102,6 +100,7 @@ function updatePlayerProfile (message) {
     if (response.msg !== '') {
       console.log('Error: ' + response.msg)
     }
+    document.dispatchEvent(eventUpdate)
   })
 }
 
@@ -124,6 +123,7 @@ function updateNavBar() {
   $("#valeur_energie").text(" " + getValue("Energy"))
   $("#valeur_satisfaction").text(" " + getValue("Satisfaction"))
   $("#valeur_score").text(" " + getValue("Score"))
+  $("#profileImage").attr('src', '/img/perso/'+playerData.profile.image);
 }
 
 function displayProfileMessage(message) {
@@ -139,6 +139,7 @@ function displayProfileMessage(message) {
 
   $(".ok_profile").click(function() {
     $(this).closest('.message').remove()
+    updatePlayerProfile(message)
   })
 }
 

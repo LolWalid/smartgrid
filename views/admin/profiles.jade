@@ -11,6 +11,9 @@ block content
         strong Name : 
         span#profileInfoName
         br
+        strong Image :
+        span#profileInfoImage
+        br
         strong Marital Status : 
         span#profileInfoMaritalStatus
         br
@@ -63,7 +66,7 @@ block content
             input#inputProfileName.form-control(type='text', placeholder='Profile name')
         .form-group
           label.col-sm-2.control-label(for="inputProfileImage") Image
-          .col-sm-10#listProfileImages
+          .col-sm-10.listProfileImages
         .form-group
           label.col-sm-2.control-label(for="inputProfileMaritalStatus") Marital status
           .col-sm-10
@@ -146,6 +149,9 @@ block content
           label.col-sm-2.control-label(for="editProfileName") Name
           .col-sm-10
             input#editProfileName.form-control(type='text', placeholder='Profile name')
+        .form-group
+          label.col-sm-2.control-label(for="editProfileImage") Image
+          .col-sm-10.listProfileImages
         .form-group
           label.col-sm-2.control-label(for="editProfileMaritalStatus") Marital status
           .col-sm-10
