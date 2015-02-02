@@ -58,6 +58,10 @@ function sockets(io, db) {
       socket.broadcast.emit('update view', message);
     });
 
+    socket.on('new profile', function(message) {
+      socket.broadcast.emit('server profile message', message);
+    });
+
     socket.on('new decision', function(message) {
       socket.broadcast.emit('server decision message', message);
     });

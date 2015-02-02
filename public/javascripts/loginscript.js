@@ -13,7 +13,6 @@ function getResource(object) {
 	})
 }
 
-
 function addPlayer(id) {
 	data = {
 		_id: id,

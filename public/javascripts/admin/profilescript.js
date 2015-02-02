@@ -8,6 +8,8 @@ $(document).ready(function() {
 
 	$('#profilesList table tbody').on('click', 'td a.linkdeleteprofile', deleteProfile);
 
+	$('#profilesList table tbody').on('click', 'td a.sendprofile', sendProfile);
+
 	$('#displayAddForm').on('click', function () {
 		$("#editProfile").slideUp(function() {
 			$('#editProfile input').not(':radio').val('');
@@ -33,11 +35,16 @@ function populateTable() {
 			tableContent += '<td>'+ this.profession +'</td>';
 			tableContent += '<td>'+ this.description +'</td>';
 			tableContent += '<td><a href="#" class="linkdeleteprofile" rel="'+ this._id +'">Delete</a></td>';
-			tableContent += '<td>None</td>';
+			tableContent += '<td><select id="sendto" class="form-control">';
+			$.each(players, function(){
+				tableContent += '<option value="'+ this._id +'">Player '+ this._id +'</option>';
+			});
+			tableContent += '</select></td>';
+			tableContent += '<td><a href="#" class="sendprofile" rel="'+ this._id +'">Send</a></td>';
 			tableContent += '</tr>';
-		});
 
-		$("#profilesList table tbody").html(tableContent);
+			$("#profilesList table tbody").html(tableContent);
+		});
 	});
 }
 
@@ -237,4 +244,22 @@ function deleteProfile(event) {
 	else {
 		return false;
 	}
+}
+
+function sendProfile(event) {
+	event.preventDefault();
+	var profileID = $(this).prop('rel');
+	var arrayPosition = profileListData.map(function(arrayItem) {return arrayItem._id;}).indexOf(profileID);
+	var profileObject = profileListData[arrayPosition];
+
+	var playerID = $(this).closest('tr').find("#sendto").val();
+
+	var profileToSend = {
+		profile : profileObject,
+		joueur : playerID 
+	}
+
+	console.log(profileToSend);
+
+	socket.emit('new profile', profileToSend);
 }

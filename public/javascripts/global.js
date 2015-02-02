@@ -20,6 +20,12 @@ $(document).ready(function() {
   updatePlayerView()
   updatePlayers()
 
+  // Recevoir message de nouveau profil
+  socket.on('server profile message', function (message) {
+    if (message.joueur === playerData._id)
+      displayProfileMessage(message)
+  })
+
   // Recevoir message de décision
   socket.on('server decision message', function (message) {
     displayDecisionMessage(message)
@@ -78,7 +84,22 @@ function updateNavBar() {
   $("#valeur_satisfaction").text(" " + getValue("Satisfaction"))
   $("#valeur_score").text(" " + getValue("Score"))
 }
-//on a pas bouffé alpha !
+
+function displayProfileMessage(message) {
+  var tableContent = '<div class="message objective">'
+  tableContent += '<div class="message-heading">'
+  tableContent += '<h3 class="message-title">Nouveau profil !</h3>'
+  tableContent += '</div><div class="message-body">'
+  tableContent += '<p>Vous êtes maintenant ' + message.profile.name + ', ' + message.profile.profession + '<br />'
+  tableContent += message.profile.description + '</p><br />'
+  tableContent += '<input type="button" class="ok_profile btn btn-lg btn-success btn-right" value="OK" />'
+  tableContent += '</div></div>'
+  $('body').append(tableContent)
+
+  $(".ok_profile").click(function() {
+    $(this).closest('.message').remove()
+  })
+}
 
 function displayDecisionMessage(message) {
 
