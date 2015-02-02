@@ -3,24 +3,37 @@ SmartGrid
 
 Game using express with node.js and mongodb.
 
-To launch the application :
+#Install node and mongodb
+Install nodejs, download it in the official website : http://nodejs.org/
+
+Install mongodb, download it in the official website : https://www.mongodb.org/
+
+Using windows, be sure to add "C:\Program Files\MongoDB 2.6 Standard\bin" to the path
+
+##Launch the application
 
 Create a directory data that will contain our database
 ```
-mkdir data
+**mkdir data**
 cd data
 ```
 
-Launch the database server
+**Launch the database server**
 ```
 mongod --dbpath .
 ```
-Launch the server
+
+**Install modules and their dependancies**
+```
+npm install
+```
+
+**Launch the server**
 ```
 npm start
 ```
 
-Routes available:
+#Routes available:
 ```
 For players:
   / : homepage, will contain all player's information
