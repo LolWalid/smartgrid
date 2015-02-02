@@ -3,7 +3,7 @@ var socket = io.connect('/')
 var playerData
 var players
 
-var event = new CustomEvent(
+var eventUpdate = new CustomEvent(
   "update",
   {
     detail: {
@@ -115,7 +115,7 @@ function updatePlayerView() {
   $.get('/players/data', function (data) {
     playerData = data
   }).done(function (response) {
-    document.dispatchEvent(event)
+    document.dispatchEvent(eventUpdate)
   })
 }
 

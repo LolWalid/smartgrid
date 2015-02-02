@@ -165,8 +165,6 @@ function addObject(event) {
     }
 
     var isCommon = $('#addObject input#inputObjectCommon').is(":checked")
-    console.log($('#addObject input#inputObjectMultipleUse'))
-    console.log($('#addObject input#inputObjectMultipleUse').is(":checked"))
 
     // If it is, compile all object info into one object
 
