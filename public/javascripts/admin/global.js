@@ -28,21 +28,21 @@ function playerActionObject(message) {
   $.getJSON('/objects/show/' + message.object, function(data) {
     switch (message.action){
       case 'buy':
-        playerBuyObject(player, data)
-        break
+      playerBuyObject(player, data)
+      break
       case 'sale':
-        playerSellObject(player, data)
-        break
+      playerSellObject(player, data)
+      break
       case 'gift':
-        otherPlayerPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(message.otherPlayer)
-        playerSellObject(player, data, players[otherPlayerPosition])
-        break
+      otherPlayerPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(message.otherPlayer)
+      playerGiveObject(player, data, players[otherPlayerPosition])
+      break
       case 'proposition':
-        playerProposeObject(message, data)
-        break
+      playerProposeObject(message, data)
+      break
       default:
-        console.log("Unknown action")
-        break
+      console.log("Unknown action")
+      break
     }
   })
 }
@@ -65,7 +65,7 @@ function updatePlayers () {
 }
 
 function playerBuyObject(player, object) {
-
+  console.log(player)
   joueur = player
   var arrayPosition = joueur.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(object.costResource)
 
@@ -131,7 +131,7 @@ function playerSellObject(joueur, object) {
     console.log("Player is cheating.")
 }
 
-function playerSellObject(joueur, object, otherPlayer) {
+function playerGiveObject(joueur, object, otherPlayer) {
   var indexOfObject = joueur.objects.map(function(arrayItem) { return arrayItem._id; }).indexOf(object._id)
 
   if (indexOfObject > -1 ) {
@@ -190,13 +190,24 @@ function playerProposeObject(message, data) {
 }
 
 function getResponseObject(message) {
-  responseObject[message.object].push({player: message.joueur, response: message.response})
-  console.log(responseObject[message.object].length)
-  console.log(players.length)
+  if (!hasRespond(message.joueur, message.object))
+    responseObject[message.object].push({player: message.joueur, response: message.response})
+
   if (responseObject[message.object].length === players.length)
-    buyObject(message)
+    buyObject(message.object)
 }
 
-function buyObject(message) {
-  console.log("Function incoming")
+function buyObject(object) {
+  $.getJSON('/objects/show/' + object, function(data) {
+    id = responseObject[object][0].player
+    var arrayPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(id)
+    var player = players[arrayPosition]
+    playerBuyObject(player, data)
+  })
+}
+
+
+function hasRespond(joueur, object) {
+  var position = responseObject[object].map(function(arrayItem) {return arrayItem.player; }).indexOf(joueur)
+  return (position > -1)
 }

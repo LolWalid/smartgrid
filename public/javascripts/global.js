@@ -22,7 +22,7 @@ $(document).ready(function() {
 
   // Recevoir message de nouveau profil
   socket.on('server profile message', function (message) {
-    if (message.joueur === playerData._id) 
+    if (message.joueur === playerData._id)
       displayProfileMessage(message)
   })
 
@@ -124,7 +124,8 @@ function updateNavBar() {
   $("#valeur_energie").text(" " + getValue("Energy"))
   $("#valeur_satisfaction").text(" " + getValue("Satisfaction"))
   $("#valeur_score").text(" " + getValue("Score"))
-  $("#profileImage").attr('src', '/img/perso/'+playerData.profile.image);
+  if (playerData.profile)
+    $("#profileImage").attr('src', '/img/perso/'+playerData.profile.image);
 }
 
 function displayProfileMessage(message) {
@@ -236,14 +237,40 @@ function displayLogoutMessage(message) {
 
 function displayPropositionGui(message) {
   //add popin with a yes or no button
+  object = message.data
 
-  $(".ok_event").click(function() {
-    sendPropositionResponse(message)
+  tableContent = '<div class="message-heading">'
+  tableContent += '<h3 class="message-title">' + 'Le joueur ' + message.joueur + ' souhaite acheter un objet pour la ville.' + '</h3>'
+  tableContent += '</div><div class="message-body">'
+  tableContent += '<h3>' + object.title + '</h3>'
+  tableContent += '<p>' + object.description + '</p><br />'
+  tableContent += '<p>Prix   : ' + object.price + (object.costUnit ? object.costUnit : '') + '</p>'
+  tableContent += "<h4>Effets</h4>"
+  tableContent += "<ul>"
+  $.each(object.effects, function() {
+    tableContent +='<li>' + this.resource + ' : '
+    tableContent += (this.effect >= 0 ? '+' + this.effect : this.effect)
+    tableContent += ' ' + (this.unit ? this.unit : '')
+    tableContent += '</li>'
+  })
+
+  tableContent += "</ul>"
+  tableContent += '<p> Etes vous d\'accord pour cet achat ?</p>'
+  tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-left" value="Oui" />'
+  tableContent += '<input type="button" class="ok_obj btn btn-lg btn-danger btn-right" value="Non" />'
+  tableContent += '</div>'
+  //tableContent += '<input type="button" class="linkbuyobject btn btn-lg btn-warning btn-left" value="Acheter" />'
+
+
+  $('body').append('<div class="message objective popin">' + tableContent + '</div>')
+
+  $(".ok_obj").click(function() {
+    response = {
+      joueur: playerData._id,
+      object: message.object,
+      response: $(this).val()
+    }
+    socket.emit('proposition reponse', response)
     $(this).closest('.message').remove()
   })
-}
-
-function sendPropositionResponse(message) {
-  //build a message to send, need playerId, response, objectId
-  socket.emit('proposition reponse', message)
 }
