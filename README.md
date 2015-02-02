@@ -1,9 +1,9 @@
-SmartGrid
+#SmartGrid
 =======
 
 Game using express with node.js and mongodb.
 
-#Install node and mongodb
+##Install node and mongodb
 Install nodejs, download it in the official website : http://nodejs.org/
 
 Install mongodb, download it in the official website : https://www.mongodb.org/
@@ -33,7 +33,7 @@ npm install
 npm start
 ```
 
-#Routes available:
+##Routes available:
 ```
 For players:
   / : homepage, will contain all player's information
