@@ -22,8 +22,10 @@ $(document).ready(function() {
 
   // Recevoir message de nouveau profil
   socket.on('server profile message', function (message) {
-    if (message.joueur === playerData._id)
+    if (message.joueur === playerData._id) {
       displayProfileMessage(message)
+      updatePlayerProfile(message)
+    }
   })
 
   // Recevoir message de décision
@@ -70,7 +72,7 @@ function updatePlayer (message) {
     type: 'POST',
     data: JSON.stringify(playerEdit),
     contentType : 'application/json',
-    url: '/players/edit',
+    url: '/players/edit'
   }).done(function( response ) {
     // Check for successful (blank) response
     if (response.msg !== '') {
@@ -86,6 +88,22 @@ function updatePlayers () {
   });
 }
 
+function updatePlayerProfile (message) {
+  var playerEdit = playerData
+
+  playerEdit.profile = message.profile
+
+  $.ajax({
+    type: 'POST',
+    data: JSON.stringify(playerEdit),
+    contentType: 'application/json',
+    url: '/players/edit'
+  }).done(function (response) {
+    if (response.msg !== '') {
+      console.log('Error: ' + response.msg)
+    }
+  })
+}
 
 function getValue(name) {
   var arrayPosition = playerData.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(name)
