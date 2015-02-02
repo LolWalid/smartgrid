@@ -101,6 +101,7 @@ function updatePlayerProfile (message) {
       console.log('Error: ' + response.msg)
     }
     document.dispatchEvent(eventUpdate)
+    window.location.reload()
   })
 }
 
