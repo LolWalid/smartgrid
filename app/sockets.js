@@ -29,6 +29,10 @@ function addTransaction(message, db) {
       log.receiver = message.otherPlayer
       log.description = 'Player ' + message.joueur + ' gave an object' + ' to player ' + message.otherPlayer + '.'
       break
+    case 'proposition':
+      console.log("i'm here")
+      log.description = 'Player ' + message.joueur + ' want community to buy an object.'
+      break
     default:
       break;
   }
@@ -70,6 +74,14 @@ function sockets(io, db) {
     socket.on('action on object', function(message) {
       addLog(message, db, 'transaction')
       socket.broadcast.emit('server action on object', message);
+    });
+
+    socket.on('player want object', function(message) {
+      socket.broadcast.emit('server player want object', message);
+    });
+
+    socket.on('proposition reponse', function(message) {
+      socket.broadcast.emit('server proposition reponse', message);
     });
   });
 }

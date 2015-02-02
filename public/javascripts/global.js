@@ -47,10 +47,32 @@ $(document).ready(function() {
     updatePlayerView()
   })
 
+  socket.on('server player want object', function(message) {
+    displayPropositionGui(message)
+  })
+
   socket.on('new player', updatePlayers)
 
   document.addEventListener("update", updateNavBar, false);
 })
+
+function updatePlayer (message) {
+  var playerEdit = playerData
+
+  // Use AJAX to post the object to our editEvent service
+  $.ajax({
+    type: 'POST',
+    data: JSON.stringify(playerEdit),
+    contentType : 'application/json',
+    url: '/players/edit',
+  }).done(function( response ) {
+    // Check for successful (blank) response
+    if (response.msg !== '') {
+      // If something goes wrong, alert the error message that our service returned
+      console.log('Error: ' + response.msg)
+    }
+  })
+}
 
 function updatePlayers () {
   $.getJSON('/players/list', function (data) {
@@ -63,6 +85,7 @@ function getValue(name) {
   var arrayPosition = playerData.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(name)
   return playerData.resources[arrayPosition] ? playerData.resources[arrayPosition].value : 'NOT IN DB';
 }
+
 
 function updatePlayerView() {
   $.get('/players/data', function (data) {
@@ -153,7 +176,6 @@ function displayLogoutMessage(message) {
   tableContent += '</div><div class="message-body">'
   tableContent += '<p><strong>Vous allez être déconnecté.</strong><br />'
   tableContent += 'L\'administrateur vient de forcer votre déconnexion.</p><br />'
-  //tableContent += '<input type="button" class="ok_event btn btn-lg btn-danger btn-right" value="OK" />'
   tableContent += '</div></div>'
   $('body').append(tableContent)
   setInterval(function(){
@@ -171,34 +193,16 @@ function displayLogoutMessage(message) {
   }, 3000)
 }
 
-  /*$(".ok_event").click(function() {
+function displayPropositionGui(message) {
+  //add popin with a yes or no button
+
+  $(".ok_event").click(function() {
+    sendPropositionResponse(message)
     $(this).closest('.message').remove()
-    $.ajax({
-      url: '/logout',
-      type: 'POST',
-      dataType: 'json',
-    }).done(function( response ) {
-      if (response.msg === 'done') {
-        window.location.href = '/'
-      }
-    })
-})*/
+  })
+}
 
-
-function updatePlayer (message) {
-  var playerEdit = playerData
-
-    // Use AJAX to post the object to our editEvent service
-    $.ajax({
-      type: 'POST',
-      data: JSON.stringify(playerEdit),
-      contentType : 'application/json',
-      url: '/players/edit',
-    }).done(function( response ) {
-      // Check for successful (blank) response
-      if (response.msg !== '') {
-        // If something goes wrong, alert the error message that our service returned
-        console.log('Error: ' + response.msg)
-      }
-    })
-  }
+function sendPropositionResponse(message) {
+  //build a message to send, need playerId, response, objectId
+  socket.emit('proposition reponse', message)
+}

@@ -2,6 +2,7 @@ var socket = io.connect('/');
 var players
 var resourcesList
 var response = []
+var responseObject = []
 
 $(document).ready(function() {
   updatePlayers();
@@ -15,6 +16,8 @@ $(document).ready(function() {
     playerActionObject(message)
   })
   socket.on('new player', updatePlayers)
+
+  socket.on('server proposition reponse', getResponseObject)
 })
 
 function playerActionObject(message) {
@@ -24,16 +27,22 @@ function playerActionObject(message) {
 
   $.getJSON('/objects/show/' + message.object, function(data) {
     switch (message.action){
-      case 'buy' :
-      playerBuyObject(player, data)
-      break
-      case 'sale' :
-      playerSellObject(player, data)
-      break
-      case 'gift' :
-      otherPlayerPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(message.otherPlayer)
-      playerSellObject(player, data, players[otherPlayerPosition])
-      break
+      case 'buy':
+        playerBuyObject(player, data)
+        break
+      case 'sale':
+        playerSellObject(player, data)
+        break
+      case 'gift':
+        otherPlayerPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(message.otherPlayer)
+        playerSellObject(player, data, players[otherPlayerPosition])
+        break
+      case 'proposition':
+        playerProposeObject(message, data)
+        break
+      default:
+        console.log("Unknown action")
+        break
     }
   })
 }
@@ -170,5 +179,24 @@ function playerSellObject(joueur, object, otherPlayer) {
     else
       console.log('Error: ' + response.msg)
   })
+}
 
+function playerProposeObject(message, data) {
+  messagetoSend = message
+  messagetoSend.data = data
+  responseObject[message.object] = [{player: message.joueur, response: 'Yes'}]
+
+  socket.emit("player want object", messagetoSend)
+}
+
+function getResponseObject(message) {
+  responseObject[message.object].push({player: message.joueur, response: message.response})
+  console.log(responseObject[message.object].length)
+  console.log(players.length)
+  if (responseObject[message.object].length === players.length)
+    buyObject(message)
+}
+
+function buyObject(message) {
+  console.log("Function incoming")
 }

@@ -3,10 +3,12 @@ objectListData = []
 $(document).ready(function() {
   getObjects();
   $('#objectList table tbody').on('click', 'td a.linkshowobject', showObject);
+  $('#objectList table tbody').on('click', 'td a.linkproposeobject', proposeobject);
   $('#objectList table tbody').on('click', 'td a.linkbuyobject', buyObject);
 
   $('#myobjects table tbody').on('click', 'td a.linksellobject', sellObject);
   $('#myobjects table tbody').on('click', 'td a.linkgiveobject', giveObjectGui);
+
 
   $( "#tabs" ).tabs();
 
@@ -25,7 +27,10 @@ function getObjects() {
       tableContent += '<tr>';
       tableContent += '<td><a href="#" class="linkshowobject" rel="' + this._id + '" title="Show Details">' + this.title + '</a></td>';
       tableContent += '<td>' + this.price + " " + (this.costUnit ? this.costUnit : this.costResource) + '</td>';
-      tableContent += '<td><a href="#" class="linkbuyobject" rel="' + this._id + '">Acheter</a></td>';
+      if (this.common)
+        tableContent += '<td><a href="#" class="linkproposeobject" rel="' + this._id + '">Proposer l\'achat</a></td>';
+      else
+        tableContent += '<td><a href="#" class="linkbuyobject" rel="' + this._id + '">Acheter</a></td>';
       //tableContent += '<td><a href="#" class="linkrentobject" rel="' + this._id + '">Louer</a></td>';
       //tableContent += '<td><a href="#" class="linkgiveobject" rel="' + this._id + '">Donner</a></td>';
       tableContent += '</tr>';
@@ -155,3 +160,12 @@ function giveObject () {
   socket.emit("action on object", object)
 }
 
+
+function proposeobject() {
+  object = {
+    action : 'proposition',
+    object : $(this).prop('rel'),
+    joueur : playerData._id,
+  }
+  socket.emit("action on object", object)
+}
