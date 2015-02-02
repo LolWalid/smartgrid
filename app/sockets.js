@@ -30,12 +30,12 @@ function addTransaction(message, db) {
       log.description = 'Player ' + message.joueur + ' gave an object' + ' to player ' + message.otherPlayer + '.'
       break
     case 'proposition':
-      console.log("i'm here")
       log.description = 'Player ' + message.joueur + ' want community to buy an object.'
       break
     default:
       break;
   }
+  log.date = new Date().toUTCString()
   db.collection('logs').insert(log, function(err, result) {
   });
 }
