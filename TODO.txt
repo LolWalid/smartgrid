@@ -9,7 +9,6 @@ Partie ADMIN :
   - Changer les éléments partagés : tout le monde -> par groupes
   - page edit resources les objets les actions des joueurs, on peut ajouter au tableau un clic sur la 1ere case et bim page edit
 
-
 Partie PLAYER :
   - Walid -> OK : Achat et vente d'objet
   - ajouter la notion de ressources partagées, je vous propose d'ajouter une collection "City" qui aura des valeurs initiales par défaut
