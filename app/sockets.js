@@ -75,6 +75,8 @@ function addVote(message, db) {
 
 function sockets(io, db) {
   io.sockets.on('connection', function(socket) {
+    socket.broadcast.emit('new player',{})
+
     socket.on('delete player', function(message) {
       socket.broadcast.emit('server logout message', message);
     });

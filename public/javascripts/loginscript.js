@@ -83,11 +83,11 @@ $(document).ready(function(){
 
 	var login,password;
 	$("#login-form").submit(function(event){
+			event.preventDefault();
 		pseudo = $("#pseudo").val();
 		password = $("#password").val();
 
 		if (pseudo == 0 && password === 'smartgrid') {
-			event.preventDefault();
 			var login = { login : pseudo};
 			console.log(login);
 			$.ajax({
@@ -101,7 +101,6 @@ $(document).ready(function(){
 			});
 		}
 		else if (pseudo != '0') {
-			event.preventDefault();
 			var login = { login : pseudo};
 			socket.emit('add player', {'player': pseudo});
 			$.ajax({
@@ -118,7 +117,6 @@ $(document).ready(function(){
 		else {
 			alert('Mauvais mot de passe.');
 			$("#password").val('');
-			event.preventDefault();
 		}
 	});
 });
