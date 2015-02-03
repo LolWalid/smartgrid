@@ -2,7 +2,7 @@ objectListData = []
 
 $(document).ready(function() {
   getObjects();
-  $('#objectList table tbody').on('click', 'td a.linkshowobject', showObject);
+  $('table tbody').on('click', 'td a.linkshowobject', showObject);
   $('#objectList table tbody').on('click', 'td a.linkproposeobject', proposeobject);
   $('#objectList table tbody').on('click', 'td a.linkbuyobject', buyObject);
 
@@ -73,15 +73,16 @@ function showObject () {
   tableContent += '<h3 class="message-title">' + thisObject.title + '</h3>'
   tableContent += '</div><div class="message-body">'
   tableContent += '<p>' + thisObject.description + '</p><br />'
+  tableContent += '<p>Prix d\'achat :' + thisObject.price + " " + (thisObject.costUnit ? thisObject.costUnit : thisObject.costResource) + '</p>'
   tableContent += "<h4>Effets</h4>"
   tableContent += "<ul>"
-  console.log(thisObject.effects)
+
   $.each(thisObject.effects, function() {
     tableContent +='<li>' + this.resource + ' : ' + this.effect + ' ' + (this.unit ? this.unit : '') + '</li>'
   })
 
   tableContent += "</ul>"
-  tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-right" value="ok" />'
+  tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-right" value="OK" />'
   tableContent += '</div>'
   //tableContent += '<input type="button" class="linkbuyobject btn btn-lg btn-warning btn-left" value="Acheter" />'
 
@@ -132,7 +133,7 @@ function giveObjectGui() {
   tableContent += '</select></td>'
   tableContent += '<input type="hidden" id="objectID" value="' + thisObjectId + '"/>'
   tableContent += '<br/>'
-  tableContent += '<input type="button" class="give_object btn btn-lg btn-success btn-left" value="ok"/>'
+  tableContent += '<input type="button" class="give_object btn btn-lg btn-success btn-left" value="Donner"/>'
   tableContent += '<input type="button" class="ok_obj btn btn-lg btn-warning btn-right" value="Cancel" />'
 
   tableContent += '</div>'

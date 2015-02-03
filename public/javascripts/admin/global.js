@@ -65,7 +65,6 @@ function updatePlayers () {
 }
 
 function playerBuyObject(player, object) {
-  console.log(player)
   joueur = player
   var arrayPosition = joueur.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(object.costResource)
 
@@ -150,6 +149,7 @@ function playerGiveObject(joueur, object, otherPlayer) {
     }).done(function(response) {
       if (response.msg === '') {
         console.log("update view")
+        socket.emit('update view')
       }
       else
         console.log('Error: ' + response.msg)

@@ -1,14 +1,21 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+
+router.get('/', function(req, res) {
+  sess = req.session;
+
+  if (sess.joueur)
+    res.render('objects', {title: 'Smartgrid', player: 'Joueur ' + sess.joueur });
+  else
+    res.render('login', {title: 'Smartgrid - Connexion'});
+});
+
 router.get('/admin', function(req, res) {
   res.render('admin/objects');
 });
 
-/*
- * GET objects.
- */
+
  router.get('/list', function(req, res) {
   var db = req.db;
   db.collection('objects').find().toArray(function (err, items) {
@@ -16,9 +23,6 @@ router.get('/admin', function(req, res) {
   });
 });
 
-/*
- * ADD object.
- */
  router.post('/add', function(req, res) {
   var db = req.db;
 
@@ -31,9 +35,6 @@ router.get('/admin', function(req, res) {
   });
 });
 
-/*
- * EDIT object.
- */
  router.post('/edit', function(req, res) {
   var db = req.db;
   var id = req.body.id;
@@ -44,9 +45,7 @@ router.get('/admin', function(req, res) {
   });
 });
 
-/*
- * DELETE to deleteobject.
- */
+
  router.delete('/delete/:id', function(req, res) {
   var db = req.db;
   var objectToDelete = req.params.id;
