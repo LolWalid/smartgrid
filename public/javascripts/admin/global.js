@@ -61,6 +61,11 @@ function updateResources() {
 function updatePlayers () {
   $.getJSON('/players/list', function (data) {
     players = data
+    tableContent = ''
+      $.each(players, function(){
+        tableContent += '<option value="'+ this._id +'">Player '+ this._id +'</option>';
+      });
+      $("#sendto").html(tableContent)
   });
 }
 

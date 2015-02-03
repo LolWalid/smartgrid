@@ -20,6 +20,16 @@ $(document).ready(function() {
 	$("#btnAddProfile").on('click', addProfile);
 
 	$("#btnEditProfile").on('click', editProfile);
+	$('.listProfileImages').text('');
+	$.getJSON('/img/perso', function(data) {
+		for (var i=0; i<data.length; i++) {
+			var toAppend = '<label>';
+			toAppend += '<input type="radio" name="profileImage" value="'+ data[i] +'" />';
+			toAppend += '<img src="/img/perso/'+ data[i] +'" width="80" />';
+			toAppend += '</label>';
+			$('.listProfileImages').append(toAppend);
+		}
+	});
 });
 
 function populateTable() {
@@ -36,26 +46,12 @@ function populateTable() {
 			tableContent += '<td>'+ this.description +'</td>';
 			tableContent += '<td><a href="#" class="linkdeleteprofile" rel="'+ this._id +'">Delete</a></td>';
 			tableContent += '<td><select id="sendto" class="form-control">';
-			$.each(players, function(){
-				tableContent += '<option value="'+ this._id +'">Player '+ this._id +'</option>';
-			});
 			tableContent += '</select></td>';
 			tableContent += '<td><a href="#" class="sendprofile" rel="'+ this._id +'">Send</a></td>';
 			tableContent += '</tr>';
 
 			$("#profilesList table tbody").html(tableContent);
 		});
-	});
-
-	$('.listProfileImages').text('');
-	$.getJSON('/img/perso', function(data) {
-		for (var i=0; i<data.length; i++) {
-			var toAppend = '<label>';
-			toAppend += '<input type="radio" name="profileImage" value="'+ data[i] +'" />';
-			toAppend += '<img src="/img/perso/'+ data[i] +'" width="80" />';
-			toAppend += '</label>';
-			$('.listProfileImages').append(toAppend);
-		}
 	});
 }
 
@@ -122,7 +118,7 @@ function addProfile(event) {
 
 	var errorCount = 0;
 	$('#addProfile input').each(function(index,val) {
-		if ($(this).val() === '') 
+		if ($(this).val() === '')
 			errorCount++;
 	});
 
@@ -180,7 +176,7 @@ function editProfile(event) {
 
 	var errorCount = 0;
 	$('#editProfile input').each(function(index,val) {
-		if ($(this).val() === '') 
+		if ($(this).val() === '')
 			errorCount++;
 	});
 
@@ -271,7 +267,7 @@ function sendProfile(event) {
 
 	var profileToSend = {
 		profile : profileObject,
-		joueur : playerID 
+		joueur : playerID
 	}
 
 	console.log(profileToSend);

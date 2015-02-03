@@ -55,10 +55,6 @@ function populateTable() {
       tableContent += '<td><a href="#" class="linkdeleteobjectif" rel="' + this._id + '">Delete</a></td>';
       if (!this.common) {
         tableContent += '<td><select id="sendto" class="form-control">';
-
-        $.each(players, function(){
-          tableContent += '<option value="'+ this._id +'">Player '+ this._id +'</option>';
-        });
         tableContent += '</select></td>';
       }
       else   {
