@@ -13,13 +13,14 @@ $(document).ready(function () {
 })
 
 function getValue(player, name) {
-  var arrayPosition = player.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(name)
-  return player.resources[arrayPosition] ? (player.resources[arrayPosition].value + player.resources[arrayPosition].unit): 'NOT IN DB';
+	var arrayPosition = player.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(name)
+	return player.resources[arrayPosition] ? (player.resources[arrayPosition].value + player.resources[arrayPosition].unit): 'NOT IN DB';
 }
 
 
 function populateTable() {
 	$.getJSON('/players/list', function(data) {
+		tableContent = ''
 		$.each(data, function(){
 			tableContent += '<tr>';
 			tableContent += '<td><a href="#" class="linkeditplayer" rel="'+ this._id +'">Player '+ this._id +'</a></td>';

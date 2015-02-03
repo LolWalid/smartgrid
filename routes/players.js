@@ -30,8 +30,7 @@ router.get('/list', function (req, res) {
 router.post('/add', function(req, res) {
     var db = req.db;
 
-    var data = req.body;
-    db.collection('players').insert(data, function(err, result){
+    db.collection('players').update({_id : req.body._id}, {'$set': req.body}, {upsert : true}, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
         );

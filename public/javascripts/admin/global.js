@@ -63,7 +63,7 @@ function updatePlayers () {
     players = data
     tableContent = ''
       $.each(players, function(){
-        tableContent += '<option value="'+ this._id +'">Player '+ this._id +'</option>';
+        tableContent += '<option class="form-control" value="'+ this._id +'">Player '+ this._id +'</option>';
       });
       $("#sendto").html(tableContent)
   });
