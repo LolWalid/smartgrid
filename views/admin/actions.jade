@@ -1,0 +1,81 @@
+extends layout
+
+block content
+  .container
+    #actionInfo.info
+      h2 Action Info
+      p
+        strong Title :
+        |  <span id='actionInfoTitle'></span>
+        br
+        strong Description :
+        |  <span id='actionInfoDescription'></span>
+        br
+      h2 Effects :
+      p#effects
+
+
+    h2 Actions List
+    #actionList.list
+      table
+        thead
+          th Title
+          th Description
+          th Type
+          th Delete ?
+          th Send to
+          th Send
+        tbody
+
+    h2#displayAddForm.displayTitle New action
+      span.caret
+    #addAction
+      form.form-horizontal
+        .form-group
+          label.col-sm-2.control-label(for="inputActionTitle") Title
+          .col-sm-10
+            input#inputActionTitle.form-control(type='text', placeholder='Action title')
+        .form-group
+          label.col-sm-2.control-label(for="inputActionCommon") Type
+          .col-sm-10
+            .checkbox
+              label
+                input#inputActionCommon(type="checkbox")
+                | Common action
+        .add_input_effects
+          .form-group
+            label.col-sm-2.control-label(for="inputActionResource") Effect
+            .col-sm-5
+              select.resource.form-control
+            //label.col-sm-1.control-label Effect
+            .col-sm-4
+              input.effect.form-control(type='text', placeholder='Effect')
+            .col-sm-1
+              button.add_field_button.btn.btn-warning
+                span +
+        .form-group
+          label.col-sm-2.control-label Description
+          .col-sm-10
+            textarea#inputActionDescription.form-control(type='text', placeholder='Description')
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            button#btnAddAction.btn.btn-success Add action
+
+
+    h2 Edit action
+    #editAction.notDisplayed
+      form.form-horizontal
+        input#editActionId.form-control(type='hidden')
+        .form-group
+          label.col-sm-2.control-label(for="editActionTitle") Title
+          .col-sm-10
+            input#editActionTitle.form-control(type='text', placeholder='Action title')
+        .form-group
+          label.col-sm-2.control-label(for="editActionDescription") Description
+          .col-sm-10
+            input#editActionDescription.form-control(type='text', placeholder='Description')
+        .add_input_effects.form-group
+          .col-sm-offset-2.col-sm-10
+            button.add_field_button.btn.btn-warning Add More Fields
+        button#btnEditAction.btn.btn-warning Edit Action
+    script(src='/javascripts/admin/actionscript.js')

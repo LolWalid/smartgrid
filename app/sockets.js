@@ -89,6 +89,10 @@ function sockets(io, db) {
       socket.broadcast.emit('server event message', message);
     });
 
+    socket.on('new action', function(message) {
+      socket.broadcast.emit('server action message', message);
+    });
+
     socket.on('update view', function(message) {
       socket.broadcast.emit('update view', message);
     });
