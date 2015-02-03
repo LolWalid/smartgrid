@@ -23,7 +23,7 @@ function addPropositionResponse(message, db){
     receiver : 'Admin',
     objectId : message.object,
     response : message.response,
-    description : message.joueur + ' answered : ' +   
+    description : message.joueur + ' answered : ' +  message.response,
     date : new Date().toUTCString()
   }
   db.collection('logs').insert(log, function(err, result) {});
