@@ -5,17 +5,38 @@ function addLog(message, db, type) {
       break;
     case 'vote':
       addVote(message, db)
-      default:
+    case 'proposition':
+      addTransaction(message, db)
     break;
+    case 'proposition response':
+      addPropositionResponse(message, db)
+    break;
+    default:
+    break;
+
   }
+}
+function addPropositionResponse(message, db){
+  var log = {
+    type : 'proposition response',
+    sender : message.joueur,
+    receiver : 'Admin',
+    objectId : message.object,
+    response : message.response,
+    description : message.joueur + ' answered : ' +   
+    date : new Date().toUTCString()
+  }
+  db.collection('logs').insert(log, function(err, result) {});
 }
 
 function addTransaction(message, db) {
-  log = {
-    type: 'transaction',
-    sender: message.joueur,
-    objectId: message.object,
-    action: message.action,
+  var log = {
+    type : 'transaction',
+    action : message.action,
+    sender : message.joueur,
+    receiver : 'Admin',
+    objectId : message.object,
+    date : new Date().toUTCString()
   }
 
   switch (message.action) {
@@ -33,7 +54,7 @@ function addTransaction(message, db) {
       log.description = 'Player ' + message.joueur + ' want community to buy an object.'
       break
     default:
-      break;
+      break
   }
   log.date = new Date().toUTCString()
   db.collection('logs').insert(log, function(err, result) {
@@ -41,6 +62,14 @@ function addTransaction(message, db) {
 }
 
 function addVote(message, db) {
+  var log = {
+    type: 'vote',
+    sender : message.joueur,
+    receiver : 'Admin',
+    description : message.joueur + ' voted : ' + message.response,
+    date : new Date().toUTCString()
+  }
+  db.collection('logs').insert(log, function(err, result) {})
 }
 
 
@@ -81,57 +110,15 @@ function sockets(io, db) {
     });
 
     socket.on('player want object', function(message) {
+      addLog(message, db, 'proposition')
       socket.broadcast.emit('server player want object', message);
     });
 
     socket.on('proposition reponse', function(message) {
+      addLog(message, db, 'proposition response')
       socket.broadcast.emit('server proposition reponse', message);
     });
   });
 }
 
 module.exports.sockets = sockets;
-
-
-
-/*function addLog(message, db, type) {
-  console.log(message)
-  var log =
-      {
-        sender : 'Admin',
-        receiver :  (message.joueur ? 'Player ' + message.joueur : 'All Players'),
-        description : type,
-        data : message,
-        date : new Date().toUTCString()
-      }
-  switch (type)
-  {
-    case 'transaction' :
-      log.sender = 'Player ' + message.joueur
-      log.object = message.object
-      switch (message.action)
-      {
-        case 'buy':
-          log.description = 'Player ' + message.joueur + ' bought an object'
-          break;
-        case 'sale':
-          log.description = 'Player ' + message.joueur + ' sold an object'
-          break;
-        case 'gift':
-          log.receiver = message.otherPlayer
-          log.description = 'Player ' + message.joueur + ' gave an object' + ' to player ' + message.otherPlayer
-          break;
-        default :
-      }
-      log.description += ' (object ID : ' + message.object + ' ).'
-    break;
-    case 'vote' :
-      log.sender = 'Player ' + message.joueur
-      log.receiver = 'Admin'
-      log.description = log.sender + ' voted : ' + message.response
-    break;
-    default:
-  }
-  db.collection('logs').insert(log, function(err, result) {});
-}
-*/
