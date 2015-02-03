@@ -261,14 +261,15 @@ function editObjectif(event) {
 
 function updatePlayersObjectives(playerId, objectif) {
   $.get('/players/show/' + playerId, function (data) {
-    if (data.objectives)
-      data.objectives.push(objectif);
+    var objectives = data.objectives
+    if (objectives)
+      objectives.push(objectif);
     else
-      data.objectives = [objectif];
+      objectives = [objectif];
 
     var playerUpdate = {
-      id : playerId,
-      objectives : data.objectives
+      _id : playerId,
+      objectives : objectives
     };
     $.ajax({
       type: 'POST',
