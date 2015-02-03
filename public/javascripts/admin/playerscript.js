@@ -6,6 +6,8 @@ $(document).ready(function () {
 
 	$("#connectedPlayers table tbody").on('click', 'td a.linkdeleteplayer', deletePlayer);
 
+	$("#connectedPlayers table tbody").on('click', 'td a.linkeditplayer', editPlayer);
+
 	$("#deleteAll").on('click', deleteAllPlayers);
 
 })
@@ -20,7 +22,7 @@ function populateTable() {
 	$.getJSON('/players/list', function(data) {
 		$.each(data, function(){
 			tableContent += '<tr>';
-			tableContent += '<td> Player '+ this._id +'</td>';
+			tableContent += '<td><a href="#" class="linkeditplayer" rel="'+ this._id +'">Player '+ this._id +'</a></td>';
 			tableContent += '<td>'+ getValue(this, "Money") +'</td>';
 			tableContent += '<td>'+ getValue(this, "Energy") +'</td>';
 			tableContent += '<td>'+ getValue(this, "Satisfaction") +'</td>';
@@ -31,6 +33,12 @@ function populateTable() {
 
 		$('#connectedPlayers table tbody').html(tableContent);
 	})
+}
+
+function editPlayer(event) {
+	event.preventDefault();
+
+	document.location.href = '/players/editplayer/' + $(this).prop('rel');
 }
 
 function deletePlayer(event) {

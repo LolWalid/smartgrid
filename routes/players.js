@@ -60,6 +60,10 @@ router.post('/edit', function(req, res) {
     });
 });
 
+router.get('/editplayer/:id', function(req,res) {
+  res.render('admin/editplayer', {title: 'Smartgrid - Admin - Edit Player'});
+});
+
 router.post('/deleteAll', function(req, res) {
   var db = req.db;
   db.collection('players').remove({}, function(err, result){
