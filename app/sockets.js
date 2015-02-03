@@ -114,6 +114,10 @@ function sockets(io, db) {
       addLog(message, db, 'transaction')
       socket.broadcast.emit('server action on object', message);
     });
+    socket.on('action triggered', function(message) {
+      addLog(message, db, 'action')
+      socket.broadcast.emit('server action triggered', message);
+    });
 
     socket.on('player want object', function(message) {
       addLog(message, db, 'proposition')

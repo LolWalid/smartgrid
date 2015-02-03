@@ -414,11 +414,6 @@ function updatePlayersActions(id, action) {
 
   player = players[arrayPosition]
 
-  $.each(action.effects, function() {
-    var arrayPosition = player.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(this.resource)
-    player.resources[arrayPosition].value += this.effect
-  })
-
   $.ajax({
     type: 'POST',
     contentType : 'application/json',
@@ -434,6 +429,4 @@ function updatePlayersActions(id, action) {
       console.log(response.msg)
     }
   })
-
-
 }

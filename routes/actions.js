@@ -1,6 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
+router.get('/', function(req, res) {
+  sess = req.session;
+
+  if (sess.joueur)
+    res.render('actions', {title: 'Smartgrid - Actions', player: 'Joueur ' + sess.joueur });
+  else
+    res.render('login', {title: 'Smartgrid - Connexion'});
+});
+
+
 /* GET home page. */
 router.get('/admin', function(req, res) {
   res.render('admin/actions');

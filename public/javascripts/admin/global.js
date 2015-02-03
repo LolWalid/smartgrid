@@ -18,6 +18,9 @@ $(document).ready(function() {
   socket.on('new player', updatePlayers)
 
   socket.on('server proposition reponse', getResponseObject)
+
+  socket.on('server action message', addAction)
+  socket.on('server action triggered', triggerAction)
 })
 
 function playerActionObject(message) {
@@ -69,6 +72,85 @@ function updatePlayers () {
   });
 }
 
+function playerAddAction(player, action) {
+  joueur = player
+  var arrayPosition = joueur.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(action.costResource)
+
+  joueur.resources[arrayPosition].value -= action.price
+
+  $.each(action.effects, function() {
+    var arrayPosition = joueur.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(this.resource)
+    joueur.resources[arrayPosition].value += this.effect
+  })
+
+  if (joueur.actions)
+    joueur.actions.push(action)
+  else
+    joueur.actions = [action]
+
+  $.ajax({
+    type: 'POST',
+    contentType : 'application/json',
+    data: JSON.stringify(joueur),
+    url: '/players/edit'
+  }).done(function(response) {
+    if (response.msg === '') {
+      console.log("update view")
+      socket.emit('update view')
+    }
+    else
+      console.log('Error: ' + response.msg)
+  })
+}
+
+function triggerAction(joueur, action) {
+  var indexOfObject = joueur.actions.map(function(arrayItem) { return arrayItem._id; }).indexOf(action._id)
+
+  if (indexOfObject > -1 ) {
+    joueur.actions.splice(indexOfObject, 1)
+
+    $.ajax({
+      type: 'POST',
+      contentType : 'application/json',
+      data: JSON.stringify(joueur),
+      url: '/players/edit'
+    }).done(function(response) {
+      if (response.msg === '') {
+        console.log("update view")
+        socket.emit('update view')
+      }
+      else
+        console.log('Error: ' + response.msg)
+    })
+  }
+
+
+  $.each(players, function (id, receiver) {
+    $.each(action.effects, function() {
+      var arrayPosition = receiver.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(this.resource)
+      receiver.resources[arrayPosition].value += this.effect
+    })
+
+    if (receiver.actions)
+      receiver.actions.push(action)
+    else
+      receiver.actions = [action]
+
+    $.ajax({
+      type: 'POST',
+      contentType : 'application/json',
+      data: JSON.stringify(receiver),
+      url: '/players/edit'
+    }).done(function(response) {
+      if (response.msg === '') {
+        socket.emit('update view')
+      }
+      else
+        console.log('Error: ' + response.msg)
+    })
+  })  
+}
+
 function playerBuyObject(player, object) {
   joueur = player
   var arrayPosition = joueur.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(object.costResource)
@@ -99,6 +181,7 @@ function playerBuyObject(player, object) {
       console.log('Error: ' + response.msg)
   })
 }
+
 
 function playerSellObject(joueur, object) {
 
@@ -208,6 +291,14 @@ function buyObject(object) {
     var arrayPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(id)
     var player = players[arrayPosition]
     playerBuyObject(player, data)
+  })
+}
+function addAction(action) {
+  $.getJSON('/actions/show/' + action, function(data) {
+    id = responseObject[action][0].player
+    var arrayPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(id)
+    var player = players[arrayPosition]
+    playerAddAction(player, data)
   })
 }
 
