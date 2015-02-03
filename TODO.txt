@@ -6,7 +6,7 @@ Partie ADMIN :
   - ALPHA -> OK : Ajouter les récompenses dans les objectifs
   - Walid -> OK : Gérer tous les messages que les joueurs vont envoyer (modifier les ressources !)
   - Gérer les réponses des consensus
-  - Changer les éléments partagés : tout le monde -> par groupes
+  - Walid -> OK mais pas partout, Changer les éléments partagés : tout le monde -> par groupes
   - page edit resources les objets les actions des joueurs, on peut ajouter au tableau un clic sur la 1ere case et bim page edit
 
 Partie PLAYER :
@@ -33,7 +33,7 @@ Avec comme objectif de rester au dessus d'une certaine valeur de satisfaction
 
 - J'ai pensé un truc con : faudrait qu'on puisse envoyer un message banal avec un bouton OK qui fait rien juste au cas où l'admin veut prévenir de qqch.
 
-- Demande d'achat groupés par un joeur à la communauté
+- Demande d'achat groupés par un joueur à la communauté
 
 - Notion de ressource à stockage limité : la cuve / la pile (en gros un min et un max 0- 100%)
 
