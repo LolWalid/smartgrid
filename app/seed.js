@@ -1,6 +1,9 @@
  function seed(db) {
   //Update db
-  db.collection('players').remove({}, function(err, result) {
+  // db.collection('players').remove({}, function(err, result) {
+  // });
+
+  db.collection('players').update({},{$set: {isConnected: false}}, function(err, result) {
   });
 
   db.collection('resources').update({ name: "Money"},
