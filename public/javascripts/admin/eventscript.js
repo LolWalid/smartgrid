@@ -90,9 +90,6 @@ function showEventInfo(event) {
   $('#eventInfoTitle').text(thisEventObject.title);
   $('#eventInfoDescription').text(thisEventObject.description);
 
-  $('#eventInfoResource').text(thisEventObject.resource);
-  $('#eventInfoAchieve').text(thisEventObject.achieve);
-
   $('#editEventTitle').val(thisEventObject.title);
   $('#editEventDescription').val(thisEventObject.description);
   $('#editEventId').val(thisEventObject._id);
@@ -123,13 +120,13 @@ function showEventInfo(event) {
         </div>');
       $("#editEvent .remove_field").on('click', removeField);
       //updateResources();
-      var options = ''
+/*      var options = ''
 
-      for (var j = 0; j < resources.length; j++) {
+      for (var j = 0; j < resourcesList.length; j++) {
 
-       options += '<option value="' + resources[j].name + '"' + (resources[j].name == effects[i].resource ? 'selected' : '' ) + '>' + resources[j].name + '</option>'
+       options += '<option value="' + resourcesList[j].name + '"' + (resourcesList[j].name == effects[i].resource ? 'selected' : '' ) + '>' + resources[j].name + '</option>'
      }
-     $('#resource' + i).html(options)
+     $('#resource' + i).html(options)*/
    }
  }
 
@@ -158,7 +155,13 @@ function addEvent(event) {
 
     if( typeof(effects.length)!="undefined") {
       for (var i=0; i<effects.length; i++) {
-        var json = {'resource': resources[i].value, 'effect': parseInt(effects[i].value)};
+        arrayPosition = resourcesList.map(function(arrayItem) { return arrayItem.name; }).indexOf(resources[i].value)
+
+        var json = {
+          'resource': resources[i].value,
+          'unit' : resourcesList[arrayPosition].unit,
+          'effect': parseInt(effects[i].value)
+        };
         effectsJson = effectsJson.concat(json);
       }
     }
@@ -391,6 +394,4 @@ function updatePlayersEvents(id, event) {
     else
       console.log('Error: ' + response.msg)
   })
-
-
 }

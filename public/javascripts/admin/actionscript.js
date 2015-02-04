@@ -63,10 +63,10 @@ function populateTable() {
 
 
 // Show Action Info
-function showActionInfo(action) {
+function showActionInfo(event) {
 
   // Praction Link from Firing
-  action.preventDefault();
+  event.preventDefault();
 
   $("#addAction").slideUp(function () {
     $("#editAction").slideDown();
@@ -139,9 +139,9 @@ function showActionInfo(action) {
 };
 
 // Add Action
-function addAction(action) {
-  action.preventDefault();
-
+function addAction(event) {
+  event.preventDefault();
+  console.log('test')
   // Super basic validation - increase errorCount variable if any fields are blank
   var errorCount = 0;
   $('#addAction input').each(function(index, val) {
@@ -158,7 +158,13 @@ function addAction(action) {
 
     if( typeof(effects.length)!="undefined") {
       for (var i=0; i<effects.length; i++) {
-        var json = {'resource': resources[i].value, 'effect': parseInt(effects[i].value)};
+        arrayPosition = resourcesList.map(function(arrayItem) { return arrayItem.name; }).indexOf(resources[i].value)
+
+        var json = {
+          'resource': resources[i].value,
+          'unit' : resourcesList[arrayPosition].unit,
+          'effect': parseInt(effects[i].value)
+        };
         effectsJson = effectsJson.concat(json);
       }
     }
@@ -169,8 +175,6 @@ function addAction(action) {
     var newAction = {
       title : $('#addAction input#inputActionTitle').val(),
       description : $('#addAction textarea#inputActionDescription').val(),
-      // achieve : $('#addAction fieldset input#inputActionAchieve').val(),
-      // resource : $('#addAction fieldset input#inputActionResource').val(),
       common : isCommon,
       effects : effectsJson
     };
@@ -357,11 +361,11 @@ function sendThroughSocket(action, player) {
   if (action.common) {
     updatePlayers();
     $.each(players, function(){
-      updatePlayersActions(this._id, actionToSend);
+      updatePlayersActions(this._id, action);
     });
   }
   else {
-    updatePlayersActions(player, actionToSend);
+    updatePlayersActions(player, action);
   }
 }
 
@@ -369,11 +373,10 @@ function updatePlayersActions(id, action) {
   var arrayPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(id);
 
   player = players[arrayPosition]
-
-  if (player.actions)
-    player.actions.push(action)
-  else
-    player.actions = [action]
+    if (player.actions)
+      player.actions.push(action)
+    else
+      player.actions = [action]
 
   $.ajax({
     type: 'POST',
@@ -389,15 +392,5 @@ function updatePlayersActions(id, action) {
       console.log('Error: ')
       console.log(response.msg)
     }
-  })
-}
-
-function addAction(action) {
-  console.log(action)
-  $.getJSON('/actions/show/' + action, function(data) {
-    id = responseObject[action][0].player
-    var arrayPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(id)
-    var player = players[arrayPosition]
-    playerAddAction(player, data)
   })
 }

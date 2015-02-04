@@ -1,6 +1,6 @@
 $(document).ready(function() {
-  $('table tbody').on('click', 'td a.showAction', showAction);
-  $('#actionList table tbody').on('click', 'td a.triggerAction', triggerAction);
+  $('#myactions table tbody').on('click', 'td a.showAction', showAction);
+  $('#myactions table tbody').on('click', 'td a.triggerAction', triggerAction);
 
   document.addEventListener("update", getActions, false);
 })
@@ -13,7 +13,7 @@ function getActions() {
       tableContent += '<tr>';
       tableContent += '<td><a href="#" class="showAction" rel="' + this._id + '" title="Show Details">' + this.title + '</a></td>';
       tableContent += '<td>' + this.description  + '</td>';
-      tableContent += '<td><a href="#" class="triggerAction" rel="' + this._id + '">Donner</a></td>';
+      tableContent += '<td><a href="#" class="triggerAction" rel="' + this._id + '">Utiliser</a></td>';
       tableContent += '</tr>';
 });
   $('#myactions table tbody').html(tableContent);
@@ -60,9 +60,9 @@ function showAction () {
 
 function triggerAction() {
   action = {
-    action : 'proposition',
     action : $(this).prop('rel'),
-    joueur : playerData._id,
+    joueur : playerData._id
   }
+  console.log(action)
   socket.emit('action triggered', action)
 }

@@ -97,54 +97,6 @@ function playerAddAction(player, action) {
   })
 }
 
-function triggerAction(joueur, action) {
-  var indexOfObject = joueur.actions.map(function(arrayItem) { return arrayItem._id; }).indexOf(action._id)
-
-  if (indexOfObject > -1 ) {
-    joueur.actions.splice(indexOfObject, 1)
-
-    $.ajax({
-      type: 'POST',
-      contentType : 'application/json',
-      data: JSON.stringify(joueur),
-      url: '/players/edit'
-    }).done(function(response) {
-      if (response.msg === '') {
-        console.log("update view")
-        socket.emit('update view')
-      }
-      else
-        console.log('Error: ' + response.msg)
-    })
-  }
-
-
-  $.each(players, function (id, receiver) {
-    $.each(action.effects, function() {
-      var arrayPosition = receiver.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(this.resource)
-      receiver.resources[arrayPosition].value += this.effect
-    })
-
-    if (receiver.actions)
-      receiver.actions.push(action)
-    else
-      receiver.actions = [action]
-
-    $.ajax({
-      type: 'POST',
-      contentType : 'application/json',
-      data: JSON.stringify(receiver),
-      url: '/players/edit'
-    }).done(function(response) {
-      if (response.msg === '') {
-        socket.emit('update view')
-      }
-      else
-        console.log('Error: ' + response.msg)
-    })
-  })
-}
-
 function playerBuyObject(player, object) {
   joueur = player
   var arrayPosition = joueur.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(object.costResource)
@@ -297,12 +249,12 @@ function sendToPlayersGUI(objToSend) {
   var tableContent = '<div class="message">'
   tableContent += '<div class="message-heading">'
   tableContent += '<h3 class="message-title">'
-  
-  if (objToSend.title) 
-    tableContent += objToSend.title 
+
+  if (objToSend.title)
+    tableContent += objToSend.title
   else if (objToSend.name)
     tableContent += objToSend.name
-  
+
   tableContent += '</h3>'
   tableContent += '</div><div class="message-body">'
   tableContent += '<strong>' + 'Select Players' + '</strong><br />'
@@ -336,4 +288,39 @@ function sendToPlayersGUI(objToSend) {
       }
     }
   })
+}
+
+function triggerAction(message) {
+
+  var indexOfPlayer = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(message.joueur)
+  joueur = players[indexOfPlayer]
+
+  var indexOfAction = joueur.actions.map(function(arrayItem) { return arrayItem._id; }).indexOf(message.action)
+  action = joueur.actions[indexOfAction]
+
+
+  if (indexOfAction > -1 ) {
+    joueur.actions.splice(indexOfAction, 1)
+
+    $.each(action.effects, function() {
+      var arrayPosition = joueur.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(this.resource)
+      joueur.resources[arrayPosition].value += this.effect
+    })
+
+    $.ajax({
+      type: 'POST',
+      contentType : 'application/json',
+      data: JSON.stringify(joueur),
+      url: '/players/edit'
+    }).done(function(response) {
+      if (response.msg === '') {
+        console.log("update view")
+        socket.emit('update view')
+      }
+      else
+        console.log('Error: ' + response.msg)
+    })
+  }
+  else
+    console.log('player is cheating')
 }
