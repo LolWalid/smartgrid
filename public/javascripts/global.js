@@ -81,7 +81,7 @@ function updatePlayer (message) {
 }
 
 function updatePlayers () {
-  $.getJSON('/players/list', function (data) {
+  $.getJSON('/players/connectedlist', function (data) {
     players = data
   });
 }

@@ -12,7 +12,7 @@ $(document).ready(function() {
 		window.location.href='/objects'
 	})
 	$("#actions").on('click', function(event) {
-		window.location.href='/objects'
+		window.location.href='/actions'
 	})
 })
 
