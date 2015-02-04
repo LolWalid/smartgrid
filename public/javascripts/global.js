@@ -86,25 +86,6 @@ function updatePlayers () {
   });
 }
 
-function updatePlayerProfile (message) {
-  var playerEdit = playerData
-
-  playerEdit.profile = message.profile
-
-  $.ajax({
-    type: 'POST',
-    data: JSON.stringify(playerEdit),
-    contentType: 'application/json',
-    url: '/players/edit'
-  }).done(function (response) {
-    if (response.msg !== '') {
-      console.log('Error: ' + response.msg)
-    }
-    document.dispatchEvent(eventUpdate)
-    window.location.reload()
-  })
-}
-
 function getValue(name) {
   var arrayPosition = playerData.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(name)
   return playerData.resources[arrayPosition] ? playerData.resources[arrayPosition].value : 'NOT IN DB';
@@ -141,7 +122,7 @@ function displayProfileMessage(message) {
 
   $(".ok_profile").click(function() {
     $(this).closest('.message').remove()
-    updatePlayerProfile(message)
+    document.location.reload()
   })
 }
 

@@ -53,13 +53,6 @@ function populateTable() {
       tableContent += '<td>' + this.description + '</td>';
       tableContent += '<td>' + (this.common ? "Common" : "Individual") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteobjectif" rel="' + this._id + '">Delete</a></td>';
-      if (!this.common) {
-        tableContent += '<td><select id="sendto" class="form-control">';
-        tableContent += '</select></td>';
-      }
-      else   {
-        tableContent += '<td>All players</td>';
-      }
       tableContent += '<td><a href="#" class="sendobjectif" rel="' + this._id + '">Send</a></td>';
       tableContent += '</tr>';
     });
@@ -278,44 +271,6 @@ function updatePlayersObjectives(playerId, objectif) {
       });
 }
 
-function sendObjectiveGUI(objective) {
-  var tableContent = '<div class="message">'
-  tableContent += '<div class="message-heading">'
-  tableContent += '<h3 class="message-title">' + objective.title + '</h3>'
-  tableContent += '</div><div class="message-body">'
-  tableContent += '<strong>' + 'Select Players' + '</strong><br />'
-  tableContent += '<div class="form-group">'
-  if (players.length != 0){
-    tableContent += '<select multiple class="form-control" id="selectPlayers">'
-    $.each(players, function(){
-      tableContent += '<option value="' +  this._id + '"> Player ' + this._id + '</option>'
-    })
-    tableContent += '</select>'
-  }
-  else
-    tableContent += '<p> No player connected, refresh page<p>'
-
-  tableContent += '</div>'
-  tableContent += '<input type="button" class="cancel btn btn-lg btn-warning btn-right" value="Cancel" />'
-  tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-right" value="Send" />'
-  tableContent += '</div></div>'
-  $('body').append(tableContent)
-
-  $('.cancel').click(function() {
-    $(this).closest('.message').remove()
-  })
-
-  $(".ok_obj").click(function() {
-    var playersSelected = $("#selectPlayers").val()
-    $(this).closest('.message').remove()
-    if (playersSelected) {
-      for (var i = 0; i < playersSelected.length; i++) {
-        sendThroughSocket(event, playersSelected[i])
-      }
-    }
-  })
-}
-
 function sendObjectif (event) {
   event.preventDefault();
   var thisObjectifId = $(this).prop('rel');
@@ -325,7 +280,7 @@ function sendObjectif (event) {
   if (thisObjectifObject.common)
     sendThroughSocket(thisObjectifObject, 0)
   else
-    sendObjectiveGUI(thisObjectifObject)
+    sendToPlayersGUI(thisObjectifObject)
 }
 
 function sendThroughSocket(objective, player) {
@@ -346,9 +301,5 @@ function sendThroughSocket(objective, player) {
   }
   else {
     updatePlayersObjectives(player, objective);
-  }
-  
+  } 
 }
-  /*var _this = $(this);
-     (thisObjectifObject.common ? 0 : $(this).closest('tr').find("#sendto").val()),
-*/
