@@ -6,6 +6,9 @@ $(document).ready(function () {
 	$("#idPlayer").text(playerID)
 
 	populateTables()
+
+	$("#objects table tbody").on('click', 'td a.deleteobject', deleteObject);
+	$("#actions table tbody").on('click', 'td a.deleteaction', deleteAction);
 })
 
 function populateTables() {
@@ -22,6 +25,9 @@ function populateTables() {
 
 		if (data.objects)
 			populateObjects(data.objects)
+
+		if (data.actions)
+			populateActions(data.actions)
 	})
 }
 
@@ -65,14 +71,107 @@ function populateObjectives(objectives) {
 
 function populateObjects(objects) {
 	tableContent = ''
-	$.each(objects, function () {
+	$.each(objects, function (index) {
 		tableContent += '<tr>'
 		tableContent += '<td>'+ this.title +'</td>'
 		tableContent += '<td>'+ this.description +'</td>'
 		tableContent += '<td>'+ this.price +'</td>'
+		tableContent += '<td><a href="#" class="deleteobject" rel="'+ index +'">Delete</a></td>'
 		tableContent += '</tr>'	
 	})
 
 	$("#objects table tbody").html(tableContent)
 }
 
+function populateActions(actions) {
+	tableContent = ''
+	$.each(actions, function (index) {
+		tableContent += '<tr>'
+		tableContent += '<td>'+ this.title +'</td>'
+		tableContent += '<td>'+ this.description +'</td>'
+		tableContent += '<td>'+ this.price +'</td>'
+		tableContent += '<td><a href="#" class="deleteaction" rel="'+ index +'">Delete</a></td>'
+		tableContent += '</tr>'	
+	})
+
+	$("#actions table tbody").html(tableContent)
+}
+
+function deleteObject(event) {
+	event.preventDefault();
+
+	var objectID = $(this).prop('rel')
+	var objects = playerData.objects
+	var resources = playerData.resources
+
+	var confirmation = confirm('Are you sure you want to delete this object from the player\'s inventory ?')
+
+	if (confirmation === true) {
+		var price = objects[objectID].price
+		resources[0].value += price
+
+		objects = $.grep(objects, function (value) {
+			return value != objects[objectID]
+		})
+
+		var playerEdit = {
+			_id : playerID,
+			resources : resources,
+			objects : objects
+		}
+
+		$.ajax({
+			type: 'POST',
+			data: JSON.stringify(playerEdit),
+			contentType: 'application/json',
+			url: '/players/edit'
+		}).done(function (response) {
+			if (response.msg !== '') {
+				console.log('Error: ' + response.msg)
+			}
+			else {
+				document.location.reload()
+			}
+		})
+	}
+	else {
+		return false
+	}
+}
+
+function deleteAction(event) {
+	event.preventDefault();
+
+	var actionID = $(this).prop('rel')
+	var actions = playerData.actions
+
+	var confirmation = confirm('Are you sure you want to delete this action from the player\'s inventory ?')
+
+	if (confirmation === true) {
+		actions = $.grep(actions, function (value) {
+			return value != actions[actionID]
+		})
+
+		var playerEdit = {
+			_id : playerID,
+			actions : actions 
+		}
+
+		$.ajax({
+			type: 'POST',
+			data: JSON.stringify(playerEdit),
+			contentType: 'application/json',
+			url: '/players/edit'
+		}).done(function (response) {
+			if (response.msg !== '') {
+				console.log('Error: ' + response.msg)
+			}
+			else {
+				document.location.reload()
+			}
+		})
+	}
+	else {
+		return false
+	}
+}
