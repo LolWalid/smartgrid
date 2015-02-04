@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/admin', function(req, res) {
-  res.render('admin/objects');
+  res.render('admin/objects', {title: 'Smartgrid - Admin - Objects'});
 });
 
 

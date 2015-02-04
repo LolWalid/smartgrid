@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/admin', function(req, res) {
-  res.render('admin/decisions');
+  res.render('admin/decisions', {title: 'Smartgrid - Admin - Decisions'});
 });
 
 /*

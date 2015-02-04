@@ -1,7 +1,4 @@
-actionListData = []
-
 $(document).ready(function() {
-  getActions();
   $('table tbody').on('click', 'td a.showAction', showAction);
   $('#actionList table tbody').on('click', 'td a.triggerAction', triggerAction);
 
@@ -28,10 +25,10 @@ function showAction () {
   var thisActionId = $(this).prop('rel')
 
   // Get Index of action based on id value
-  var arrayPosition = actionListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisActionId)
+  var arrayPosition = playerData.actions.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisActionId)
 
   // Get our Actionif Action
-  var thisAction = actionListData[arrayPosition]
+  var thisAction = playerData.actions[arrayPosition]
 
   tableContent = '<div class="message-heading">'
   tableContent += '<h3 class="message-title">' + thisAction.title + '</h3>'

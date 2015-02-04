@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/admin', function(req, res) {
-  res.render('admin/events');
+  res.render('admin/events', {title: 'Smartgrid - Admin - Events'});
 });
 
 /*
