@@ -389,7 +389,6 @@ function sendThroughSocket(event, player) {
 
   var eventToSend = {
     joueur: player,
-    //'joueur': event.common == "true" ? 0 : event.players[i],
     title: event.title,
     description: event.description,
     effects : event.effects,

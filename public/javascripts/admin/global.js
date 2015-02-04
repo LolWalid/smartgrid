@@ -19,7 +19,6 @@ $(document).ready(function() {
 
   socket.on('server proposition reponse', getResponseObject)
 
-  socket.on('server action message', addAction)
   socket.on('server action triggered', triggerAction)
 })
 
@@ -148,7 +147,7 @@ function triggerAction(joueur, action) {
       else
         console.log('Error: ' + response.msg)
     })
-  })  
+  })
 }
 
 function playerBuyObject(player, object) {
@@ -293,15 +292,6 @@ function buyObject(object) {
     playerBuyObject(player, data)
   })
 }
-function addAction(action) {
-  $.getJSON('/actions/show/' + action, function(data) {
-    id = responseObject[action][0].player
-    var arrayPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(id)
-    var player = players[arrayPosition]
-    playerAddAction(player, data)
-  })
-}
-
 
 function hasRespond(joueur, object) {
   var position = responseObject[object].map(function(arrayItem) {return arrayItem.player; }).indexOf(joueur)

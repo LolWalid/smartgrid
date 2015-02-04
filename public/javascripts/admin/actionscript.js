@@ -389,14 +389,11 @@ function sendThroughSocket(action, player) {
 
   var actionToSend = {
     joueur: player,
-    //'joueur': action.common == "true" ? 0 : action.players[i],
     title: action.title,
     description: action.description,
     effects : action.effects,
     common : action.common
   };
-
-  socket.emit('new action', actionToSend);
 
   if (action.common) {
     updatePlayers();
@@ -414,6 +411,11 @@ function updatePlayersActions(id, action) {
 
   player = players[arrayPosition]
 
+  if (player.actions)
+    player.actions.push(action)
+  else
+    player.actions = [action]
+
   $.ajax({
     type: 'POST',
     contentType : 'application/json',
@@ -424,9 +426,19 @@ function updatePlayersActions(id, action) {
       console.log('update view')
       socket.emit('update view')
     }
-    else { 
+    else {
       console.log('Error: ')
       console.log(response.msg)
     }
+  })
+}
+
+function addAction(action) {
+  console.log(action)
+  $.getJSON('/actions/show/' + action, function(data) {
+    id = responseObject[action][0].player
+    var arrayPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(id)
+    var player = players[arrayPosition]
+    playerAddAction(player, data)
   })
 }
