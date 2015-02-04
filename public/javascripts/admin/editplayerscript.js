@@ -142,10 +142,34 @@ function deleteObject(event) {
 function deleteAction(event) {
 	event.preventDefault();
 
+	var actionID = $(this).prop('rel')
+	var actions = playerData.actions
+
 	var confirmation = confirm('Are you sure you want to delete this action from the player\'s inventory ?')
 
 	if (confirmation === true) {
-		alert('BOOM')
+		actions = $.grep(actions, function (value) {
+			return value != actions[actionID]
+		})
+
+		var playerEdit = {
+			_id : playerID,
+			actions : actions 
+		}
+
+		$.ajax({
+			type: 'POST',
+			data: JSON.stringify(playerEdit),
+			contentType: 'application/json',
+			url: '/players/edit'
+		}).done(function (response) {
+			if (response.msg !== '') {
+				console.log('Error: ' + response.msg)
+			}
+			else {
+				document.location.reload()
+			}
+		})
 	}
 	else {
 		return false
