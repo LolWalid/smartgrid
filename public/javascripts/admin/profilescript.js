@@ -48,8 +48,8 @@ function populateTable() {
 			tableContent += '<td><a href="#" class="sendprofile" rel="'+ this._id +'">Send</a></td>';
 			tableContent += '</tr>';
 
-			$("#profilesList table tbody").html(tableContent);
 		});
+		$("#profilesList table tbody").html(tableContent);
 	});
 }
 
