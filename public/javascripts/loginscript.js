@@ -16,6 +16,7 @@ function getResource(object) {
 function addPlayer(id) {
 	data = {
 		_id: id,
+		isConnected: true,
 		resources : []
 	}
 
@@ -38,7 +39,7 @@ function addPlayer(id) {
 };
 
 function updatePlayers () {
-	$.getJSON('/players/list', function (data) {
+	$.getJSON('/players/connectedlist', function (data) {
 		players = data;
 		addDisconnected();
 	});

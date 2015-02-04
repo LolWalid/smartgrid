@@ -27,6 +27,14 @@ router.get('/list', function (req, res) {
   });
 });
 
+router.get('/connectedlist', function (req, res) {
+  sess = req.session;
+  var db = req.db;
+  db.collection('players').find({isConnected: true}).sort({_id : 1}).toArray(function (err, items) {
+    res.json(items);
+  });
+});
+
 router.post('/add', function(req, res) {
     var db = req.db;
 
