@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
 
 /* GET home page. */
 router.get('/admin', function(req, res) {
-  res.render('admin/actions');
+  res.render('admin/actions', {title: 'Smartgrid - Admin - Actions'});
 });
 
 /*

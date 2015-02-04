@@ -22,7 +22,6 @@ function getObjects() {
   // jQuery AJAX call for JSON
   $.getJSON( '/objects/list', function( data ) {
     objectListData = data;
-    // For each item in our JSON, add a table row and cells to the content string
     $.each(data, function(){
       tableContent += '<tr>';
       tableContent += '<td><a href="#" class="linkshowobject" rel="' + this._id + '" title="Show Details">' + this.title + '</a></td>';
@@ -31,12 +30,9 @@ function getObjects() {
         tableContent += '<td><a href="#" class="linkproposeobject" rel="' + this._id + '">Proposer l\'achat</a></td>';
       else
         tableContent += '<td><a href="#" class="linkbuyobject" rel="' + this._id + '">Acheter</a></td>';
-      //tableContent += '<td><a href="#" class="linkrentobject" rel="' + this._id + '">Louer</a></td>';
-      //tableContent += '<td><a href="#" class="linkgiveobject" rel="' + this._id + '">Donner</a></td>';
       tableContent += '</tr>';
     });
 
-    // Inject the whole content string into our existing HTML table
     $('#objectList table tbody').html(tableContent);
   });
 };
@@ -50,10 +46,9 @@ function setMyObjects() {
       tableContent += '<td><a href="#" class="linkshowobject" rel="' + this._id + '" title="Show Details">' + this.title + '</a></td>';
       tableContent += '<td>' + 0.5 * this.price + " " + (this.costUnit ? this.costUnit : this.costResource) + '</td>';
       tableContent += '<td><a href="#" class="linksellobject" rel="' + this._id + '">Vendre</a></td>';
-//      tableContent += '<td><a href="#" class="linkrentobject" rel="' + this._id + '">Louer</a></td>';
-tableContent += '<td><a href="#" class="linkgiveobject" rel="' + this._id + '">Donner</a></td>';
-tableContent += '</tr>';
-});
+      tableContent += '<td><a href="#" class="linkgiveobject" rel="' + this._id + '">Donner</a></td>';
+      tableContent += '</tr>';
+    });
   $('#myobjects table tbody').html(tableContent);
 }
 

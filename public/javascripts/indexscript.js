@@ -8,7 +8,10 @@ $(document).ready(function() {
 		window.location.href='/budget'
 	})
 
-	$("#consommation").on('click', function(event) {
+	$("#shop").on('click', function(event) {
+		window.location.href='/objects'
+	})
+	$("#actions").on('click', function(event) {
 		window.location.href='/objects'
 	})
 })
