@@ -297,3 +297,48 @@ function hasRespond(joueur, object) {
   var position = responseObject[object].map(function(arrayItem) {return arrayItem.player; }).indexOf(joueur)
   return (position > -1)
 }
+
+function sendToPlayersGUI(objToSend) {
+  var tableContent = '<div class="message">'
+  tableContent += '<div class="message-heading">'
+  tableContent += '<h3 class="message-title">'
+  
+  if (objToSend.title) 
+    tableContent += objToSend.title 
+  else if (objToSend.name)
+    tableContent += objToSend.name
+  
+  tableContent += '</h3>'
+  tableContent += '</div><div class="message-body">'
+  tableContent += '<strong>' + 'Select Players' + '</strong><br />'
+  tableContent += '<div class="form-group">'
+  if (players.length != 0){
+    tableContent += '<select multiple class="form-control" id="selectPlayers">'
+    $.each(players, function(){
+      tableContent += '<option value="' +  this._id + '"> Player ' + this._id + '</option>'
+    })
+    tableContent += '</select>'
+  }
+  else
+    tableContent += '<p> No player connected, refresh page<p>'
+
+  tableContent += '</div>'
+  tableContent += '<input type="button" class="cancel btn btn-lg btn-warning btn-right" value="Cancel" />'
+  tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-right" value="Send" />'
+  tableContent += '</div></div>'
+  $('body').append(tableContent)
+
+  $('.cancel').click(function() {
+    $(this).closest('.message').remove()
+  })
+
+  $(".ok_obj").click(function() {
+    var playersSelected = $("#selectPlayers").val()
+    $(this).closest('.message').remove()
+    if (playersSelected) {
+      for (var i = 0; i < playersSelected.length; i++) {
+        sendThroughSocket(objToSend, playersSelected[i])
+      }
+    }
+  })
+}

@@ -45,8 +45,6 @@ function populateTable() {
 			tableContent += '<td>'+ this.profession +'</td>';
 			tableContent += '<td>'+ this.description +'</td>';
 			tableContent += '<td><a href="#" class="linkdeleteprofile" rel="'+ this._id +'">Delete</a></td>';
-			tableContent += '<td><select id="sendto" class="form-control">';
-			tableContent += '</select></td>';
 			tableContent += '<td><a href="#" class="sendprofile" rel="'+ this._id +'">Send</a></td>';
 			tableContent += '</tr>';
 
@@ -208,8 +206,6 @@ function editProfile(event) {
 			description : $("#editProfile #editProfileDescription").val()
 		}
 
-		console.log(profile);
-
 		$.ajax({
 			type: 'POST',
 			data: profile,
@@ -257,20 +253,41 @@ function deleteProfile(event) {
 	}
 }
 
+function updatePlayerProfile (profile, playerID) {
+	var newProfile = profile
+	var playerEdit = {
+		_id : playerID,
+		profile : newProfile
+	}
+
+	$.ajax({
+		type: 'POST',
+		data: JSON.stringify(playerEdit),
+		contentType: 'application/json',
+		url: '/players/edit'
+	}).done(function (response) {
+		if (response.msg !== '') {
+			console.log('Error: ' + response.msg)
+		}
+	})
+}
+
 function sendProfile(event) {
 	event.preventDefault();
 	var profileID = $(this).prop('rel');
 	var arrayPosition = profileListData.map(function(arrayItem) {return arrayItem._id;}).indexOf(profileID);
 	var profileObject = profileListData[arrayPosition];
 
-	var playerID = $(this).closest('tr').find("#sendto").val();
+	sendToPlayersGUI(profileObject);
+}
 
+function sendThroughSocket(prof, player) {
 	var profileToSend = {
-		profile : profileObject,
-		joueur : playerID
+		profile: prof,
+		joueur: player
 	}
 
-	console.log(profileToSend);
-
 	socket.emit('new profile', profileToSend);
+
+	updatePlayerProfile(prof, player);
 }

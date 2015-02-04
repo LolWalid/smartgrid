@@ -52,12 +52,6 @@ function populateTable() {
       tableContent += '<td>' + this.description + '</td>';
       tableContent += '<td>' + (this.common ? "Common" : "Individual") + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteaction" rel="' + this._id + '">Delete</a></td>';
-      if (!this.common) {
-        tableContent += '<td>Select players</td>';
-      }
-      else   {
-        tableContent += '<td>All players</td>';
-      }
       tableContent += '<td><a href="#" class="sendAction" rel="' + this._id + '">Send</a></td>';
       tableContent += '</tr>';
     });
@@ -340,40 +334,6 @@ function removeField(e) {
   $(this).parents('div.form-group').first().remove();
 }
 
-
-function sendActionGui(action) {
-  var tableContent = '<div class="message">'
-  tableContent += '<div class="message-heading">'
-  tableContent += '<h3 class="message-title">' + action.title + '</h3>'
-  tableContent += '</div><div class="message-body">'
-  tableContent += '<strong>' + 'Select Players' + '</strong><br />'
-  tableContent += '<div class="form-group">'
-  if (players.length != 0){
-    tableContent += '<select multiple class="form-control" id="selectPlayers">'
-    $.each(players, function(){
-      tableContent += '<option value="' +  this._id + '"> Player' + this._id + '</option>'
-    })
-    tableContent += '</select>'
-  }
-  else
-    tableContent += '<p> No player connected, refresh page<p>'
-
-  tableContent += '</div>'
-  tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-right" value="OK" />'
-  tableContent += '</div></div>'
-  $('body').append(tableContent)
-
-  $(".ok_obj").click(function() {
-    var playersSelected = $("#selectPlayers").val()
-    $(this).closest('.message').remove()
-    if (playersSelected) {
-      for (var i = 0; i < playersSelected.length; i++) {
-        sendThroughSocket(action, playersSelected[i])
-      }
-    }
-  })
-}
-
 function sendAction(e){
   e.preventDefault();
   var thisActionId = $(this).prop('rel');
@@ -382,11 +342,10 @@ function sendAction(e){
   if (thisActionObject.common)
     sendThroughSocket(thisActionObject, 0)
   else
-    sendActionGui(thisActionObject)
+    sendToPlayersGUI(thisActionObject)
 }
 
 function sendThroughSocket(action, player) {
-
   var actionToSend = {
     joueur: player,
     title: action.title,
