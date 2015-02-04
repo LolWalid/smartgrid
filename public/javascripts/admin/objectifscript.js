@@ -278,31 +278,77 @@ function updatePlayersObjectives(playerId, objectif) {
       });
 }
 
+function sendObjectiveGUI(objective) {
+  var tableContent = '<div class="message">'
+  tableContent += '<div class="message-heading">'
+  tableContent += '<h3 class="message-title">' + objective.title + '</h3>'
+  tableContent += '</div><div class="message-body">'
+  tableContent += '<strong>' + 'Select Players' + '</strong><br />'
+  tableContent += '<div class="form-group">'
+  if (players.length != 0){
+    tableContent += '<select multiple class="form-control" id="selectPlayers">'
+    $.each(players, function(){
+      tableContent += '<option value="' +  this._id + '"> Player ' + this._id + '</option>'
+    })
+    tableContent += '</select>'
+  }
+  else
+    tableContent += '<p> No player connected, refresh page<p>'
+
+  tableContent += '</div>'
+  tableContent += '<input type="button" class="cancel btn btn-lg btn-warning btn-right" value="Cancel" />'
+  tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-right" value="Send" />'
+  tableContent += '</div></div>'
+  $('body').append(tableContent)
+
+  $('.cancel').click(function() {
+    $(this).closest('.message').remove()
+  })
+
+  $(".ok_obj").click(function() {
+    var playersSelected = $("#selectPlayers").val()
+    $(this).closest('.message').remove()
+    if (playersSelected) {
+      for (var i = 0; i < playersSelected.length; i++) {
+        sendThroughSocket(event, playersSelected[i])
+      }
+    }
+  })
+}
+
 function sendObjectif (event) {
   event.preventDefault();
   var thisObjectifId = $(this).prop('rel');
   var arrayPosition = objectifListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisObjectifId);
   var thisObjectifObject = objectifListData[arrayPosition];
-  var _this = $(this);
-  var objToSend = {
-    joueur: (thisObjectifObject.common ? 0 : $(this).closest('tr').find("#sendto").val()),
-    title: thisObjectifObject.title,
-    description: thisObjectifObject.description,
-    common : thisObjectifObject.common
-  };
 
+  if (thisObjectifObject.common)
+    sendThroughSocket(thisObjectifObject, 0)
+  else
+    sendObjectiveGUI(thisObjectifObject)
+}
+
+function sendThroughSocket(objective, player) {
+  var objToSend = {
+    joueur: player,
+    title: objective.title,
+    description: objective.description,
+    common : objective.common
+  };
+  
   socket.emit('new objective', objToSend);
 
-  if (thisObjectifObject.common) {
+  if (objective.common) {
     updatePlayers();
     $.each(players, function(){
-      updatePlayersObjectives(this._id, thisObjectifObject);
+      updatePlayersObjectives(this._id, objective);
     });
   }
   else {
-    var playerId = $(this).closest('tr').find("#sendto").val();
-    updatePlayersObjectives(playerId, thisObjectifObject);
+    updatePlayersObjectives(player, objective);
   }
-};
-
-
+  
+}
+  /*var _this = $(this);
+     (thisObjectifObject.common ? 0 : $(this).closest('tr').find("#sendto").val()),
+*/

@@ -351,7 +351,7 @@ function sendEventGui(event) {
   if (players.length != 0){
     tableContent += '<select multiple class="form-control" id="selectPlayers">'
     $.each(players, function(){
-      tableContent += '<option value="' +  this._id + '"> Player' + this._id + '</option>'
+      tableContent += '<option value="' +  this._id + '"> Player ' + this._id + '</option>'
     })
     tableContent += '</select>'
   }
