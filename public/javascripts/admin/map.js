@@ -1,80 +1,45 @@
 var taille = 15;
 var default_url = "img/grass.png";
 
-
-function add_tree(i,j) {
+function add(name, i, top, left, url, zindex) {
   $("#map")
   .append('<img \
-    src="img/treeConiferTall.png"\
-    id= "tree_'+ i + '_' + j + '"\
-    class= "tree"\
-    style="top : '+ (i + j) * 25 +'px; \
-    left : '+ (i-j) * 50 +'px; \
+    src="' + url + '"\
+    id= "' + name + i + '"\
+    class= ""\
+    style="top : '+ top +'px; \
+    left : '+ left +'px; \
+    z-index :' + zindex + ';\
     "/>');
 }
 
+function add_tree(i,j) {
+  add("tree", i, (i + j) * 25, (i - j) * 50, "img/aap/arbre.png", 1) ;
+  //add("tree", , (i  j) * 25, (i - j) * 50, "img/aap/maisons.png") ;
+}
+
+
 function add_road() {
-  for (var j=0; j < taille; j++)
+  for (var j=0; j < taille; j++) {
     if (j != 3 && j !=4 && j!=5)
-      $("#i_" + 1 +"-j_" + j).attr('src', "img/roadEast.png");
+      $("#i_" + 2 +"-j_" + j).attr('src', "img/roadEast.png");
   }
+}
 
-  function add(i,j,url,offset) {
-    $("#i_" + i +"-j_" + j).attr('src', url);
-    $("#i_" + i +"-j_" + j).css({
-      'top': parseInt($("#i_" + i +"-j_" + j).css('top')) + offset,
-    })
-  }
-
-  function ajout(url, i, j, size,offset) {
-    var id = "#i_" + i +"-j_" + j;
-
-    $(id).attr('src', url);
-
-    var z_index = parseInt($(id).css('z-index')) + 1;
-    $(id).css({
-      'top' : parseInt($(id).css('top')) + offset,
-      'width': size * 100,
-      'left': parseInt($(id).css('left')) - (size-1) * 50,
-      'z-index': z_index
-    });
-
-/*  for (k=i; k < taille;k++) {
-    for (n=j+size; n < taille; n++)
-      $("#i_" + k +"-j_" + n).css("z-index",z_index);
-  }
-  for (k=i+size; k < taille;k++) {
-    for (n=j; n < taille; n++)
-      $("#i_" + k +"-j_" + n).css("z-index",z_index);
-  }
-  */
-};
-
-function remove(i, j, size) {
-  var id = "#i_" + i +"-j_" + j;
-  var z_index = parseInt($(id).css('z-index'));
-
-  $(id).attr('src', default_url);
-  $(id).css({
-    'width': 100,
-    'left': parseInt($(id).css('left')) + (size-1) * 50,
-    'z-index': z_index
-  });
-
-  for (var k=0; k < size; k++){
-    for (var n=0; n < size; n++){
-      if (!(k==0 && n==0))
-        $("#i_" + (i+k) +"-j_" + (j+n)).css("z-index", z_index);
-    }
-  }
-};
+function add_tile(i,j,url,offset) {
+  $("#i_" + i +"-j_" + j).attr('src', url);
+  $("#i_" + i +"-j_" + j).css({
+    'top': parseInt($("#i_" + i +"-j_" + j).css('top')) + offset,
+  })
+}
 
 var moveOffLeft = -2;
 var moveOffTop = 1;
+
 function move(elem) {
 
-  var left = -30;
-  var top = 47;
+  var left = 110;
+  var top = 24;
 
   function frame() {
 
@@ -86,28 +51,43 @@ function move(elem) {
       'top' : top + 'px'
     })
 
-    if (left < -430 && top < 275)  // check finish condition
+    if (left < -380 && top < 280)  // check finish condition
     {
       moveOffLeft = 2;
       moveOffTop = 1;
       elem.attr('src',"img/vehicules/bus_face.png")
-     // clearInterval(id);
-   }
-    if (left > 200 )  // check finish condition
-      clearInterval(id);
-
-  }
+    }
+    if (left > 230 && top > 500 && top != 60)
+      {  // check finish condition
+        elem.attr('src',"img/vehicules/bus_cote.png")
+        //elem.hide();
+        left = 110;
+        top = 24;
+        elem.css({
+          'left' : left + 'px', // show frame
+          'top' : top + 'px'
+        });
+        moveOffLeft = -2;
+        moveOffTop = 1;
+        play();
+        clearInterval(id);
+      }
+    }
 
   var id = setInterval(frame, 10) // draw every 10ms
 }
 
+function play() {
+    setTimeout(function(){
+      move ($('#bus'));
+    }, Math.random() * 5000);
+}
 
 
 ready = $(function() {
   $("#map").css({
     'position': 'relative',
-    'margin-left': 50 * (taille-1) + "px",
-    'margin-top' : '50px'
+    'margin-left': 50*taille + "px"
   });
 
   for (var i=0; i < taille; i++) {
@@ -127,63 +107,48 @@ ready = $(function() {
 
 
   for (var i=0; i<taille; i++)
-    add(i,4,"img/water/riverBankedWaterfallS.png",0);
+    add_tile(i,4,"img/water/riverBankedWaterfallS.png",0);
 
-
-  add(1,5,"img/hillRoadEast.png",-15);
-
-  add(1,3,"img/hillRoadWest.png",0)
-  add(1,4,"img/water/bridgeHighBankedEW.png",-12)
-
-  for (i=2;i<taille;i++) {
-    x = (Math.random() * (taille-1));
-    y = (Math.random() * (taille-1));
-    add_tree(i,10.1);
-    add_tree(i,2.7);
-    add_tree(i,3.7);
+  for (i=3;i<taille;i++) {
+    add_tree(i, 10.1);
+    add_tree(i, 2.7);
+    add_tree(i, 3.7);
   }
+
+  // add road
   add_road();
+  for (var i= 3; i<taille; i++)
+    add_tile(i, 10,"img/roadNorth.png", 0);
 
-  add(2,5,"img/hillCornerEast.png",-15);
-  add(0,5,"img/hillCornerSE.png",0);
-  add(2,3,"img/hillCornerNW.png",0);
-  add(0,3,"img/hillCornerWest.png",0);
-  ajout("img/house.png",3,0,2,-50);
+  for (var i = 3; i<taille; i++)
+    add_tile(i, 2,"img/roadNorth.png", 0);
 
-  ajout("img/macdo.png",6,6,4,-28);
-  ajout("img/building2.png",9,0,2,-145);
+  //add bridge
+  add_tile(3, 5,"img/hillCornerEast.png", -15);
+  add_tile(1, 5,"img/hillCornerSE.png", 0);
+  add_tile(3, 3,"img/hillCornerNW.png", 0);
+  add_tile(1, 3,"img/hillCornerWest.png", 0);
+  add_tile(2,5,"img/hillRoadEast.png",-15);
+  add_tile(2,3,"img/hillRoadWest.png",0);
+  add_tile(2,4,"img/water/bridgeHighBankedEW.png",-12);
 
-  add(1,2,"img/roadTSouth.png",0);
-  add(1,10,"img/roadTSouth.png",0);
+  add_tile(2, 2,"img/roadTSouth.png", 0);
+  add_tile(2, 10,"img/roadTSouth.png", 0);
 
-  for (var i= 2; i<taille; i++)
-    add(i,10,"img/roadNorth.png",0);
+  add("house", 0, -20, 63, "img/aap/maisons.png", 3);
+  add("house", 0, 272, -150, "img/aap/maisons.png", 2);
+  add("house", 0, 150, 400, "img/aap/maisons.png", 3);
+  add("house", 0, 100, -500, "img/aap/maisons_side.png", 2);
+  add("eolienne", 0, 390, 275, "img/aap/eolienne2.png", 2);
+  add("eolienne", 0, 300, 175, "img/aap/eolienne.png", 2);
+  add("eolienne", 0, 290, 75, "img/aap/eolienne2.png", 2);
+  add("eolienne", 0, 200, -25, "img/aap/eolienne.png", 1);
+  add("eolienne", 0, 170, -155, "img/aap/eolienne2.png", 3);
 
-  add(6,10,"img/roadTEast.png",0);
-  add(9,10,"img/roadTEast.png",0);
-
-  for (var i= 2; i<taille; i++)
-    add(i,2,"img/roadNorth.png",0);
-
-  add(3,2,"img/roadTEast.png",0);
-  add(4,2,"img/roadTEast.png",0);
-
-  //add_house(0,0);
-  $("#map")
-  .append('<img \
-    src="img/vehicules/bus_cote.png" \
-    id= "bus" \
-    class="" \
-    style="top : '+ 47 +'px; left : '+ -30 +'px; z-index: 3; \
-    "/>');
-
-  move ($('#bus'));
-/*  ajout('img/gros.png',2,2,2);
-  ajout('img/gros.png',1,1,1);
-  ajout('img/gros.png',4,4,4);
-  */
-  //remove(4,4,4);
-
+  add("bus","", 24, 110, "img/vehicules/bus_cote.png", 2);
+  //add("mac_do", 0, 272, -150,"img/macdo.png");
+  //add("appart", 0, 80, 400, "img/building2.png");
+    play();
 });
 
 $(document).ready(ready);
