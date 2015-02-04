@@ -14,6 +14,9 @@ function populateTables() {
 		if (data.profile)
 			populateProfile(data.profile)
 
+		if (data.resources)
+			populateResources(data.resources)
+
 		if (data.objectives)
 			populateObjectives(data.objectives)
 
@@ -31,6 +34,19 @@ function populateProfile(profile) {
 	tableContent += '</tr>'
 
 	$("#profile table tbody").html(tableContent)
+}
+
+function populateResources(resources) {
+	tableContent = ''
+	$.each(resources, function () {
+		tableContent += '<tr>'
+		tableContent += '<td>'+ this.name +'</td>'
+		tableContent += '<td>'+ this.unit +'</td>'
+		tableContent += '<td>'+ this.value +'</td>'
+		tableContent += '</tr>'	
+	})
+
+	$("#resources table tbody").html(tableContent)
 }
 
 function populateObjectives(objectives) {

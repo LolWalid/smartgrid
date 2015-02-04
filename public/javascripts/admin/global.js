@@ -63,12 +63,7 @@ function updateResources() {
 function updatePlayers () {
   $.getJSON('/players/list', function (data) {
     players = data
-    tableContent = ''
-      $.each(players, function(){
-        tableContent += '<option class="form-control" value="'+ this._id +'">Player '+ this._id +'</option>';
-      });
-      $("#sendto").html(tableContent)
-  });
+  })
 }
 
 function playerAddAction(player, action) {
@@ -323,7 +318,7 @@ function sendToPlayersGUI(objToSend) {
     tableContent += '<p> No player connected, refresh page<p>'
 
   tableContent += '</div>'
-  tableContent += '<input type="button" class="cancel btn btn-lg btn-warning btn-right" value="Cancel" />'
+  tableContent += '<input type="button" class="cancel btn btn-lg btn-warning" value="Cancel" />'
   tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-right" value="Send" />'
   tableContent += '</div></div>'
   $('body').append(tableContent)

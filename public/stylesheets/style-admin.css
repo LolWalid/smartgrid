@@ -57,8 +57,14 @@ fieldset {
 .notDisplayed {
   display: none;
 }
+
 .add_field_button{
   margin-bottom: 15px;
+}
+
+.btn-right {
+  float: right;
+  margin-bottom: 10px;
 }
 
 .message {
