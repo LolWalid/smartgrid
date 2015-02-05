@@ -71,11 +71,16 @@ function populateObjectives(objectives) {
 
 function populateObjects(objects) {
 	tableContent = ''
+	var effects = ''
 	$.each(objects, function (index) {
+		$.each(this.effects, function () {
+			effects += this.effect +' on '+ this.resource +'<br />'
+		})	
 		tableContent += '<tr>'
 		tableContent += '<td>'+ this.title +'</td>'
 		tableContent += '<td>'+ this.description +'</td>'
 		tableContent += '<td>'+ this.price +'</td>'
+		tableContent += '<td>'+ effects + '</td>'
 		tableContent += '<td><a href="#" class="deleteobject" rel="'+ index +'">Delete</a></td>'
 		tableContent += '</tr>'	
 	})
@@ -85,11 +90,15 @@ function populateObjects(objects) {
 
 function populateActions(actions) {
 	tableContent = ''
+	var effects = ''
 	$.each(actions, function (index) {
+		$.each(this.effects, function () {
+			effects += this.effect +' on '+ this.resource +'<br />'
+		})	
 		tableContent += '<tr>'
 		tableContent += '<td>'+ this.title +'</td>'
 		tableContent += '<td>'+ this.description +'</td>'
-		tableContent += '<td>'+ this.price +'</td>'
+		tableContent += '<td>'+ effects +'</td>'
 		tableContent += '<td><a href="#" class="deleteaction" rel="'+ index +'">Delete</a></td>'
 		tableContent += '</tr>'	
 	})
@@ -109,6 +118,8 @@ function deleteObject(event) {
 	if (confirmation === true) {
 		var price = objects[objectID].price
 		resources[0].value += price
+
+		var effects = objects[objectID].resources
 
 		objects = $.grep(objects, function (value) {
 			return value != objects[objectID]
