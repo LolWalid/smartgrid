@@ -7,8 +7,9 @@ $(document).ready(function () {
 
 	populateTables()
 
-	$("#objects table tbody").on('click', 'td a.deleteobject', deleteObject);
-	$("#actions table tbody").on('click', 'td a.deleteaction', deleteAction);
+	$("#resources table tbody").on('click', 'td button.newResource', editResource)
+	$("#objects table tbody").on('click', 'td a.deleteobject', deleteObject)
+	$("#actions table tbody").on('click', 'td a.deleteaction', deleteAction)
 })
 
 function populateTables() {
@@ -49,6 +50,9 @@ function populateResources(resources) {
 		tableContent += '<td>'+ this.name +'</td>'
 		tableContent += '<td>'+ this.unit +'</td>'
 		tableContent += '<td>'+ this.value +'</td>'
+		tableContent += '<td><form class="form-inline">'
+		tableContent += '<input type="text" class="form-control" name="newValue" placeholder="New value" /> <button class="newResource btn btn-warning">OK</button>'
+		tableContent += '</form></td>'
 		tableContent += '</tr>'	
 	})
 
@@ -106,8 +110,46 @@ function populateActions(actions) {
 	$("#actions table tbody").html(tableContent)
 }
 
+function editResource(event) {
+	event.preventDefault()
+
+	var newValue = $(this).parent().find('input').val()
+	if (newValue == "")
+		alert('Please enter a value')
+	else {
+		var resourceName = $(this).closest('tr').find('td:first').text()
+		console.log(resourceName +' : '+ newValue)
+		var resources = playerData.resources
+
+		$.each(resources, function() {
+			if (this.name === resourceName) {
+				this.value = newValue
+			}
+		})
+		
+		var playerEdit = {
+			_id : playerID,
+			resources : resources
+		}
+
+		$.ajax({
+			type: 'POST',
+			data: JSON.stringify(playerEdit),
+			contentType: 'application/json',
+			url: '/players/edit'
+		}).done(function (response) {
+			if (response.msg !== '') {
+				console.log('Error: ' + response.msg)
+			}
+			else {
+				document.location.reload()
+			}
+		})
+	}
+}
+
 function deleteObject(event) {
-	event.preventDefault();
+	event.preventDefault()
 
 	var objectID = $(this).prop('rel')
 	var objects = playerData.objects
@@ -119,7 +161,10 @@ function deleteObject(event) {
 		var price = objects[objectID].price
 		resources[0].value += price
 
-		var effects = objects[objectID].resources
+		var effects = objects[objectID].effects
+		$.each(effects, function() {
+			console.log(this.name)
+		})
 
 		objects = $.grep(objects, function (value) {
 			return value != objects[objectID]
@@ -151,7 +196,7 @@ function deleteObject(event) {
 }
 
 function deleteAction(event) {
-	event.preventDefault();
+	event.preventDefault()
 
 	var actionID = $(this).prop('rel')
 	var actions = playerData.actions
