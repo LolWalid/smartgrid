@@ -1,14 +1,28 @@
- function seed(db) {
-  //Update db
-  // db.collection('players').remove({}, function(err, result) {
-  // });
-
+function clean(db) {
+  db.collection('players').remove({},function(err, result){})
   db.collection('players').update({},{$set: {isConnected: false}}, function(err, result) {
+  })
+}
+
+function seed(db) {
+  db.collection('cities').update({name: 'city'},
+    {$set: { name: 'city'}
+  },
+
+  {upsert : true}, function(err, result) {
   });
 
   db.collection('resources').update({ name: "Money"},
   {
     name: "Money",
+    shared: false,
+    defaultValue: 1000,
+    unit: "€"},
+    {upsert : true}, function(err, result){})
+
+  db.collection('resources').update({ name: "MoneyShared"},
+  {
+    name: "MoneyShared",
     shared: true,
     defaultValue: 1000,
     unit: "€"},
@@ -40,3 +54,4 @@
 }
 
 module.exports.seed = seed;
+module.exports.clean = clean;

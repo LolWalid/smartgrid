@@ -19,7 +19,7 @@ html
           span.icon-bar
         a.navbar-brand(href='#') Admin
 
-      ul.nav.navbar-nav
+      ul.nav.navbar-nav.pull-left
         li
           a(href='/objectives/admin') Objectives
         li
@@ -29,7 +29,7 @@ html
         li
           a(href='/actions/admin') Actions
         li
-          a(href='/map') Map
+          a(href='/cities') Map
         li
           a(href='/players/admin') Players
         li
@@ -40,5 +40,8 @@ html
           a(href='/decisions/admin') Decisions
         li
           a(href='/logs/list') Logs
+      ul.nav.navbar-nav.pull-right
+        li
+          a#init(href='#') init city
     block content
 

@@ -125,11 +125,11 @@ function showActionInfo(event) {
       //updateResources();
       var options = ''
 
-      for (var j = 0; j < resources.length; j++) {
+     //  for (var j = 0; j < effects.length; j++) {
 
-       options += '<option value="' + resources[j].name + '"' + (resources[j].name == effects[i].resource ? 'selected' : '' ) + '>' + resources[j].name + '</option>'
-     }
-     $('#resource' + i).html(options)
+     //   options += '<option value="' + resources[j].name + '"' + (resources[j].name == effects[i].resource ? 'selected' : '' ) + '>' + resources[j].name + '</option>'
+     // }
+     // $('#resource' + i).html(options)
    }
  }
 
@@ -191,7 +191,7 @@ function addAction(event) {
       if (response.msg === '') {
 
         // Clear the form inputs
-        $('#addAction input').val('');
+        $('#addAction input').not(":checkbox").val('');
         $('#addAction textarea').val('');
 
         // Update the table

@@ -2,16 +2,16 @@ var socket = io.connect('/');
 
 var players = [];
 
-function getResource(object) {
-	$.getJSON( '/resources/list', function( data ) {
-		$.each(data, function() {
-			if (object.resources)
-				object.resources.push({name : this.name, unit : this.unit, value : this.defaultValue})
-			else
-				object.resources = [{name : this.name, unit : this.unit, value : this.defaultValue}]
-		})
-	})
-}
+// function getResource(object) {
+// 	$.getJSON( '/resources/list', function( data ) {
+// 		$.each(data, function() {
+// 			if (object.resources)
+// 				object.resources.push({name : this.name, unit : this.unit, value : this.defaultValue})
+// 			else
+// 				object.resources = [{name : this.name, unit : this.unit, value : this.defaultValue}]
+// 		})
+// 	})
+// }
 
 function addPlayer(id) {
 	data = {
@@ -22,7 +22,8 @@ function addPlayer(id) {
 
 	$.getJSON( '/resources/list', function( resourceList ) {
 		$.each(resourceList, function() {
-			data.resources.push({name : this.name, unit : this.unit, value : (this.defaultValue ? this.defaultValue : 0)})
+			if (!this.shared)
+				data.resources.push({name : this.name, unit : this.unit, value : (this.defaultValue ? this.defaultValue : 0)})
 		})
 		$.ajax({
 			url: '/players/add',

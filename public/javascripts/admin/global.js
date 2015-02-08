@@ -6,6 +6,7 @@ var responseObject = []
 
 $(document).ready(function() {
   updatePlayers();
+  updateResources();
   socket.on('server decision response', function (message) {
     response.push(message);
     updatePlayers();
@@ -20,6 +21,9 @@ $(document).ready(function() {
   socket.on('server proposition reponse', getResponseObject)
 
   socket.on('server action triggered', triggerAction)
+
+  $("#init").on('click',initCity)
+
 })
 
 function playerActionObject(message) {
@@ -233,10 +237,14 @@ function getResponseObject(message) {
 
 function buyObject(object) {
   $.getJSON('/objects/show/' + object, function(data) {
-    id = responseObject[object][0].player
-    var arrayPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(id)
-    var player = players[arrayPosition]
-    playerBuyObject(player, data)
+    // id = responseObject[object][0].player
+    // var arrayPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(id)
+    // var player = players[arrayPosition]
+    if (data.common)
+      $.getJSON('/cities/show/city', function(city){
+        console.log(city)
+        addObjectToCity(city, data)
+      })
   })
 }
 
@@ -323,4 +331,89 @@ function triggerAction(message) {
   }
   else
     console.log('player is cheating')
+}
+
+
+function addObjectToCity(data, object) {
+  var city = data
+  delete city._id
+
+  var arrayPosition = city.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(object.costResource)
+
+  if (arrayPosition < -1 )
+    arrayPosition = city.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf("MoneyShared")
+
+  console.log(city.resources)
+  city.resources[0].value -= object.price
+
+  if (city.resources[0].value >= 0) {
+
+    city.objects.push(object)
+
+    updatePlayersResources(object)
+
+    $.ajax({
+      type: 'POST',
+      contentType : 'application/json',
+      data: JSON.stringify(city),
+      url: '/cities/edit'
+    }).done(function(response) {
+      if (response.msg === '') {
+        console.log("ok")
+        socket.emit('update view')
+      }
+      else
+        console.log('Error: ' + response.msg)
+    })
+  }
+}
+
+
+function initCity(event) {
+  event.preventDefault
+  city = {
+    name: 'city',
+    resources: [],
+    objects: []
+  }
+  $.each(resourcesList, function(){
+    if (this.shared)
+      city.resources.push({name : this.name, unit : this.unit, value : (this.defaultValue ? this.defaultValue : 0)})
+  })
+  $.ajax({
+    url: '/cities/edit',
+    type: 'POST',
+    data: JSON.stringify(city),
+    contentType : 'application/json',
+  }).done(function(response){
+    if (response.msg != '')
+      console.log(response.msg);
+  })
+}
+
+function updatePlayersResources(object){
+  $.each(players, function() {
+    joueur = this
+    $.each(object.effects, function() {
+      var arrayPosition = joueur.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(this.resource)
+      joueur.resources[arrayPosition].value += this.effect
+      if (joueur.resources[arrayPosition].value < 0)
+        joueur.resources[arrayPosition].value = 0
+    })
+
+    $.ajax({
+      type: 'POST',
+      contentType : 'application/json',
+      data: JSON.stringify(joueur),
+      url: '/players/edit'
+    }).done(function(response) {
+      if (response.msg === '') {
+        console.log("update view")
+        socket.emit('update view')
+      }
+      else
+        console.log('Error: ' + response.msg)
+    })
+
+  })
 }

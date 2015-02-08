@@ -4,7 +4,6 @@ setInterval(function(){
   })
 }, 10000)
 
-
 function checkMoney(joueur) {
   player = joueur
   var moneyPosition = player.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf("Money")

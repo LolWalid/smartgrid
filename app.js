@@ -1,37 +1,35 @@
-var express = require('express');
-var session = require('express-session');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var http = require('http');
+var express = require('express')
+var session = require('express-session')
+var path = require('path')
+var favicon = require('serve-favicon')
+var logger = require('morgan')
+var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser')
+var http = require('http')
 
 // DataBase
 var mongo = require('mongoskin');
-var db = mongo.db("mongodb://localhost/sg", {native_parser: true});
+var db = mongo.db("mongodb://localhost/sg", {native_parser: true})
+var seed = require('./app/seed.js')
 
-var routes = require('./routes/index');
-var players = require('./routes/players');
-var objectives = require('./routes/objectives');
-var events = require('./routes/events');
-var actions = require('./routes/actions');
-var resources = require('./routes/resources');
-var decisions = require('./routes/decisions');
-var objects = require('./routes/objects');
-var profiles = require('./routes/profiles');
-var logs = require('./routes/logs');
+var routes = require('./routes/index')
+var players = require('./routes/players')
+var objectives = require('./routes/objectives')
+var events = require('./routes/events')
+var actions = require('./routes/actions')
+var resources = require('./routes/resources')
+var decisions = require('./routes/decisions')
+var objects = require('./routes/objects')
+var profiles = require('./routes/profiles')
+var cities = require('./routes/cities')
+var logs = require('./routes/logs')
 
 var app = express();
 
 app.server = http.createServer(app);
 var io = require('socket.io').listen(app.server);
 
-var connectedPlayers = [];
-
-
-
-require('./app/seed.js').seed(db);
+seed.seed(db);
 require('./app/sockets.js').sockets(io, db);
 
 
@@ -66,6 +64,7 @@ app.use('/resources', resources);
 app.use('/objects', objects);
 app.use('/decisions', decisions);
 app.use('/profiles', profiles);
+app.use('/cities', cities);
 app.use('/logs', logs);
 
 // catch 404 and forward to error handler
@@ -100,5 +99,22 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+process.stdin.resume();//so the program will not close instantly
+
+function exitHandler(options, err) {
+    if (options.cleanup) seed.clean(db);
+    if (err) console.log(err.stack);
+    if (options.exit) process.exit();
+}
+
+//do something when app is closing
+process.on('exit', exitHandler.bind(null,{cleanup:true}));
+
+//catches ctrl+c event
+process.on('SIGINT', exitHandler.bind(null, {exit:true}));
+
+//catches uncaught exceptions
+process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
 
 module.exports = app;

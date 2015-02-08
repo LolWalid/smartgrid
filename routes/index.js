@@ -21,10 +21,6 @@ router.get('/img/perso', function(req,res) {
   });
 });
 
-router.get('/map', function(req, res) {
-  res.render('admin/map', {title: 'Smartgrid - Admin - Map'})
-});
-
 router.get('/budget', function(req,res) {
   sess = req.session;
 
