@@ -14,7 +14,6 @@ router.get('/',function(req, res) {
 })
 
 router.post('/edit', function(req, res) {
-  console.log("edit")
   var db = req.db;
   var name = req.body.name;
   db.collection('cities').update({name: name}, {'$set':req.body}, function(err, result){

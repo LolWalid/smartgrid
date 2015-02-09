@@ -290,16 +290,35 @@ function sendThroughSocket(objective, player) {
     description: objective.description,
     common : objective.common
   };
-  
+
   socket.emit('new objective', objToSend);
 
   if (objective.common) {
     updatePlayers();
+
+    city = {
+      name: 'city'
+    }
+    if (city.objectives)
+      city.objectives.push(objective)
+    else
+      city.objectives = [objective]
+
+    $.ajax({
+      url: '/cities/edit',
+      type: 'POST',
+      data: JSON.stringify(city),
+      contentType : 'application/json',
+    }).done(function(response){
+      if (response.msg != '')
+        console.log(response.msg);
+    })
+
     $.each(players, function(){
       updatePlayersObjectives(this._id, objective);
     });
   }
   else {
     updatePlayersObjectives(player, objective);
-  } 
+  }
 }

@@ -374,7 +374,8 @@ function initCity(event) {
   city = {
     name: 'city',
     resources: [],
-    objects: []
+    objects: [],
+    objectives: []
   }
   $.each(resourcesList, function(){
     if (this.shared)
