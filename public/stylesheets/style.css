@@ -111,7 +111,7 @@ a.navbar-brand {
 
 .profil {
   margin-top: 15px;
-  height: 500px;
+  min-height: 500px;
   border: 1px solid transparent;
   border-radius: 8px;
 }
