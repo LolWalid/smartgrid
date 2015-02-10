@@ -111,7 +111,7 @@ a.navbar-brand {
 
 .profil {
   margin-top: 15px;
-  height: 500px;
+  min-height: 500px;
   border: 1px solid transparent;
   border-radius: 8px;
 }
@@ -124,6 +124,7 @@ a.navbar-brand {
   border: 1px solid transparent;
   border-top-left-radius: 16px;
   border-bottom-right-radius: 16px;
+  font-size: 18px;
 }
 
 .individuel {

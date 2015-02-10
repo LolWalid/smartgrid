@@ -21,9 +21,9 @@ function populateProfil() {
 
 	$.get('/players/data', function (data) {
 		if (data.profile) {
-			profileContent = '<p><strong>'+ data.profile.name + '</strong></p>';
-			profileContent += '<p>'+ data.profile.profession + '</p>';
-			profileContent += '<p>'+ data.profile.description + '</p>';
+			profileContent = '<p><img src="/img/perso/'+ data.profile.image +'" width="80" /> <strong>'+ data.profile.name +'</strong>, ';
+			profileContent += '<i>'+ data.profile.profession +'</i></p>';
+			profileContent += '<p>'+ data.profile.description +'</p>';
 		}
 
 		$("#profileContent").html(profileContent);
