@@ -133,7 +133,7 @@ function displayDecisionMessage(message) {
 
   tableContent += '<h3 class="message-title">Nouvelle décision à prendre</h3>'
   tableContent += '</div><div class="message-body">'
-  tableContent += '<p><strong>' + message.name + '</strong><br />'
+  tableContent += '<p><strong>' + message.title + '</strong><br />'
   tableContent += message.description + '</p><br />'
 
   if (message.type === 'Concensus')

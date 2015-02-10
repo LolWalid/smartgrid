@@ -1,6 +1,6 @@
 function clean(db) {
   //db.collection('players').remove({},function(err, result){})
-  db.collection('players').update({},{$set: {isConnected: false}}, function(err, result) {
+  db.collection('players').update({},{$set: {isConnected: false}},{upsert: false, multi: true}, function(err, result) {
   })
 }
 
