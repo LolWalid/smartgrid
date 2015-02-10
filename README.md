@@ -11,15 +11,14 @@ Using windows, be sure to add "C:\Program Files\MongoDB 2.6 Standard\bin" to you
 
 ##Launch the application
 
-Create a directory named data which will contain our database
+**Create a directory named data which will contain our database**
 ```
-**mkdir data**
-cd data
+mkdir data
 ```
 
 **Launch the database server**
 ```
-mongod --dbpath .
+mongod --dbpath ./data
 ```
 
 **Install modules and their dependancies**
