@@ -1,8 +1,12 @@
-extends layout
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/style-admin.css')
+    link(rel='stylesheet', href='/stylesheets/map.css')
+    script(src='/javascripts/jquery.min.js')
+    script(src='/javascripts/admin/map.js')
+    script(src='/javascripts/admin/mapscript.js')
+  body
+    div#map
 
-block content
-  div#map
-
-  link(rel='stylesheet', href='/stylesheets/map.css')
-
-  script(src='/javascripts/admin/map.js')

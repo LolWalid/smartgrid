@@ -242,7 +242,6 @@ function buyObject(object) {
     // var player = players[arrayPosition]
     if (data.common)
       $.getJSON('/cities/show/city', function(city){
-        console.log(city)
         addObjectToCity(city, data)
       })
   })

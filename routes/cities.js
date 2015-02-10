@@ -4,10 +4,7 @@ var router = express.Router();
 router.get('/',function(req, res) {
   sess= req.session
   if (sess.joueur) {
-    if (sess.joueur == 0)
       res.render('admin/map', {title: 'Smartgrid - Admin - Map'})
-    else
-      res.render('index', {title: 'Smartgrid', player: 'Joueur ' + sess.joueur });
   }
   else
     res.render('login', { title: 'Smartgrid - Connexion'});
