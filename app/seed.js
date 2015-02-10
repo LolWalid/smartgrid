@@ -1,5 +1,5 @@
 function clean(db) {
-  db.collection('players').remove({},function(err, result){})
+  //db.collection('players').remove({},function(err, result){})
   db.collection('players').update({},{$set: {isConnected: false}}, function(err, result) {
   })
 }
@@ -24,7 +24,7 @@ function seed(db) {
   {
     name: "MoneyShared",
     shared: true,
-    defaultValue: 1000,
+    defaultValue: 10000,
     unit: "€"},
     {upsert : true}, function(err, result){})
 

@@ -1,9 +1,16 @@
 var players = []
-var city
+var city = {}
+
+$(document).ready(function() {
+  updatePlayers()
+  updateCity()
+})
 
 function updatePlayers () {
   $.getJSON('/players/list', function (data) {
     players = data
+    updateSideBar()
+    updateNavBarMap()
   })
 }
 
@@ -11,20 +18,18 @@ function updateCity() {
   $.getJSON('/cities/show/city', function(data){
     city = data
     showObject()
+    updateNavBarMap()
   })
 }
 
-
-$(document).ready(function() {
-  updatePlayers()
-  updateCity()
-})
-
-
 function getPosition(name){
-  var position =  city.objects(function(arrayItem) { return arrayItem.title; }).indexOf(name)
+  var position =  city.objects.map(function(arrayItem) { return arrayItem.title; }).indexOf(name)
   return position;
+}
 
+function getValue(name) {
+  var position =  city.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(name)
+  return city.resources[position].value + ' ' + city.resources[position].unit;
 }
 
 function showObject() {
@@ -42,4 +47,22 @@ function showObject() {
       play();
     }
   }
+}
+
+function updateNavBarMap() {
+  $("#valeur_argent").text(" " + getValue("MoneyShared"))
+  $("#nb_joueurs").text(" " + players.length)
+}
+
+function updateSideBar(){
+  tableContent = ''
+  $.each(players,function() {
+    tableContent += '<li><div class="joueur">'
+    tableContent += '<img width="30px" src="/img/perso/' + this.profile.image + '"/> '
+    tableContent += ' ' + (this.profile ? this.profile.name : "No name")
+    tableContent += '</div></li>'
+    tableContent += '<br/>'
+  })
+
+  $("#joueurs").html(tableContent)
 }
