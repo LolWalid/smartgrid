@@ -1,7 +1,7 @@
 var socket = io.connect('/')
 
 var playerData
-var players
+var players = []
 
 var eventUpdate = new CustomEvent(
   "update",
@@ -53,8 +53,12 @@ $(document).ready(function() {
     updatePlayerView()
   })
 
-  socket.on('server player want object', function(message) {
-    displayPropositionGui(message)
+  socket.on('server player want object', function (message) {
+    displayPropositionGui(message, false)
+  })
+
+  socket.on('server new object city', function (message) {
+    displayPropositionGui(message, true)
   })
 
   socket.on('new player', updatePlayers)
@@ -137,7 +141,7 @@ function displayDecisionMessage(message) {
   tableContent += message.description + '</p><br />'
 
   if (message.type === 'Concensus')
-    tableContent += '<input type="button" class="close" value="Close" />'
+    tableContent += '<input type="button" class="closeMessage" value="Close" />'
   else {
     tableContent += '<input type="button" class="btn btn-success vote" value="Oui" /><span> </span>'
     tableContent += '<input type="button" class="btn btn-danger vote" value="Non" />'
@@ -148,7 +152,7 @@ function displayDecisionMessage(message) {
 
   $('.vote').on('click',sendResponse)
 
-  $(".close").click(function() {
+  $(".closeMessage").click(function() {
     $(this).closest('.message').remove()
   })
 }
@@ -216,12 +220,16 @@ function displayLogoutMessage(message) {
   }, 3000)
 }
 
-function displayPropositionGui(message) {
+function displayPropositionGui(message, hasBeenBought) {
   //add popin with a yes or no button
   object = message.data
+  console.log(message)
 
   tableContent = '<div class="message-heading">'
-  tableContent += '<h3 class="message-title">' + 'Le joueur ' + message.joueur + ' souhaite acheter un objet pour la ville.' + '</h3>'
+  if (hasBeenBought)
+    tableContent += '<h3 class="message-title">Nouvel objet pour la ville : ' + object.title + '</h3>'
+  else
+    tableContent += '<h3 class="message-title">' + 'Le joueur ' + message.joueur + ' souhaite acheter un objet pour la ville.' + '</h3>'
   tableContent += '</div><div class="message-body">'
   tableContent += '<h3>' + object.title + '</h3>'
   tableContent += '<p>' + object.description + '</p><br />'
@@ -236,9 +244,13 @@ function displayPropositionGui(message) {
   })
 
   tableContent += "</ul>"
-  tableContent += '<p> Etes vous d\'accord pour cet achat ?</p>'
-  tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-left" value="Oui" />'
-  tableContent += '<input type="button" class="ok_obj btn btn-lg btn-danger btn-right" value="Non" />'
+  if (hasBeenBought)
+    tableContent += '<input type="button" class="closeMessage btn btn-lg btn-success btn-left" value="OK" />'
+  else {
+    tableContent += '<p> Etes vous d\'accord pour cet achat ?</p>'
+    tableContent += '<input type="button" class="ok_obj btn btn-lg btn-success btn-left" value="Oui" />'
+    tableContent += '<input type="button" class="ok_obj btn btn-lg btn-danger btn-right" value="Non" />'
+  }
   tableContent += '</div>'
   //tableContent += '<input type="button" class="linkbuyobject btn btn-lg btn-warning btn-left" value="Acheter" />'
 
@@ -251,7 +263,10 @@ function displayPropositionGui(message) {
       object: message.object,
       response: $(this).val()
     }
-    socket.emit('proposition reponse', response)
+    socket.emit('proposition response', response)
+    $(this).closest('.message').remove()
+  })
+  $('.closeMessage').click(function() {
     $(this).closest('.message').remove()
   })
 }

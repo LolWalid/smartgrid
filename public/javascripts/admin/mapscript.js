@@ -7,7 +7,7 @@ $(document).ready(function() {
 })
 
 function updatePlayers () {
-  $.getJSON('/players/list', function (data) {
+  $.getJSON('/players/connectedlist', function (data) {
     players = data
     updateSideBar()
     updateNavBarMap()
@@ -28,8 +28,13 @@ function getPosition(name){
 }
 
 function getValue(name) {
-  var position =  city.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(name)
-  return city.resources[position].value + ' ' + city.resources[position].unit;
+  if (city.resources) {
+    var position =  city.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(name)
+    if (position > -1)
+      return city.resources[position].value + ' ' + city.resources[position].unit;
+  }
+  else
+    return -1
 }
 
 function showObject() {

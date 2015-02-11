@@ -124,10 +124,13 @@ function sockets(io, db) {
       socket.broadcast.emit('server player want object', message);
     });
 
-    socket.on('proposition reponse', function(message) {
+    socket.on('proposition response', function(message) {
       addLog(message, db, 'proposition response')
-      socket.broadcast.emit('server proposition reponse', message);
+      socket.broadcast.emit('server proposition response', message);
     });
+    socket.on("object bought for city", function(message) {
+      socket.broadcast.emit('server new object city', message);
+    })
   });
 }
 

@@ -1,8 +1,10 @@
 var socket = io.connect('/');
 var players
+var playersConnected
 var resourcesList
 var response = []
 var responseObject = []
+var city
 
 $(document).ready(function() {
   updatePlayers();
@@ -18,7 +20,9 @@ $(document).ready(function() {
   })
   socket.on('new player', updatePlayers)
 
-  socket.on('server proposition reponse', getResponseObject)
+  socket.on('server proposition response', function(message) {
+    getResponseObject(message)
+  })
 
   socket.on('server action triggered', triggerAction)
 
@@ -67,6 +71,9 @@ function updateResources() {
 function updatePlayers () {
   $.getJSON('/players/list', function (data) {
     players = data
+  })
+  $.getJSON('/players/connectedlist', function (connected) {
+    playersConnected = connected
   })
 }
 
@@ -228,23 +235,30 @@ function playerProposeObject(message, data) {
 }
 
 function getResponseObject(message) {
+  console.log("hi")
   if (!hasRespond(message.joueur, message.object))
     responseObject[message.object].push({player: message.joueur, response: message.response})
 
-  if (responseObject[message.object].length === players.length)
+  if (responseObject[message.object].length === playersConnected.length)
     buyObject(message.object)
 }
 
 function buyObject(object) {
-  $.getJSON('/objects/show/' + object, function(data) {
-    // id = responseObject[object][0].player
-    // var arrayPosition = players.map(function(arrayItem) { return arrayItem._id; }).indexOf(id)
-    // var player = players[arrayPosition]
-    if (data.common)
-      $.getJSON('/cities/show/city', function(city){
-        addObjectToCity(city, data)
-      })
+  nbYes = 0
+  nbNo = 0
+  $.each(responseObject[object], function() {
+    this.response === "Yes" ? nbYes++ : nbNo++
   })
+  console.log("hi")
+  if (nbYes > nbNo) {
+    $.getJSON('/objects/show/' + object, function(data) {
+      if (data.common)
+        $.getJSON('/cities/show/city', function(cityData){
+          city = cityData
+          addObjectToCity(cityData, data)
+        })
+    })
+  }
 }
 
 function hasRespond(joueur, object) {
@@ -342,7 +356,6 @@ function addObjectToCity(data, object) {
   if (arrayPosition < -1 )
     arrayPosition = city.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf("MoneyShared")
 
-  console.log(city.resources)
   city.resources[0].value -= object.price
 
   if (city.resources[0].value >= 0) {
@@ -350,6 +363,8 @@ function addObjectToCity(data, object) {
     city.objects.push(object)
 
     updatePlayersResources(object)
+    socket.emit("object bought for city", {data : object})
+
 
     $.ajax({
       type: 'POST',
@@ -392,13 +407,25 @@ function initCity(event) {
 }
 
 function updatePlayersResources(object){
+  var cityEdit = city
   $.each(players, function() {
     joueur = this
+
     $.each(object.effects, function() {
-      var arrayPosition = joueur.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(this.resource)
-      joueur.resources[arrayPosition].value += this.effect
-      if (joueur.resources[arrayPosition].value < 0)
-        joueur.resources[arrayPosition].value = 0
+
+      if (this.shared) {
+        var arrayPosition = cityEdit.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(this.resource)
+        cityEdit.resources[arrayPosition].value += this.effect
+        if (cityEdit.resources[arrayPosition].value < 0)
+          cityEdit.resources[arrayPosition].value = 0
+        delete this
+      }
+      else {
+        var arrayPosition = joueur.resources.map(function(arrayItem) { return arrayItem.name; }).indexOf(this.resource)
+        joueur.resources[arrayPosition].value += this.effect
+        if (joueur.resources[arrayPosition].value < 0)
+          joueur.resources[arrayPosition].value = 0
+      }
     })
 
     $.ajax({
@@ -414,6 +441,18 @@ function updatePlayersResources(object){
       else
         console.log('Error: ' + response.msg)
     })
-
+    $.ajax({
+      type: 'POST',
+      contentType : 'application/json',
+      data: JSON.stringify(cityEdit),
+      url: '/cities/edit'
+    }).done(function(response) {
+      if (response.msg === '') {
+        console.log("update view")
+        socket.emit('update view')
+      }
+      else
+        console.log('Error: ' + response.msg)
+    })
   })
 }
